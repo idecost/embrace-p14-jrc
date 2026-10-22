@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DRM Event Viewer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<style>
+/* Layout: analyst workbench. Header with event identity, tab strip, then one working surface per tab
+   (storyline reading column / graph canvas + detail rail / dense tables). */
+:root {
+  --bg: #f3f5f6;
+  --surface: #ffffff;
+  --surface-2: #e9eef0;
+  --line: #d3dbdf;
+  --fg: #172227;
+  --muted: #56666e;
+  --accent: #0b6870;
+  --accent-soft: #d6ecee;
+  --hazard: #c2410c;
+  --impact: #a16207;
+  --vuln: #7c3aed;
+  --measure: #15803d;
+  --need: #1d4ed8;
+  --actor: #4b5563;
+  --high: #15803d;
+  --medium: #a16207;
+  --low: #b91c1c;
+  --mark: #fde68a;
+  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1518; --surface: #161e22; --surface-2: #1e292e; --line: #2b383e; --fg: #e1e8eb; --muted: #92a3ab;
+    --accent: #52b6bf; --accent-soft: #173a3e;
+    --hazard: #fb8a5a; --impact: #e2b04e; --vuln: #a78bfa; --measure: #4ade80; --need: #7ea6ff; --actor: #a7b4c2;
+    --high: #4ade80; --medium: #e2b04e; --low: #f87171; --mark: #6b5a12;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1518; --surface: #161e22; --surface-2: #1e292e; --line: #2b383e; --fg: #e1e8eb; --muted: #92a3ab;
+  --accent: #52b6bf; --accent-soft: #173a3e;
+  --hazard: #fb8a5a; --impact: #e2b04e; --vuln: #a78bfa; --measure: #4ade80; --need: #7ea6ff; --actor: #a7b4c2;
+  --high: #4ade80; --medium: #e2b04e; --low: #f87171; --mark: #6b5a12;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 14px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 1440px; margin-inline: auto; display: flex; flex-direction: column; gap: 16px; }
+a { color: var(--accent); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* header */
+header.top { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+.eyebrow { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: 28px; line-height: 1.15; margin: 4px 0 6px; text-wrap: balance; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 13px; }
+.meta b { color: var(--fg); font-weight: 500; }
+.loader { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn.primary:hover { filter: brightness(1.08); }
+.filename { font-family: var(--font-mono); font-size: 12px; color: var(--muted); max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.banner { border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 14px; font-size: 13px; }
+.banner.error { background: var(--surface); border-color: var(--low); color: var(--low); }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; font-size: 13px; color: var(--muted); }
+.stat b { font-family: var(--font-mono); color: var(--fg); font-weight: 500; font-variant-numeric: tabular-nums; margin-right: 4px; }
+
+/* tabs */
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { border: 0; background: none; padding: 9px 14px; cursor: pointer; color: var(--muted); font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.tab .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+/* chips / pills */
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.high { color: var(--high); } .pill.medium { color: var(--medium); } .pill.low { color: var(--low); }
+.pill.neutral { color: var(--muted); }
+.pill.lacking { color: var(--low); }
+.pill.t-hazard { color: var(--hazard); } .pill.t-impact { color: var(--impact); } .pill.t-vulnerability { color: var(--vuln); }
+.pill.t-measure { color: var(--measure); } .pill.t-need { color: var(--need); } .pill.t-actor { color: var(--actor); }
+
+/* filters */
+.filters { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-start; }
+.fgroup { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.fgroup > span { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 2px 9px; font-size: 12px; cursor: pointer; }
+.chip[aria-pressed="false"] { background: transparent; color: var(--muted); opacity: .55; }
+.chip[aria-pressed="false"] svg { opacity: .4; }
+.chip .c { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.fgroup.end { margin-left: auto; align-self: center; }
+
+/* graph */
+.graph-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.graph-tools input[type="search"], .search { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 10px; min-width: 0; width: 240px; max-width: 100%; }
+.graph-tools select { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 8px; }
+.graph-tools label.tog { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); }
+.graph-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; }
+#cy { height: clamp(520px, 78vh, 1000px); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; min-width: 0; }
+.detail { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-y: auto; max-height: clamp(520px, 78vh, 1000px); min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.detail h3 { font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1.25; margin: 0; text-wrap: balance; }
+.detail .row { display: flex; flex-wrap: wrap; gap: 6px; }
+.detail p { margin: 0; }
+.detail .hint { color: var(--muted); font-size: 13px; }
+.detail h4 { margin: 4px 0 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.elist { display: flex; flex-direction: column; gap: 4px; }
+.elink { text-align: left; border: 1px solid var(--line); background: var(--surface-2); border-radius: 6px; padding: 6px 8px; cursor: pointer; font-size: 13px; line-height: 1.35; }
+.elink:hover { border-color: var(--accent); }
+.elink .rel { font-family: var(--font-mono); font-size: 11px; color: var(--accent); }
+.triple { font-size: 14px; line-height: 1.45; }
+.triple .rel { font-family: var(--font-mono); font-size: 12px; color: var(--accent); padding: 0 4px; }
+.explain { border-left: 3px solid var(--line); padding-left: 10px; font-family: var(--font-display); font-size: 15px; line-height: 1.55; }
+.cy-missing { padding: 24px; color: var(--muted); }
+
+/* storyline */
+.story { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; }
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
+.toc a { text-decoration: none; color: var(--muted); padding: 4px 8px; border-radius: 4px; display: flex; justify-content: space-between; gap: 8px; }
+.toc a:hover { background: var(--surface-2); color: var(--fg); }
+.toc .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; align-self: center; }
+.dot.high { background: var(--high); } .dot.medium { background: var(--medium); } .dot.low { background: var(--low); }
+.sections { display: flex; flex-direction: column; gap: 4px; max-width: 760px; }
+.sec { padding: 18px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 16px; }
+.sec:last-child { border-bottom: 0; }
+.sec header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.sec h2 { font-family: var(--font-display); font-weight: 600; font-size: 21px; margin: 0; }
+.sec p { margin: 0; font-family: var(--font-display); font-size: 17px; line-height: 1.65; max-width: 68ch; }
+.sec.empty p { color: var(--muted); font-style: italic; }
+.story-tools { display: flex; justify-content: flex-end; }
+
+/* tables */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--surface-2); position: sticky; top: 0; white-space: nowrap; }
+th.sortable { cursor: pointer; }
+th.sortable:hover { color: var(--fg); }
+tbody tr.clickable { cursor: pointer; }
+tbody tr.clickable:hover { background: var(--surface-2); }
+td.num, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.expl { min-width: 280px; max-width: 520px; }
+td.lbl { min-width: 150px; }
+.tbl-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.count { color: var(--muted); font-size: 13px; }
+
+/* passages */
+.plist { display: flex; flex-direction: column; gap: 10px; }
+.passage { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.phead { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--muted); align-items: center; }
+.phead .n { font-family: var(--font-mono); color: var(--fg); font-weight: 500; }
+.ptitle { font-weight: 600; font-size: 14px; line-height: 1.35; }
+.ptext { font-family: var(--font-display); font-size: 15px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.ptext.clamp { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+.linkbtn { border: 0; background: none; color: var(--accent); padding: 0; cursor: pointer; font-size: 13px; align-self: flex-start; }
+mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }
+
+/* run info */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card h2 { font-size: 13px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin: 0; font-weight: 600; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; font-size: 13px; margin: 0; }
+.kv dt { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+.card .table-wrap { border-radius: 6px; }
+
+.drop { position: fixed; inset: 0; background: color-mix(in srgb, var(--bg) 85%, transparent); display: grid; place-items: center; z-index: 50; border: 3px dashed var(--accent); font-family: var(--font-display); font-size: 24px; color: var(--accent); }
+
+@media (max-width: 900px) {
+  .graph-wrap { grid-template-columns: minmax(0, 1fr); }
+  .detail { max-height: none; }
+  .story { grid-template-columns: minmax(0, 1fr); }
+  .toc { position: static; flex-direction: row; flex-wrap: wrap; }
+  .fgroup.end { margin-left: 0; }
+  h1 { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div style="min-width:0">
+      <div class="eyebrow">DRM storyline &amp; knowledge graph</div>
+      <h1 id="evName">—</h1>
+      <div class="meta" id="evMeta"></div>
+    </div>
+    <div class="loader">
+      <span class="filename" id="fileName"></span>
+      <label class="btn primary" for="fileInput">Open JSON…</label>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </div>
+  </header>
+
+  <div class="banner" id="banner" hidden></div>
+  <div class="banner error" id="errorBox" role="alert" hidden></div>
+  <div class="stats" id="stats"></div>
+
+  <nav class="tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-tab="storyline" id="t-storyline">Storyline</button>
+    <button class="tab" role="tab" data-tab="graph" id="t-graph">Graph</button>
+    <button class="tab" role="tab" data-tab="edges" id="t-edges">Edges<span class="n" id="nEdges"></span></button>
+    <button class="tab" role="tab" data-tab="passages" id="t-passages">Passages<span class="n" id="nPass"></span></button>
+    <button class="tab" role="tab" data-tab="run" id="t-run">Run &amp; validation</button>
+  </nav>
+
+  <section class="filters" id="filters" hidden></section>
+
+  <section id="p-storyline" class="panel">
+    <div class="story">
+      <nav class="toc" id="toc"></nav>
+      <div>
+        <div class="story-tools"><label class="tog" style="display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)"><input type="checkbox" id="hideEmpty"> Hide sections marked “Not reported.”</label></div>
+        <div class="sections" id="sections"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p-graph" class="panel" hidden>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="graph-tools">
+        <input type="search" id="nodeSearch" placeholder="Highlight nodes…" aria-label="Highlight nodes">
+        <select id="layoutSel" aria-label="Layout">
+          <option value="layered">Layered: actor → measure → hazard → impact → need</option>
+          <option value="force">Force-directed</option>
+        </select>
+        <label class="tog" id="spreadWrap" hidden>Spread <input type="range" id="spread" min="1" max="4" step="0.5" value="2" aria-label="Spacing between nodes"> <span class="mono" id="spreadVal">2×</span></label>
+        <button class="btn" id="relayoutBtn" hidden title="Run the force-directed layout again from new random positions">Re-run layout</button>
+        <label class="tog"><input type="checkbox" id="edgeLabels" checked> Relation labels</label>
+        <button class="btn" id="fitBtn">Fit</button>
+        <button class="btn" id="pngBtn" title="Open a PNG of the graph in the detail panel">Snapshot</button>
+      </div>
+      <div class="graph-wrap">
+        <div id="cy"></div>
+        <aside class="detail" id="detail"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="p-edges" class="panel" hidden>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="tbl-head">
+        <input type="search" class="search" id="edgeSearch" placeholder="Search labels and explanations…" aria-label="Search edges">
+        <span class="count" id="edgeCount"></span>
+      </div>
+      <div class="table-wrap"><table id="edgeTable"></table></div>
+    </div>
+  </section>
+
+  <section id="p-passages" class="panel" hidden>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="tbl-head">
+        <input type="search" class="search" id="passSearch" placeholder="Search passages (all words must match)…" aria-label="Search passages">
+        <span class="count" id="passCount"></span>
+      </div>
+      <div class="chips" id="passPhases"></div>
+      <div class="plist" id="plist"></div>
+    </div>
+  </section>
+
+  <section id="p-run" class="panel" hidden>
+    <div class="grid2" id="runGrid"></div>
+  </section>
+</div>
+<div class="drop" id="drop" hidden>Drop the *_drm_storyline_kg.json file</div>
+
+<script>
+(() => {
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const KEY = 'drmviewer:last';
+
+const TYPE_ORDER = ['hazard', 'vulnerability', 'impact', 'need', 'measure', 'actor'];
+const TYPE_VAR = { hazard: '--hazard', impact: '--impact', vulnerability: '--vuln', measure: '--measure', need: '--need', actor: '--actor' };
+const CY_SHAPE = { hazard: 'diamond', impact: 'ellipse', vulnerability: 'triangle', measure: 'round-rectangle', need: 'octagon', actor: 'hexagon' };
+const STATUS_ORDER = ['observed', 'planned', 'recommended', 'lacking'];
+const PHASE_ORDER = ['prevention', 'preparedness', 'response', 'recovery', 'none'];
+const CONF_ORDER = ['high', 'medium', 'low'];
+const REL_ORDER = ['causes', 'triggers', 'amplifies', 'prevents', 'mitigates', 'addresses', 'implements'];
+const COL = { actor: 0, measure: 1, hazard: 2, vulnerability: 2, impact: 3, need: 4 };
+const STOP = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'that', 'this', 'are', 'was', 'were', 'has', 'have', 'its', 'not']);
+
+let D = null, nodeById = new Map(), F = null, cy = null, graphDirty = true, currentTab = 'storyline';
+let edgeSort = { key: null, dir: 1 }, passPhaseSel = null, pendingSelect = null;
+
+/* ---------- sample data (illustrative, fictional place) ---------- */
+const SAMPLE = {
+  event: { eventtype: 'EQ', eventid: '000000', name: 'Sample earthquake, Valle Norte', hazard: 'Earthquake', country: 'Sample country', date: '2026-01-10', id: 'EQ_000000' },
+  model: 'claude-sonnet-5', embedding_model: 'BAAI/bge-m3',
+  usage: { input_tokens: 61234, output_tokens: 9120, calls: 2, cached: 0 },
+  settings: { selection: 'queries', top_k: 6, window: 1, max_passages: 45, max_chars: 110000, days_after_event: null },
+  storyline: {
+    overview: { title: 'Event overview', confidence: 'high', content: 'Illustrative data. A magnitude 6.4 earthquake struck the fictional Valle Norte district at 03:12 local time on 10 January 2026, at a depth of 12 km.' },
+    hazards: { title: 'Hazard and cascading hazards', confidence: 'medium', content: 'More than 80 aftershocks were recorded in the first 48 hours. Landslides blocked two mountain roads on day +1.' },
+    exposure_vulnerability: { title: 'Exposure and vulnerability', confidence: 'medium', content: 'Most collapsed homes were unreinforced adobe structures. Reports describe weak enforcement of the building code in rural municipalities.' },
+    impacts: { title: 'Impacts', confidence: 'high', content: 'National civil protection reported 41 deaths and 230 injured as of day +3; the Red Cross reported 1,900 damaged houses. Piped water was interrupted in three towns.' },
+    prevention: { title: 'Prevention and mitigation', confidence: 'low', content: 'A retrofitting programme for adobe homes had been proposed but not funded before the event.' },
+    preparedness: { title: 'Preparedness', confidence: 'low', content: 'Not reported.' },
+    response: { title: 'Response', confidence: 'high', content: 'Search and rescue teams from national civil protection worked in the district from day 0. Copernicus EMS delivered damage grading maps on day +2. Red Cross volunteers ran water trucking.' },
+    recovery: { title: 'Recovery and reconstruction', confidence: 'low', content: 'Not reported.' },
+    needs_gaps: { title: 'Needs and gaps', confidence: 'medium', content: 'Temporary shelter for about 1,200 families and safe drinking water were the main unmet needs on day +4.' },
+    lessons: { title: 'Lessons and recommendations', confidence: 'low', content: 'Reports recommend community earthquake drills and retrofitting of adobe homes.' },
+    confidence: { title: 'Information quality', confidence: 'medium', content: 'Casualty figures differ slightly between the civil protection and Red Cross reports. No economic loss estimate is available.' }
+  },
+  kg: {
+    nodes: [
+      { id: 'mainshock', label: 'M6.4 main shock', type: 'hazard', drm_phase: 'none', description: 'Shallow earthquake under Valle Norte.' },
+      { id: 'aftershocks', label: 'aftershock sequence', type: 'hazard', drm_phase: 'none', description: 'More than 80 aftershocks in 48 h.' },
+      { id: 'landslides', label: 'landslides on mountain roads', type: 'hazard', drm_phase: 'none', description: 'Slope failures triggered by shaking.' },
+      { id: 'adobe', label: 'unreinforced adobe housing', type: 'vulnerability', drm_phase: 'none', description: 'Dominant rural building type.' },
+      { id: 'code_gap', label: 'weak building code enforcement', type: 'vulnerability', drm_phase: 'none', description: 'Code rarely enforced in rural municipalities.' },
+      { id: 'collapsed', label: 'collapsed houses in Valle Norte', type: 'impact', drm_phase: 'none', description: '1,900 damaged houses (Red Cross).' },
+      { id: 'casualties', label: 'deaths and injuries', type: 'impact', drm_phase: 'none', description: '41 deaths, 230 injured (day +3).' },
+      { id: 'roads', label: 'road access cut to villages', type: 'impact', drm_phase: 'none', description: 'Two mountain roads blocked.' },
+      { id: 'water_cut', label: 'piped water interrupted', type: 'impact', drm_phase: 'none', description: 'Three towns without piped water.' },
+      { id: 'shelter_need', label: 'temporary shelter for families', type: 'need', drm_phase: 'response', description: 'About 1,200 families.' },
+      { id: 'water_need', label: 'safe drinking water', type: 'need', drm_phase: 'response', description: 'Main unmet need on day +4.' },
+      { id: 'assess_need', label: 'structural assessment of buildings', type: 'need', drm_phase: 'recovery', description: 'Needed before people return home.' },
+      { id: 'sar', label: 'search and rescue teams', type: 'measure', drm_phase: 'response', description: 'National USAR teams.' },
+      { id: 'trucking', label: 'water trucking', type: 'measure', drm_phase: 'response', description: 'Red Cross water distribution.' },
+      { id: 'tents', label: 'tents and collective centres', type: 'measure', drm_phase: 'response', description: 'Announced shelter support.' },
+      { id: 'mapping', label: 'satellite damage grading maps', type: 'measure', drm_phase: 'response', description: 'Copernicus EMS rapid mapping.' },
+      { id: 'retrofit', label: 'retrofitting of adobe homes', type: 'measure', drm_phase: 'prevention', description: 'Proposed, never funded.' },
+      { id: 'drills', label: 'community earthquake drills', type: 'measure', drm_phase: 'preparedness', description: 'Recommended in reports.' },
+      { id: 'civpro', label: 'national civil protection', type: 'actor', drm_phase: 'none', description: '' },
+      { id: 'redcross', label: 'Red Cross volunteers', type: 'actor', drm_phase: 'none', description: '' },
+      { id: 'cems', label: 'Copernicus EMS', type: 'actor', drm_phase: 'none', description: '' }
+    ],
+    edges: [
+      ['mainshock', 'causes', 'collapsed', 'none', 'observed', 'high', 'Reports attribute the house collapses directly to the main shock.'],
+      ['mainshock', 'triggers', 'aftershocks', 'none', 'observed', 'high', 'More than 80 aftershocks followed the main shock.'],
+      ['mainshock', 'triggers', 'landslides', 'none', 'observed', 'medium', 'Landslides on mountain roads were reported after the shaking.'],
+      ['mainshock', 'causes', 'water_cut', 'none', 'observed', 'medium', 'Pipelines broke in three towns.'],
+      ['adobe', 'amplifies', 'collapsed', 'none', 'observed', 'high', 'Most collapsed homes were unreinforced adobe.'],
+      ['code_gap', 'amplifies', 'collapsed', 'none', 'observed', 'medium', 'Weak code enforcement is cited as a driver of poor construction.'],
+      ['collapsed', 'causes', 'casualties', 'none', 'observed', 'high', 'Most deaths occurred in collapsed houses.'],
+      ['collapsed', 'causes', 'shelter_need', 'none', 'observed', 'high', 'Families whose homes collapsed need temporary shelter.'],
+      ['landslides', 'causes', 'roads', 'none', 'observed', 'medium', 'Two mountain roads were blocked by landslides.'],
+      ['water_cut', 'causes', 'water_need', 'none', 'observed', 'high', 'Interrupted supply created a need for safe water.'],
+      ['roads', 'amplifies', 'water_need', 'none', 'observed', 'low', 'Blocked roads slowed water deliveries to villages.'],
+      ['aftershocks', 'causes', 'assess_need', 'none', 'observed', 'medium', 'Aftershocks raised concern about damaged buildings.'],
+      ['retrofit', 'prevents', 'collapsed', 'prevention', 'lacking', 'medium', 'The retrofitting programme was proposed but not funded.'],
+      ['retrofit', 'mitigates', 'adobe', 'recovery', 'recommended', 'medium', 'Reports recommend retrofitting adobe homes during reconstruction.'],
+      ['drills', 'mitigates', 'casualties', 'preparedness', 'recommended', 'low', 'Reports recommend community drills.'],
+      ['sar', 'mitigates', 'casualties', 'response', 'observed', 'high', 'Rescue teams pulled survivors from rubble.'],
+      ['trucking', 'addresses', 'water_need', 'response', 'observed', 'high', 'Water trucking served the three affected towns.'],
+      ['tents', 'addresses', 'shelter_need', 'response', 'planned', 'medium', 'Tents and collective centres were announced.'],
+      ['mapping', 'addresses', 'assess_need', 'response', 'observed', 'medium', 'Damage grading maps guided building inspections.'],
+      ['civpro', 'implements', 'sar', 'response', 'observed', 'high', 'Civil protection deployed the rescue teams.'],
+      ['redcross', 'implements', 'trucking', 'response', 'observed', 'medium', 'Red Cross volunteers ran water trucking.'],
+      ['redcross', 'implements', 'tents', 'response', 'planned', 'low', 'Red Cross announced shelter support.'],
+      ['cems', 'implements', 'mapping', 'response', 'observed', 'high', 'Copernicus EMS produced the maps.']
+    ].map(([source, relation, target, drm_phase, status, confidence, explanation]) => ({ source, relation, target, drm_phase, status, confidence, explanation })),
+    validation: {
+      dropped_edges: [{ edge: 'sar -causes-> casualties', reason: 'types not allowed (measure -causes-> impact)' }],
+      dropped_nodes: [['generic_damage', 'isolated']],
+      merged_nodes: []
+    }
+  },
+  passages: [
+    { n: 1, reliefweb_id: '0000001', title: 'Valle Norte earthquake: Flash Update No. 1', url: '', date: '2026-01-10', days_after_event: 0, sources: ['OCHA'], field: 'body_text', pdf_filename: '', phases: ['event', 'response'], text: 'A magnitude 6.4 earthquake struck Valle Norte at 03:12 local time. Search and rescue teams of the national civil protection are working in the most affected towns. Most collapsed houses are unreinforced adobe structures.' },
+    { n: 2, reliefweb_id: '0000002', title: 'Emergency appeal: Valle Norte earthquake', url: '', date: '2026-01-12', days_after_event: 2, sources: ['IFRC'], field: 'pdf', pdf_filename: 'appeal.pdf', phases: ['response', 'needs'], text: 'Red Cross volunteers are trucking water to three towns where piped water is interrupted. An estimated 1,900 houses are damaged. Tents and collective centres will be provided to about 1,200 families.' },
+    { n: 3, reliefweb_id: '0000003', title: 'Situation report No. 3', url: '', date: '2026-01-13', days_after_event: 3, sources: ['Civil Protection'], field: 'body_text', pdf_filename: '', phases: ['prevention', 'preparedness'], text: 'Officials reported 41 deaths and 230 injured. A retrofitting programme for adobe homes had been proposed in 2023 but was never funded. The report recommends community earthquake drills.' }
+  ]
+};
+
+/* ---------- loading ---------- */
+function normalize(d) {
+  if (!d || typeof d !== 'object' || Array.isArray(d)) throw new Error('The file is not a JSON object.');
+  const kg = d.kg || (d.nodes ? { nodes: d.nodes, edges: d.edges, validation: d.validation } : null);
+  if (!kg || !Array.isArray(kg.nodes) || !Array.isArray(kg.edges))
+    throw new Error('No kg.nodes / kg.edges in this file. Open the *_drm_storyline_kg.json file written by cell 7 (SAVE).');
+  return {
+    event: d.event || {}, storyline: d.storyline || {},
+    kg: { nodes: kg.nodes, edges: kg.edges.filter(e => e && e.source && e.target), validation: kg.validation || {} },
+    passages: Array.isArray(d.passages) ? d.passages : [],
+    model: d.model, embedding_model: d.embedding_model, usage: d.usage, settings: d.settings
+  };
+}
+
+function uniqOrdered(values, order) {
+  const s = [...new Set(values.filter(v => v != null && v !== ''))];
+  return s.sort((a, b) => {
+    const ia = order.indexOf(a), ib = order.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || String(a).localeCompare(String(b));
+  });
+}
+
+function loadData(raw, name, kind) {
+  const data = normalize(raw);
+  D = data;
+  nodeById = new Map(D.kg.nodes.map(n => [n.id, n]));
+  D.kg.edges = D.kg.edges.filter(e => nodeById.has(e.source) && nodeById.has(e.target));
+  D.kg.edges.forEach((e, i) => e._i = i);
+  const E = D.kg.edges;
+  D.vals = {
+    types: uniqOrdered(D.kg.nodes.map(n => n.type), TYPE_ORDER),
+    relations: uniqOrdered(E.map(e => e.relation), REL_ORDER),
+    status: uniqOrdered(E.map(e => e.status), STATUS_ORDER),
+    phases: uniqOrdered(E.map(e => e.drm_phase || 'none'), PHASE_ORDER),
+    conf: uniqOrdered(E.map(e => e.confidence), CONF_ORDER)
+  };
+  F = { types: new Set(D.vals.types), relations: new Set(D.vals.relations), status: new Set(D.vals.status), phases: new Set(D.vals.phases), conf: new Set(D.vals.conf) };
+  passPhaseSel = null; edgeSort = { key: null, dir: 1 };
+  $('#errorBox').hidden = true;
+  $('#fileName').textContent = name || '';
+  const b = $('#banner');
+  if (kind === 'sample') { b.hidden = false; b.innerHTML = '<b>Sample data.</b> This is an illustrative example. Click <b>Open JSON…</b> or drop your <span class="mono">&lt;event&gt;_drm_storyline_kg.json</span> file (from <span class="mono">&lt;EVENT_DIR&gt;/drm_kg/</span>) anywhere on the page.'; }
+  else if (kind === 'restored') { b.hidden = false; b.innerHTML = 'Showing the last file you opened in this browser. Open another file to replace it.'; }
+  else b.hidden = true;
+  renderAll();
+}
+
+function showError(msg) { const e = $('#errorBox'); e.hidden = false; e.textContent = msg; }
+
+function readFile(file) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      loadData(JSON.parse(r.result), file.name, 'file');
+      try { if (r.result.length < 4.5e6) localStorage.setItem(KEY, JSON.stringify({ name: file.name, text: r.result })); else localStorage.removeItem(KEY); } catch (_) {}
+    } catch (err) { showError(`Could not read ${file.name}: ${err.message}`); }
+  };
+  r.onerror = () => showError(`Could not read ${file.name}.`);
+  r.readAsText(file);
+}
+
+/* ---------- filters ---------- */
+function edgeVisible(e) {
+  const s = nodeById.get(e.source), t = nodeById.get(e.target);
+  return F.relations.has(e.relation) && F.status.has(e.status) && F.phases.has(e.drm_phase || 'none') && F.conf.has(e.confidence)
+    && s && t && F.types.has(s.type) && F.types.has(t.type);
+}
+
+function shapeSvg(type) {
+  const c = `fill:var(${TYPE_VAR[type] || '--muted'})`;
+  const shapes = {
+    hazard: '<polygon points="6,0 12,6 6,12 0,6"/>',
+    impact: '<circle cx="6" cy="6" r="5.5"/>',
+    vulnerability: '<polygon points="6,0.5 11.5,11 0.5,11"/>',
+    measure: '<rect x="0.5" y="1.5" width="11" height="9" rx="2.5"/>',
+    need: '<polygon points="3.5,0.5 8.5,0.5 11.5,3.5 11.5,8.5 8.5,11.5 3.5,11.5 0.5,8.5 0.5,3.5"/>',
+    actor: '<polygon points="3,0.8 9,0.8 11.8,6 9,11.2 3,11.2 0.2,6"/>'
+  };
+  return `<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="${c}">${shapes[type] || shapes.impact}</svg>`;
+}
+function statusSvg(st) {
+  const col = st === 'lacking' ? 'var(--low)' : 'var(--muted)';
+  const dash = st === 'planned' || st === 'lacking' ? '5 3' : st === 'recommended' ? '1.5 2.5' : 'none';
+  return `<svg width="22" height="8" viewBox="0 0 22 8" aria-hidden="true"><line x1="1" y1="4" x2="21" y2="4" style="stroke:${col}" stroke-width="2" stroke-dasharray="${dash}" stroke-linecap="round"/></svg>`;
+}
+
+function renderFilters() {
+  const E = D.kg.edges, N = D.kg.nodes;
+  const count = (arr, f) => arr.reduce((m, x) => (m[f(x)] = (m[f(x)] || 0) + 1, m), {});
+  const cT = count(N, n => n.type), cR = count(E, e => e.relation), cS = count(E, e => e.status), cP = count(E, e => e.drm_phase || 'none'), cC = count(E, e => e.confidence);
+  const group = (label, key, vals, counts, deco) => `<div class="fgroup"><span>${label}</span><div class="chips">${vals.map(v =>
+    `<button class="chip" data-f="${key}" data-v="${esc(v)}" aria-pressed="${F[key].has(v)}">${deco ? deco(v) : ''}${esc(v)} <span class="c">${counts[v] || 0}</span></button>`).join('')}</div></div>`;
+  $('#filters').innerHTML =
+    group('Node types', 'types', D.vals.types, cT, shapeSvg) +
+    group('Relations', 'relations', D.vals.relations, cR) +
+    group('Status', 'status', D.vals.status, cS, statusSvg) +
+    group('Edge phase', 'phases', D.vals.phases, cP) +
+    group('Confidence', 'conf', D.vals.conf, cC) +
+    `<div class="fgroup end"><button class="btn" id="resetF">Reset filters</button></div>`;
+}
+
+function onFiltersChanged() {
+  if (cy) { applyCyFilters(); runLayout(); }
+  renderEdgeTable();
+}
+
+/* ---------- storyline ---------- */
+function renderStoryline() {
+  const S = D.storyline, keys = Object.keys(S);
+  const hide = $('#hideEmpty').checked;
+  const isEmpty = s => /^not reported\.?$/i.test(String(s.content || '').trim());
+  if (!keys.length) { $('#sections').innerHTML = '<p class="count">This file has no storyline.</p>'; $('#toc').innerHTML = ''; return; }
+  $('#toc').innerHTML = keys.map(k => { const s = S[k]; return `<a href="#sec-${esc(k)}" data-sec="${esc(k)}"><span>${esc(s.title || k)}</span><span class="dot ${esc(s.confidence)}" title="confidence: ${esc(s.confidence)}"></span></a>`; }).join('');
+  $('#sections').innerHTML = keys.filter(k => !(hide && isEmpty(S[k]))).map(k => {
+    const s = S[k];
+    return `<article class="sec${isEmpty(s) ? ' empty' : ''}" id="sec-${esc(k)}"><header><h2>${esc(s.title || k)}</h2><span class="pill ${esc(s.confidence)}">${esc(s.confidence || '—')} confidence</span></header><p>${esc(s.content)}</p></article>`;
+  }).join('');
+}
+
+/* ---------- graph ---------- */
+let zoomK = 1;
+function cyStyle(k = zoomK) {
+  const fg = tok('--fg'), muted = tok('--muted'), surf = tok('--surface'), low = tok('--low'), acc = tok('--accent');
+  const st = [
+    { selector: 'node', style: { label: 'data(label)', width: 26 * k, height: 26 * k, 'font-family': 'IBM Plex Sans, Segoe UI, sans-serif', 'font-size': 12 * k, 'font-weight': 500, color: fg, 'text-wrap': 'wrap', 'text-max-width': 150 * k, 'text-valign': 'bottom', 'text-halign': 'center', 'text-margin-y': 6 * k, 'text-background-color': surf, 'text-background-opacity': 0.92, 'text-background-padding': 3 * k, 'text-background-shape': 'roundrectangle', 'border-width': 2 * k, 'border-color': surf } },
+    ...Object.keys(TYPE_VAR).map(t => ({ selector: `node[type="${t}"]`, style: { 'background-color': tok(TYPE_VAR[t]), shape: CY_SHAPE[t] } })),
+    { selector: 'node[type="measure"]', style: { width: 32 * k, height: 24 * k } },
+    { selector: 'edge', style: { width: 1.6 * k, 'line-color': muted, 'target-arrow-color': muted, 'target-arrow-shape': 'triangle', 'arrow-scale': 0.9, 'curve-style': 'bezier', opacity: 0.75 } },
+    { selector: 'edge[conf="high"]', style: { width: 2.6 * k } },
+    { selector: 'edge[conf="low"]', style: { width: 1 * k } },
+    { selector: 'edge[status="planned"]', style: { 'line-style': 'dashed' } },
+    { selector: 'edge[status="recommended"]', style: { 'line-style': 'dotted' } },
+    { selector: 'edge[status="lacking"]', style: { 'line-style': 'dashed', 'line-color': low, 'target-arrow-color': low } },
+    { selector: 'edge.labels', style: { label: 'data(relation)', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 10 * k, color: muted, 'text-rotation': 'autorotate', 'text-background-color': surf, 'text-background-opacity': 0.9, 'text-background-padding': 1 } },
+    { selector: '.hidden', style: { display: 'none' } },
+    { selector: 'node.faded', style: { opacity: 0.15 } },
+    { selector: 'edge.faded', style: { opacity: 0.07 } },
+    { selector: 'node.match', style: { 'border-width': 3.5 * k, 'border-color': acc } },
+    { selector: 'node:selected', style: { 'border-width': 4 * k, 'border-color': acc } },
+    { selector: 'edge:selected', style: { 'line-color': acc, 'target-arrow-color': acc, width: 3.5 * k, 'z-index': 10, opacity: 1 } }
+  ];
+  return st;
+}
+
+function buildCy() {
+  graphDirty = false;
+  if (cy) { cy.destroy(); cy = null; }
+  if (typeof cytoscape === 'undefined') { $('#cy').innerHTML = '<div class="cy-missing">The graph library could not load. Check your connection and reload the page; the other tabs still work.</div>'; return; }
+  $('#cy').innerHTML = '';
+  const els = [
+    ...D.kg.nodes.map(n => ({ data: { id: n.id, label: n.label || n.id, type: n.type, phase: n.drm_phase || 'none' } })),
+    ...D.kg.edges.map(e => ({ data: { id: 'e' + e._i, source: e.source, target: e.target, relation: e.relation, status: e.status, conf: e.confidence, idx: e._i } }))
+  ];
+  cy = cytoscape({ container: $('#cy'), elements: els, style: cyStyle(), minZoom: 0.15, maxZoom: 3, selectionType: 'single' });
+  cy.on('tap', 'node', ev => { focusEle(ev.target); showNode(ev.target.id()); });
+  cy.on('tap', 'edge', ev => { focusEle(ev.target); showEdge(ev.target.data('idx')); });
+  cy.on('tap', ev => { if (ev.target === cy) { clearFocus(); showDetailIntro(); } });
+  cy.on('zoom', onZoom);
+  applyLabels(); applyCyFilters(); runLayout(); applyNodeSearch();
+  showDetailIntro();
+}
+
+function applyLabels() { if (cy) cy.edges().toggleClass('labels', $('#edgeLabels').checked); }
+
+function applyCyFilters() {
+  cy.batch(() => {
+    const keepN = new Set();
+    cy.edges().forEach(ed => {
+      const ok = edgeVisible(D.kg.edges[ed.data('idx')]);
+      ed.toggleClass('hidden', !ok);
+      if (ok) { keepN.add(ed.data('source')); keepN.add(ed.data('target')); }
+    });
+    cy.nodes().forEach(n => n.toggleClass('hidden', !keepN.has(n.id())));
+  });
+}
+
+function layeredPositions() {
+  const cols = [[], [], [], [], []], pos = {};
+  cy.nodes().not('.hidden').forEach(n => cols[COL[n.data('type')] ?? 2].push(n));
+  cols.forEach(c => c.sort((a, b) => TYPE_ORDER.indexOf(a.data('type')) - TYPE_ORDER.indexOf(b.data('type'))
+    || PHASE_ORDER.indexOf(a.data('phase')) - PHASE_ORDER.indexOf(b.data('phase')) || a.data('label').localeCompare(b.data('label'))));
+  const place = () => cols.forEach((c, ci) => c.forEach((n, i) => pos[n.id()] = { x: ci * 250, y: (i - (c.length - 1) / 2) * 78 }));
+  place();
+  for (let it = 0; it < 4; it++) {
+    cols.forEach(c => {
+      const bc = new Map(c.map(n => {
+        const ys = n.neighborhood('node').not('.hidden').map(m => pos[m.id()] && pos[m.id()].y).filter(v => v != null);
+        return [n.id(), ys.length ? ys.reduce((a, b) => a + b, 0) / ys.length : pos[n.id()].y];
+      }));
+      c.sort((a, b) => bc.get(a.id()) - bc.get(b.id()));
+    });
+    place();
+  }
+  return pos;
+}
+
+function runLayout() {
+  if (!cy) return;
+  const vis = cy.elements().not('.hidden');
+  if (!vis.length) return;
+  const force = $('#layoutSel').value === 'force';
+  $('#spreadWrap').hidden = !force; $('#relayoutBtn').hidden = !force;
+  zoomK = 1; cy.style(cyStyle(1));               // lay out at base size, then rescale for the zoom
+  if (!force) {
+    const pos = layeredPositions();
+    vis.nodes().layout({ name: 'preset', positions: n => pos[n.id()], fit: true, padding: 40 }).run();
+  } else {
+    const s = +$('#spread').value;
+    vis.layout({
+      name: 'cose', animate: false, fit: true, padding: 50, randomize: true,
+      nodeDimensionsIncludeLabels: true,          // labels count as part of the node: no label overlaps
+      nodeRepulsion: () => 600000 * s * s,
+      idealEdgeLength: () => 140 * s,
+      edgeElasticity: () => 120,
+      nodeOverlap: 60,
+      gravity: 0.15,
+      componentSpacing: 140 * s,
+      nestingFactor: 1.2,
+      numIter: 3000,
+      initialTemp: 2000, coolingFactor: 0.97, minTemp: 1.0
+    }).run();
+  }
+  updateZoomScale(true);
+}
+
+/* In force mode, nodes and labels grow on screen as you zoom out, so they stay readable on a spread graph. */
+function updateZoomScale(force) {
+  if (!cy) return;
+  const k = $('#layoutSel').value === 'force' ? Math.min(2.6, Math.max(1, 0.85 / cy.zoom())) : 1;
+  if (!force && Math.abs(k - zoomK) < 0.06) return;
+  zoomK = k; cy.style(cyStyle(k));
+}
+let zoomRaf = 0;
+function onZoom() { if (!zoomRaf) zoomRaf = requestAnimationFrame(() => { zoomRaf = 0; updateZoomScale(false); }); }
+
+function focusEle(ele) {
+  cy.elements().addClass('faded');
+  (ele.isNode() ? ele.closedNeighborhood() : ele.union(ele.connectedNodes())).removeClass('faded');
+}
+function clearFocus() { if (cy) { cy.elements().removeClass('faded'); cy.elements().unselect(); } }
+
+function applyNodeSearch() {
+  if (!cy) return;
+  const q = $('#nodeSearch').value.trim().toLowerCase();
+  cy.nodes().removeClass('match');
+  if (!q) return;
+  cy.nodes().filter(n => { const d = nodeById.get(n.id()); return (d.label || '').toLowerCase().includes(q) || (d.description || '').toLowerCase().includes(q); }).addClass('match');
+}
+
+function nodeLabel(id) { const n = nodeById.get(id); return n ? (n.label || id) : id; }
+function edgePills(e) {
+  return `<span class="pill ${e.status === 'lacking' ? 'lacking' : 'neutral'}">${esc(e.status)}</span><span class="pill neutral">${esc(e.drm_phase || 'none')}</span><span class="pill ${esc(e.confidence)}">${esc(e.confidence)}</span>`;
+}
+
+function showDetailIntro() {
+  const N = D.kg.nodes.length, E = D.kg.edges.length;
+  $('#detail').innerHTML = `<h3>Select a node or an edge</h3>
+    <p class="hint">${N} nodes and ${E} edges. Click a node to see its description and every relation it takes part in; click an edge to read the explanation the model gave for it.</p>
+    <h4>Reading the graph</h4>
+    <p class="hint">Shape and colour give the node type. Line style gives the edge status: solid observed, dashed planned, dotted recommended, red dashed lacking. Thicker lines have higher confidence.</p>
+    <p class="hint">Layered view runs left to right: actors, measures, hazards and vulnerabilities, impacts, needs.</p>`;
+}
+
+function showNode(id) {
+  const n = nodeById.get(id); if (!n) return;
+  const out = D.kg.edges.filter(e => e.source === id), inc = D.kg.edges.filter(e => e.target === id);
+  const li = (e, dir) => `<button class="elink" data-edge="${e._i}">${dir === 'out' ? '' : esc(nodeLabel(e.source)) + ' '}<span class="rel">${esc(e.relation)}</span>${dir === 'out' ? ' ' + esc(nodeLabel(e.target)) : ''} <span class="pill ${e.status === 'lacking' ? 'lacking' : 'neutral'}" style="font-size:10px">${esc(e.status)}</span></button>`;
+  $('#detail').innerHTML = `<div class="row"><span class="pill t-${esc(n.type)}">${shapeSvg(n.type)} ${esc(n.type)}</span>${n.drm_phase && n.drm_phase !== 'none' ? `<span class="pill neutral">${esc(n.drm_phase)}</span>` : ''}</div>
+    <h3>${esc(n.label || n.id)}</h3>
+    ${n.description ? `<p class="explain">${esc(n.description)}</p>` : ''}
+    <p class="hint mono" style="font-size:12px">${esc(n.id)}</p>
+    ${out.length ? `<h4>Outgoing (${out.length})</h4><div class="elist">${out.map(e => li(e, 'out')).join('')}</div>` : ''}
+    ${inc.length ? `<h4>Incoming (${inc.length})</h4><div class="elist">${inc.map(e => li(e, 'in')).join('')}</div>` : ''}
+    ${D.passages.length ? `<button class="btn" data-findp="${esc(n.label || n.id)}">Find in passages</button>` : ''}`;
+}
+
+function showEdge(i) {
+  const e = D.kg.edges[i]; if (!e) return;
+  $('#detail').innerHTML = `<div class="row">${edgePills(e)}</div>
+    <p class="triple"><button class="linkbtn" data-node="${esc(e.source)}">${esc(nodeLabel(e.source))}</button><span class="rel">${esc(e.relation)} →</span><button class="linkbtn" data-node="${esc(e.target)}">${esc(nodeLabel(e.target))}</button></p>
+    <h4>Why the model drew this edge</h4>
+    <p class="explain">${esc(e.explanation || 'No explanation given.')}</p>`;
+}
+
+function selectEdgeInGraph(i) {
+  if (!cy) { pendingSelect = i; return; }
+  const ed = cy.getElementById('e' + i);
+  if (!ed.length) return;
+  if (ed.hasClass('hidden')) { const e = D.kg.edges[i]; resetFilters(); }
+  cy.elements().unselect(); ed.select(); focusEle(ed); showEdge(i);
+  cy.animate({ center: { eles: ed }, zoom: Math.max(cy.zoom(), 1) }, { duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 300 });
+}
+function selectNodeInGraph(id) {
+  const n = cy && cy.getElementById(id);
+  if (!n || !n.length) return;
+  cy.elements().unselect(); n.select(); focusEle(n); showNode(id);
+}
+
+/* ---------- edges table ---------- */
+const EDGE_COLS = [
+  ['source', 'Source', e => nodeLabel(e.source)], ['relation', 'Relation', e => e.relation], ['target', 'Target', e => nodeLabel(e.target)],
+  ['drm_phase', 'Phase', e => e.drm_phase || 'none'], ['status', 'Status', e => e.status], ['confidence', 'Conf.', e => e.confidence], ['explanation', 'Explanation', e => e.explanation || '']
+];
+function renderEdgeTable() {
+  const q = $('#edgeSearch').value.trim().toLowerCase();
+  let rows = D.kg.edges.filter(edgeVisible).filter(e => !q || [nodeLabel(e.source), nodeLabel(e.target), e.relation, e.explanation].join(' ').toLowerCase().includes(q));
+  if (edgeSort.key) {
+    const col = EDGE_COLS.find(c => c[0] === edgeSort.key);
+    const rank = { status: STATUS_ORDER, confidence: CONF_ORDER, drm_phase: PHASE_ORDER, relation: REL_ORDER }[edgeSort.key];
+    rows = rows.slice().sort((a, b) => {
+      const va = col[2](a), vb = col[2](b);
+      const r = rank ? (rank.indexOf(va) - rank.indexOf(vb)) : String(va).localeCompare(String(vb));
+      return r * edgeSort.dir;
+    });
+  }
+  $('#edgeCount').textContent = `${rows.length} of ${D.kg.edges.length} edges · click a row to see it in the graph`;
+  $('#nEdges').textContent = D.kg.edges.length;
+  const arrow = k => edgeSort.key === k ? (edgeSort.dir > 0 ? ' ↑' : ' ↓') : '';
+  $('#edgeTable').innerHTML = `<thead><tr>${EDGE_COLS.map(c => `<th class="sortable" data-sort="${c[0]}" aria-sort="${edgeSort.key === c[0] ? (edgeSort.dir > 0 ? 'ascending' : 'descending') : 'none'}">${c[1]}${arrow(c[0])}</th>`).join('')}</tr></thead>
+  <tbody>${rows.map(e => {
+    const s = nodeById.get(e.source), t = nodeById.get(e.target);
+    return `<tr class="clickable" data-edge="${e._i}">
+      <td class="lbl">${shapeSvg(s.type)} ${esc(s.label || s.id)}</td>
+      <td class="mono">${esc(e.relation)}</td>
+      <td class="lbl">${shapeSvg(t.type)} ${esc(t.label || t.id)}</td>
+      <td>${esc(e.drm_phase || 'none')}</td>
+      <td><span class="pill ${e.status === 'lacking' ? 'lacking' : 'neutral'}">${esc(e.status)}</span></td>
+      <td><span class="pill ${esc(e.confidence)}">${esc(e.confidence)}</span></td>
+      <td class="expl">${esc(e.explanation)}</td></tr>`;
+  }).join('') || `<tr><td colspan="7" class="count">No edges match the filters and search.</td></tr>`}</tbody>`;
+}
+
+/* ---------- passages ---------- */
+function terms(q) { return q.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length >= 3 && !STOP.has(w)); }
+function highlight(text, ts) {
+  let h = esc(text);
+  if (!ts.length) return h;
+  const re = new RegExp('(' + ts.map(t => esc(t).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'giu');
+  return h.replace(re, '<mark>$1</mark>');
+}
+function renderPassages() {
+  const P = D.passages;
+  $('#nPass').textContent = P.length;
+  const allPh = uniqOrdered(P.flatMap(p => p.phases || []), ['event', ...PHASE_ORDER]);
+  if (!passPhaseSel) passPhaseSel = new Set(allPh);
+  $('#passPhases').innerHTML = allPh.length ? `<span class="count" style="align-self:center;margin-right:4px">Retrieved for:</span>` + allPh.map(ph => `<button class="chip" data-pph="${esc(ph)}" aria-pressed="${passPhaseSel.has(ph)}">${esc(ph)} <span class="c">${P.filter(p => (p.phases || []).includes(ph)).length}</span></button>`).join('') : '';
+  const ts = terms($('#passSearch').value);
+  const rows = P.filter(p => !allPh.length || (p.phases || []).some(ph => passPhaseSel.has(ph)))
+    .filter(p => { if (!ts.length) return true; const h = (p.title + ' ' + p.text).toLowerCase(); return ts.every(t => h.includes(t)); });
+  const reports = new Set(P.map(p => p.reliefweb_id)).size;
+  $('#passCount').textContent = `${rows.length} of ${P.length} passages · ${reports} reports`;
+  $('#plist').innerHTML = rows.map(p => `<article class="passage">
+    <div class="phead"><span class="n">#${esc(p.n)}</span><span>${esc(p.date || 'no date')}${p.days_after_event != null ? ` · day +${esc(p.days_after_event)}` : ''}</span>
+      <span>${esc((p.sources || []).join(', '))}</span><span class="mono">${esc(p.field)}${p.pdf_filename ? ' · ' + esc(p.pdf_filename) : ''}</span>
+      ${(p.phases || []).map(ph => `<span class="pill neutral">${esc(ph)}</span>`).join('')}</div>
+    <div class="ptitle">${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title || 'Untitled report')}</a>` : esc(p.title || 'Untitled report')}</div>
+    <p class="ptext${ts.length ? '' : ' clamp'}">${highlight(p.text, ts)}</p>
+    ${ts.length || (p.text || '').length < 400 ? '' : `<button class="linkbtn" data-expand>Show full passage (${(p.text || '').length.toLocaleString()} characters)</button>`}
+  </article>`).join('') || '<p class="count">No passages match.</p>';
+}
+
+/* ---------- run info ---------- */
+function kv(obj) {
+  const entries = Object.entries(obj || {});
+  if (!entries.length) return '<p class="count">Not in this file.</p>';
+  return `<dl class="kv">${entries.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v === null ? 'None' : typeof v === 'object' ? JSON.stringify(v) : (typeof v === 'number' ? v.toLocaleString() : v))}</dd>`).join('')}</dl>`;
+}
+function renderRun() {
+  const E = D.kg.edges, V = D.kg.validation || {};
+  const rels = D.vals.relations, phs = D.vals.phases;
+  const cell = (r, p) => E.filter(e => (r == null || e.relation === r) && (p == null || (e.drm_phase || 'none') === p)).length;
+  const matrix = `<div class="table-wrap"><table><thead><tr><th>relation</th>${phs.map(p => `<th>${esc(p)}</th>`).join('')}<th>all</th></tr></thead><tbody>
+    ${rels.map(r => `<tr><td class="mono">${esc(r)}</td>${phs.map(p => `<td class="num">${cell(r, p) || ''}</td>`).join('')}<td class="num"><b>${cell(r, null)}</b></td></tr>`).join('')}
+    <tr><td><b>all</b></td>${phs.map(p => `<td class="num"><b>${cell(null, p)}</b></td>`).join('')}<td class="num"><b>${E.length}</b></td></tr></tbody></table></div>`;
+  const byType = Object.fromEntries(D.vals.types.map(t => [t, D.kg.nodes.filter(n => n.type === t).length]));
+  const byStatus = Object.fromEntries(D.vals.status.map(s => [s, E.filter(e => e.status === s).length]));
+  const de = V.dropped_edges || [], dn = V.dropped_nodes || [], mn = V.merged_nodes || [];
+  const pair = x => Array.isArray(x) ? x : [x && (x.id || x.node || JSON.stringify(x)), x && x.reason];
+  $('#runGrid').innerHTML = `
+    <section class="card"><h2>Event</h2>${kv(D.event)}</section>
+    <section class="card"><h2>Run</h2>${kv({ model: D.model, embedding_model: D.embedding_model, ...Object.fromEntries(Object.entries(D.usage || {}).map(([k, v]) => ['usage.' + k, v])) })}</section>
+    <section class="card"><h2>Passage selection</h2>${kv(D.settings)}</section>
+    <section class="card"><h2>Graph contents</h2><div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px">
+      <div>${Object.entries(byType).map(([t, c]) => `<div style="display:flex;gap:6px;align-items:center;font-size:13px">${shapeSvg(t)} ${esc(t)} <span class="mono" style="margin-left:auto">${c}</span></div>`).join('')}</div>
+      <div>${Object.entries(byStatus).map(([s, c]) => `<div style="display:flex;gap:6px;align-items:center;font-size:13px">${statusSvg(s)} ${esc(s)} <span class="mono" style="margin-left:auto">${c}</span></div>`).join('')}</div></div></section>
+    <section class="card" style="grid-column:1/-1"><h2>Edges by relation and DRM phase</h2>${matrix}</section>
+    <section class="card" style="grid-column:1/-1"><h2>Validation · ${de.length} edges dropped, ${dn.length} nodes dropped, ${mn.length} nodes merged</h2>
+      ${de.length ? `<div class="table-wrap"><table><thead><tr><th>Dropped edge</th><th>Reason</th></tr></thead><tbody>${de.map(d => `<tr><td class="mono">${esc(d.edge)}</td><td>${esc(d.reason)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="count">No edges were dropped.</p>'}
+      ${dn.length ? `<div class="table-wrap"><table><thead><tr><th>Dropped node</th><th>Reason</th></tr></thead><tbody>${dn.map(d => { const [a, b] = pair(d); return `<tr><td class="mono">${esc(a)}</td><td>${esc(b)}</td></tr>`; }).join('')}</tbody></table></div>` : ''}
+      ${mn.length ? `<div class="table-wrap"><table><thead><tr><th>Merged node</th><th>Into</th></tr></thead><tbody>${mn.map(d => { const [a, b] = pair(d); return `<tr><td class="mono">${esc(a)}</td><td class="mono">${esc(b)}</td></tr>`; }).join('')}</tbody></table></div>` : ''}
+    </section>`;
+}
+
+/* ---------- header ---------- */
+function renderHeader() {
+  const ev = D.event;
+  $('#evName').textContent = ev.name || ev.id || 'Untitled event';
+  const m = [['hazard', ev.hazard || ev.eventtype], ['country', ev.country], ['location', ev.location !== ev.country ? ev.location : null], ['date', ev.date], ['GLIDE', ev.glide], ['id', ev.id]].filter(x => x[1]);
+  $('#evMeta').innerHTML = m.map(([k, v]) => `<span>${esc(k)} <b>${esc(v)}</b></span>`).join('');
+  const P = D.passages, dates = P.map(p => p.date).filter(Boolean).sort();
+  const reports = new Set(P.map(p => p.reliefweb_id)).size;
+  const st = [[D.kg.nodes.length, 'nodes'], [D.kg.edges.length, 'edges'], [D.kg.edges.filter(e => e.status === 'lacking' || e.status === 'recommended').length, 'gap edges (lacking / recommended)'], [P.length, `passages from ${reports} reports`]];
+  $('#stats').innerHTML = st.map(([n, l]) => `<span class="stat"><b>${n}</b>${esc(l)}</span>`).join('') + (dates.length ? `<span class="stat">reports dated <b>${esc(dates[0])}</b>to <b>${esc(dates[dates.length - 1])}</b></span>` : '');
+}
+
+function renderAll() {
+  renderHeader(); renderFilters(); renderStoryline(); renderEdgeTable(); renderPassages(); renderRun();
+  graphDirty = true;
+  if (currentTab === 'graph') buildCy();
+}
+
+/* ---------- tabs ---------- */
+function showTab(t) {
+  if (!['storyline', 'graph', 'edges', 'passages', 'run'].includes(t)) t = 'storyline';
+  currentTab = t;
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t));
+  document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + t);
+  $('#filters').hidden = !(t === 'graph' || t === 'edges');
+  try { history.replaceState(null, '', '#' + t); } catch (_) {}
+  if (t === 'graph' && D) {
+    if (graphDirty) buildCy(); else if (cy) { cy.resize(); }
+    if (pendingSelect != null && cy) { const i = pendingSelect; pendingSelect = null; selectEdgeInGraph(i); }
+  }
+}
+
+function resetFilters() {
+  F = { types: new Set(D.vals.types), relations: new Set(D.vals.relations), status: new Set(D.vals.status), phases: new Set(D.vals.phases), conf: new Set(D.vals.conf) };
+  renderFilters();
+  if (cy) { applyCyFilters(); runLayout(); }
+  renderEdgeTable();
+}
+
+/* ---------- events ---------- */
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) showTab(b.dataset.tab); });
+$('#fileInput').addEventListener('change', e => { readFile(e.target.files[0]); e.target.value = ''; });
+$('#filters').addEventListener('click', e => {
+  if (e.target.closest('#resetF')) { resetFilters(); return; }
+  const c = e.target.closest('.chip'); if (!c) return;
+  const set = F[c.dataset.f], v = c.dataset.v;
+  set.has(v) ? set.delete(v) : set.add(v);
+  c.setAttribute('aria-pressed', set.has(v));
+  onFiltersChanged();
+});
+$('#hideEmpty').addEventListener('change', renderStoryline);
+$('#toc').addEventListener('click', e => { const a = e.target.closest('a[data-sec]'); if (!a) return; e.preventDefault(); const el = document.getElementById('sec-' + a.dataset.sec); if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
+$('#nodeSearch').addEventListener('input', applyNodeSearch);
+$('#layoutSel').addEventListener('change', runLayout);
+$('#spread').addEventListener('input', () => { $('#spreadVal').textContent = $('#spread').value + '×'; });
+$('#spread').addEventListener('change', runLayout);
+$('#relayoutBtn').addEventListener('click', runLayout);
+$('#edgeLabels').addEventListener('change', applyLabels);
+$('#fitBtn').addEventListener('click', () => cy && cy.fit(cy.elements().not('.hidden'), 40));
+$('#pngBtn').addEventListener('click', () => {
+  if (!cy) return;
+  const uri = cy.png({ full: true, scale: 2, bg: tok('--surface') });
+  $('#detail').innerHTML = `<h3>Graph snapshot</h3><p class="hint">Right-click or long-press the image to copy or save it. For Gephi or Cytoscape use the .graphml file written by cell 7.</p><img src="${uri}" alt="Snapshot of the knowledge graph" style="border:1px solid var(--line);border-radius:6px">`;
+});
+$('#detail').addEventListener('click', e => {
+  const el = e.target.closest('[data-edge]'); if (el) { selectEdgeInGraph(+el.dataset.edge); return; }
+  const nd = e.target.closest('[data-node]'); if (nd) { selectNodeInGraph(nd.dataset.node); return; }
+  const fp = e.target.closest('[data-findp]'); if (fp) { $('#passSearch').value = fp.dataset.findp; passPhaseSel = null; renderPassages(); showTab('passages'); }
+});
+$('#edgeTable').addEventListener('click', e => {
+  const th = e.target.closest('th[data-sort]');
+  if (th) { const k = th.dataset.sort; edgeSort = { key: k, dir: edgeSort.key === k ? -edgeSort.dir : 1 }; renderEdgeTable(); return; }
+  const tr = e.target.closest('tr[data-edge]');
+  if (tr) { const i = +tr.dataset.edge; pendingSelect = i; showTab('graph'); if (pendingSelect != null && cy) { pendingSelect = null; selectEdgeInGraph(i); } }
+});
+$('#edgeSearch').addEventListener('input', renderEdgeTable);
+$('#passSearch').addEventListener('input', renderPassages);
+$('#passPhases').addEventListener('click', e => { const c = e.target.closest('[data-pph]'); if (!c) return; const v = c.dataset.pph; passPhaseSel.has(v) ? passPhaseSel.delete(v) : passPhaseSel.add(v); renderPassages(); });
+$('#plist').addEventListener('click', e => { const b = e.target.closest('[data-expand]'); if (!b) return; const p = b.previousElementSibling; const open = p.classList.toggle('clamp'); b.textContent = open ? b.textContent.replace('Hide', 'Show full passage') : b.textContent.replace('Show full passage', 'Hide'); });
+
+let dragDepth = 0;
+addEventListener('dragenter', e => { if ([...(e.dataTransfer?.types || [])].includes('Files')) { dragDepth++; $('#drop').hidden = false; } });
+addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) $('#drop').hidden = true; });
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => { e.preventDefault(); dragDepth = 0; $('#drop').hidden = true; const f = e.dataTransfer?.files?.[0]; if (f) readFile(f); });
+
+const restyle = () => { if (cy) cy.style(cyStyle()); };
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', restyle); } catch (_) {}
+new MutationObserver(restyle).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+addEventListener('resize', () => { if (cy && currentTab === 'graph') cy.resize(); });
+
+/* ---------- start ---------- */
+let restored = false;
+try {
+  const s = localStorage.getItem(KEY);
+  if (s) { const o = JSON.parse(s); loadData(JSON.parse(o.text), o.name, 'restored'); restored = true; }
+} catch (_) { try { localStorage.removeItem(KEY); } catch (__) {} }
+if (!restored) loadData(SAMPLE, 'sample data', 'sample');
+showTab((location.hash || '').slice(1) || 'storyline');
+})();
+</script>
+
+</body>
+</html>
