@@ -75,6 +75,7 @@ h1 { font-family: var(--font-display); font-weight: 600; font-size: 28px; line-h
 .btn:hover { border-color: var(--accent); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
 .btn.primary:hover { filter: brightness(1.08); }
+select.btn { max-width: 320px; }
 .filename { font-family: var(--font-mono); font-size: 12px; color: var(--muted); max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .banner { border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 14px; font-size: 13px; }
 .banner.error { background: var(--surface); border-color: var(--low); color: var(--low); }
@@ -205,6 +206,7 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
     </div>
     <div class="loader">
       <span class="filename" id="fileName"></span>
+      <select id="jsonPick" class="btn" hidden aria-label="Files in the repository"></select>
       <label class="btn primary" for="fileInput">Open JSON…</label>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
     </div>
@@ -298,6 +300,14 @@ const CONF_ORDER = ['high', 'medium', 'low'];
 const REL_ORDER = ['causes', 'triggers', 'amplifies', 'prevents', 'mitigates', 'addresses', 'implements'];
 const COL = { actor: 0, measure: 1, hazard: 2, vulnerability: 2, impact: 3, need: 4 };
 const STOP = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'that', 'this', 'are', 'was', 'were', 'has', 'have', 'its', 'not']);
+
+/* ---------- GitHub Pages auto-load ----------
+   On https://<user>.github.io/<repo>/... the page finds owner, repo and folder by itself
+   and loads every *_drm_storyline_kg.json that sits in the same folder as this HTML file.
+   Fill REPO only if auto-detection does not work (custom domain, Pages from another folder):
+   e.g. const REPO = { owner: 'mario', repo: 'drm-viewer', branch: 'main', dir: 'docs' };     */
+const REPO = null;
+const JSON_PATTERN = /_drm_storyline_kg\.json$/i;
 
 let D = null, nodeById = new Map(), F = null, cy = null, graphDirty = true, currentTab = 'storyline';
 let edgeSort = { key: null, dir: 1 }, passPhaseSel = null, pendingSelect = null;
@@ -443,6 +453,70 @@ function readFile(file) {
   };
   r.onerror = () => showError(`Could not read ${file.name}.`);
   r.readAsText(file);
+}
+
+/* ---------- loading from the GitHub Pages folder ---------- */
+async function loadFromUrl(name) {
+  const r = await fetch(new URL(name, location.href), { cache: 'no-cache' });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  loadData(await r.json(), name.split('/').pop(), 'file');
+}
+
+// Places in the repo where this HTML file could live. The API is asked about each one in turn.
+function repoCandidates() {
+  if (REPO && REPO.owner && REPO.repo) return [REPO];
+  if (!location.hostname.toLowerCase().endsWith('.github.io')) return [];
+  const owner = location.hostname.split('.')[0];
+  const parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
+  if (!location.pathname.endsWith('/')) parts.pop();          // drop the file name (e.g. index.html)
+  const out = [];
+  if (parts.length) {                                         // project site: /<repo>/<folder...>
+    const repo = parts[0], dir = parts.slice(1).join('/');
+    out.push({ owner, repo, dir }, { owner, repo, dir: dir ? 'docs/' + dir : 'docs' });
+  }
+  out.push({ owner, repo: owner + '.github.io', dir: parts.join('/') });   // user site: <user>.github.io
+  return out;
+}
+
+async function listRepoJson() {
+  for (const c of repoCandidates()) {
+    const path = c.dir ? '/' + c.dir.split('/').map(encodeURIComponent).join('/') : '';
+    const ref = c.branch ? `?ref=${encodeURIComponent(c.branch)}` : '';
+    try {
+      const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents${path}${ref}`);
+      if (r.status === 403) throw new Error('GitHub API rate limit reached, try again later or use ?file=name.json');
+      if (!r.ok) continue;
+      const list = await r.json();
+      if (!Array.isArray(list)) continue;
+      const files = list.filter(f => f.type === 'file' && JSON_PATTERN.test(f.name)).map(f => f.name).sort();
+      if (files.length) return files;
+    } catch (err) { if (/rate limit/.test(err.message)) throw err; }
+  }
+  return [];
+}
+
+async function start() {
+  try {
+    const param = new URLSearchParams(location.search).get('file');   // link diretto: ?file=nome.json
+    if (param) { await loadFromUrl(param); return; }
+    const files = await listRepoJson();
+    if (files.length) {
+      const sel = $('#jsonPick');
+      sel.innerHTML = files.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+      sel.hidden = files.length < 2;
+      await loadFromUrl(files[0]);
+      return;
+    }
+  } catch (err) {
+    console.warn('Auto-load failed:', err);
+    showError(`Could not load the JSON from the repository: ${err.message}`);
+  }
+  // fallback: last file opened in this browser, otherwise the sample
+  try {
+    const s = localStorage.getItem(KEY);
+    if (s) { const o = JSON.parse(s); loadData(JSON.parse(o.text), o.name, 'restored'); return; }
+  } catch (_) { try { localStorage.removeItem(KEY); } catch (__) {} }
+  if (!D) loadData(SAMPLE, 'sample data', 'sample');
 }
 
 /* ---------- filters ---------- */
@@ -672,7 +746,7 @@ function selectEdgeInGraph(i) {
   if (!cy) { pendingSelect = i; return; }
   const ed = cy.getElementById('e' + i);
   if (!ed.length) return;
-  if (ed.hasClass('hidden')) { const e = D.kg.edges[i]; resetFilters(); }
+  if (ed.hasClass('hidden')) resetFilters();
   cy.elements().unselect(); ed.select(); focusEle(ed); showEdge(i);
   cy.animate({ center: { eles: ed }, zoom: Math.max(cy.zoom(), 1) }, { duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 300 });
 }
@@ -801,8 +875,8 @@ function showTab(t) {
   currentTab = t;
   document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t));
   document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + t);
-  $('#filters').hidden = !(t === 'graph' || t === 'edges');
-  try { history.replaceState(null, '', '#' + t); } catch (_) {}
+  $('#filters').hidden = !D || !(t === 'graph' || t === 'edges');
+  try { history.replaceState(null, '', location.pathname + location.search + '#' + t); } catch (_) {}
   if (t === 'graph' && D) {
     if (graphDirty) buildCy(); else if (cy) { cy.resize(); }
     if (pendingSelect != null && cy) { const i = pendingSelect; pendingSelect = null; selectEdgeInGraph(i); }
@@ -819,6 +893,10 @@ function resetFilters() {
 /* ---------- events ---------- */
 $('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) showTab(b.dataset.tab); });
 $('#fileInput').addEventListener('change', e => { readFile(e.target.files[0]); e.target.value = ''; });
+$('#jsonPick').addEventListener('change', e => {
+  const name = e.target.value;
+  loadFromUrl(name).catch(err => showError(`Could not load ${name}: ${err.message}`));
+});
 $('#filters').addEventListener('click', e => {
   if (e.target.closest('#resetF')) { resetFilters(); return; }
   const c = e.target.closest('.chip'); if (!c) return;
@@ -869,13 +947,8 @@ new MutationObserver(restyle).observe(document.documentElement, { attributes: tr
 addEventListener('resize', () => { if (cy && currentTab === 'graph') cy.resize(); });
 
 /* ---------- start ---------- */
-let restored = false;
-try {
-  const s = localStorage.getItem(KEY);
-  if (s) { const o = JSON.parse(s); loadData(JSON.parse(o.text), o.name, 'restored'); restored = true; }
-} catch (_) { try { localStorage.removeItem(KEY); } catch (__) {} }
-if (!restored) loadData(SAMPLE, 'sample data', 'sample');
 showTab((location.hash || '').slice(1) || 'storyline');
+start().finally(() => { if (currentTab === 'graph' || currentTab === 'edges') $('#filters').hidden = !D; });
 })();
 </script>
 
