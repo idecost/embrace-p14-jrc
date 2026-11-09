@@ -1,0 +1,970 @@
+{
+  "name": "Generic earthquake DRM ontology",
+  "sources": [
+    "HIPs-EarthQuakes.pdf",
+    "UNDAC_Handbook_8th_edition_section_K.PDF"
+  ],
+  "model": "claude-sonnet-5",
+  "drm_phases": {
+    "prevention": "BEFORE the event, avoiding new risk or reducing existing risk: risk assessment, land-use planning, building codes and enforcement, retrofitting, mitigation works, risk financing.",
+    "preparedness": "BEFORE the event, capacities to anticipate, respond and recover: monitoring and early warning, contingency plans, drills, stockpiles, trained teams, public awareness, situational awareness systems.",
+    "response": "DURING or IMMEDIATELY AFTER the event, saving lives and meeting basic needs: search and rescue, emergency health care, shelter, water, food, damage mapping, needs assessment, coordination, international assistance.",
+    "recovery": "AFTER the event, restoring and improving livelihoods, services and assets (build back better): damage and loss assessment, reconstruction, rehabilitation, livelihoods and psychosocial support."
+  },
+  "edge_status": {
+    "observed": "it happened / was in place",
+    "planned": "announced or planned, not yet done",
+    "recommended": "the documents recommend it",
+    "lacking": "the documents say it was missing or failed"
+  },
+  "classes": [
+    {
+      "id": "hazard",
+      "parent": "",
+      "definition": "Physical event or process that can cause harm (main shock, aftershock, landslide, fire, outbreak).",
+      "examples": [
+        "main shock earthquake",
+        "aftershock",
+        "fire following earthquake"
+      ],
+      "sources": []
+    },
+    {
+      "id": "impact",
+      "parent": "",
+      "definition": "Concrete effect on people, assets, services, economy or environment.",
+      "examples": [
+        "deaths",
+        "collapsed schools",
+        "water supply cut"
+      ],
+      "sources": []
+    },
+    {
+      "id": "vulnerability",
+      "parent": "",
+      "definition": "Pre-existing condition that increases susceptibility to earthquake impacts.",
+      "examples": [
+        "unreinforced masonry",
+        "poverty",
+        "no building code enforcement"
+      ],
+      "sources": []
+    },
+    {
+      "id": "measure",
+      "parent": "",
+      "definition": "Action, plan, system, policy or capacity that reduces risk or impacts.",
+      "examples": [
+        "retrofitting",
+        "early warning",
+        "SAR teams",
+        "shelters"
+      ],
+      "sources": []
+    },
+    {
+      "id": "need",
+      "parent": "",
+      "definition": "Unmet requirement or gap reported in the documents.",
+      "examples": [
+        "temporary shelter",
+        "structural assessment of buildings",
+        "safe water"
+      ],
+      "sources": []
+    },
+    {
+      "id": "actor",
+      "parent": "",
+      "definition": "Organisation or group that acts.",
+      "examples": [
+        "civil protection agency",
+        "UN OCHA",
+        "Red Cross",
+        "Copernicus EMS"
+      ],
+      "sources": []
+    },
+    {
+      "id": "exposure",
+      "parent": "",
+      "definition": "People, property, systems or other elements present in hazard zones that are thereby subject to potential losses from an earthquake.",
+      "examples": [
+        "high-density populations",
+        "buildings on soft soils",
+        "exposed population"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "ground_shaking",
+      "parent": "hazard",
+      "definition": "Vibratory motion of the ground produced by seismic waves radiating from an earthquake source; strength and duration depend on magnitude, distance to epicentre and local soil conditions.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "surface_rupture",
+      "parent": "hazard",
+      "definition": "Visible breaking and displacement of the earth's surface along the trace of a fault during an earthquake, including fissures and subsidence/uplift.",
+      "examples": [
+        "fissures",
+        "subsidence",
+        "uplift"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "aftershock",
+      "parent": "hazard",
+      "definition": "Smaller earthquake that follows a larger earthquake (mainshock) in the same area, caused by leftover stress along the fault line.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "id": "foreshock",
+      "parent": "hazard",
+      "definition": "An earthquake that precedes a larger earthquake in the same sequence, often not recognized as such until the larger event occurs.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "triggered_earthquake",
+      "parent": "hazard",
+      "definition": "A separate earthquake of considerable magnitude caused by stress transfer from a main earthquake, which may occur outside the predicted aftershock area.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "landslide",
+      "parent": "hazard",
+      "definition": "Mass movement of rock, debris or earth down a slope, including debris flow, triggered by earthquake shaking.",
+      "examples": [
+        "debris flow"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "liquefaction",
+      "parent": "hazard",
+      "definition": "Process whereby water-saturated granular soil temporarily loses strength and behaves as a liquid due to earthquake shaking.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "tsunami",
+      "parent": "hazard",
+      "definition": "Series of ocean waves generated by sudden displacement of water, often triggered by submarine earthquakes.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 7
+        }
+      ]
+    },
+    {
+      "id": "seiche",
+      "parent": "hazard",
+      "definition": "Oscillation of water in an enclosed or semi-enclosed body of water, triggered by earthquake-induced ground motion.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "earthquake_induced_flooding",
+      "parent": "hazard",
+      "definition": "Flooding caused as a secondary effect of an earthquake, e.g. due to dam or levee failure or changed river courses.",
+      "examples": [
+        "dam failure",
+        "flash flood"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "fire",
+      "parent": "hazard",
+      "definition": "Uncontrolled combustion triggered as a secondary effect of an earthquake, often from damaged gas lines or electrical systems.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "technological_accident",
+      "parent": "hazard",
+      "definition": "Accident triggered by an earthquake that damages hazardous installations, releasing hazardous substances leading to fires, explosions, gas leaks, or chemical spills.",
+      "examples": [
+        "chemical spill",
+        "gas leak"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "building_collapse",
+      "parent": "impact",
+      "definition": "Structural failure of a building during or after an earthquake, the leading cause of death and injury in earthquake disasters.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "casualty",
+      "parent": "impact",
+      "definition": "A person killed or injured as a direct result of an earthquake or its secondary hazards.",
+      "examples": [
+        "trapped victim",
+        "crush syndrome",
+        "PTSD"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "displacement",
+      "parent": "impact",
+      "definition": "Population movement caused by destruction of homes or settling outside damaged buildings due to aftershock risk after an earthquake.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "earthquake_loss",
+      "parent": "impact",
+      "definition": "Quantifiable loss (economic, human, or physical) resulting from earthquake shaking and secondary hazards, calculated by combining hazard intensity, vulnerability functions and exposure data.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "critical_infrastructure_damage",
+      "parent": "impact",
+      "definition": "Damage to essential infrastructure such as power, telecommunications, water/sanitation, gas lines, ports, and airports, hampering relief efforts.",
+      "examples": [
+        "power cables",
+        "telecommunications systems",
+        "water and sanitation pipes"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "built_environment_vulnerability",
+      "parent": "vulnerability",
+      "definition": "Susceptibility of buildings and infrastructure to damage from earthquake shaking, dependent on construction type, soil conditions and location.",
+      "examples": [
+        "unreinforced masonry buildings",
+        "structures on soft soils"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 4
+        }
+      ]
+    },
+    {
+      "id": "social_vulnerability",
+      "parent": "vulnerability",
+      "definition": "Susceptibility of populations to earthquake impacts due to social, economic, or physical factors such as age, health, or belonging to a vulnerable group.",
+      "examples": [
+        "age",
+        "health conditions",
+        "women",
+        "children"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "seismic_retrofitting",
+      "parent": "measure",
+      "definition": "Structural intervention aimed at strengthening existing buildings to improve their resistance to earthquake shaking.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "seismic_building_code",
+      "parent": "measure",
+      "definition": "Design regulations with provisions for earthquake safety that buildings and civil engineering works must follow, enforced to mitigate earthquake risk.",
+      "examples": [
+        "Eurocode 8",
+        "FEMA seismic building codes"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 3
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "urban_planning_measure",
+      "parent": "measure",
+      "definition": "Strategic land-use planning that forbids construction near cliff faces, active faults, or on soft soils to reduce earthquake risk.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "earthquake_early_warning_system",
+      "parent": "measure",
+      "definition": "System that detects earthquakes close to the source or fault rupture and sends real-time alerts to more distant locations, providing seconds to minutes of advance warning before shaking arrives.",
+      "examples": [
+        "Japan bullet train warning system",
+        "Mexico City SASMEX"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "seismic_monitoring_network",
+      "parent": "measure",
+      "definition": "Network of seismic stations/sensors used to observe and monitor seismic activity, essential for the effectiveness of early warning systems.",
+      "examples": [
+        "seismic stations"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "rapid_impact_estimation",
+      "parent": "measure",
+      "definition": "Automatic process (e.g., within GDACS) that estimates exposure, population, infrastructure impact and alert level for humanitarian activation shortly after an earthquake.",
+      "examples": [
+        "GDACS alert level",
+        "shakemap"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "urban_search_and_rescue",
+      "parent": "measure",
+      "definition": "Specialized INSARAG-certified teams (USAR) tasked with detecting, locating and extracting survivors trapped in collapsed buildings and structures after an earthquake.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "structural_assessment",
+      "parent": "measure",
+      "definition": "Inspection of earthquake-damaged infrastructure by certified structural engineers to determine safety for continued use.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "emergency_shelter",
+      "parent": "need",
+      "definition": "Temporary housing solutions such as tents, cots, and blankets needed by people displaced by earthquake damage to homes.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "medical_care_need",
+      "parent": "need",
+      "definition": "Need for medical treatment, including temporary field hospitals with emergency medical personnel, supplies and equipment, to treat earthquake-injured individuals.",
+      "examples": [
+        "field hospital"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "seismic_monitoring_agency",
+      "parent": "actor",
+      "definition": "National or regional organization with the remit to monitor seismic activity and produce disaster risk data/information.",
+      "examples": [
+        "USGS"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "undac_team",
+      "parent": "actor",
+      "definition": "United Nations Disaster Assessment and Coordination team deployed to support coordination of international relief, including USAR operations, after an earthquake.",
+      "examples": [],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "causes",
+      "definition": "Source directly produces the target (a hazard, impact or vulnerability causes another hazard or impact).",
+      "domain": [
+        "hazard",
+        "impact",
+        "vulnerability"
+      ],
+      "range": [
+        "impact",
+        "need",
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 1
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "prevents",
+      "definition": "A measure stops the target from happening at all (or would have, if recommended/lacking).",
+      "domain": [
+        "measure"
+      ],
+      "range": [
+        "hazard",
+        "impact",
+        "vulnerability"
+      ],
+      "sources": []
+    },
+    {
+      "id": "mitigates",
+      "definition": "A measure reduces the severity or extent of the target.",
+      "domain": [
+        "measure"
+      ],
+      "range": [
+        "impact",
+        "vulnerability",
+        "need",
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 3
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "triggers",
+      "definition": "A hazard sets off another (cascading) hazard, e.g. a main earthquake triggering an aftershock or secondary hazard.",
+      "domain": [
+        "hazard"
+      ],
+      "range": [
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "amplifies",
+      "definition": "A vulnerability or impact makes the target worse without causing it alone.",
+      "domain": [
+        "vulnerability",
+        "impact"
+      ],
+      "range": [
+        "impact",
+        "need",
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 3
+        }
+      ]
+    },
+    {
+      "id": "addresses",
+      "definition": "A measure responds to a need.",
+      "domain": [
+        "measure"
+      ],
+      "range": [
+        "need"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "implements",
+      "definition": "An actor carries out or provides a measure.",
+      "domain": [
+        "actor"
+      ],
+      "range": [
+        "measure"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "follows",
+      "definition": "An aftershock or foreshock follows/precedes a mainshock earthquake in the same seismic sequence.",
+      "domain": [
+        "hazard"
+      ],
+      "range": [
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "monitors",
+      "definition": "A seismic monitoring agency or network monitors earthquake activity to produce disaster risk data.",
+      "domain": [
+        "actor",
+        "measure"
+      ],
+      "range": [
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "forecasts",
+      "definition": "An early warning system or forecasting process warns of or estimates an earthquake's occurrence or impact.",
+      "domain": [
+        "measure"
+      ],
+      "range": [
+        "hazard"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        },
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "depends_on",
+      "definition": "The effectiveness of a measure depends on another measure (e.g., early warning system depending on the monitoring network).",
+      "domain": [
+        "measure"
+      ],
+      "range": [
+        "measure"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "assesses",
+      "definition": "A measure assesses the condition or safety of exposure elements (e.g. structural assessment of buildings).",
+      "domain": [
+        "measure"
+      ],
+      "range": [
+        "exposure"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    },
+    {
+      "id": "disrupts",
+      "definition": "A hazard or impact disrupts a measure or service (e.g., earthquake damage disrupting logistics).",
+      "domain": [
+        "hazard",
+        "impact"
+      ],
+      "range": [
+        "measure"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 5
+        }
+      ]
+    },
+    {
+      "id": "calculated_from",
+      "definition": "Earthquake loss is calculated by combining seismic intensity/ground motion parameters with vulnerability functions and exposure datasets.",
+      "domain": [
+        "impact"
+      ],
+      "range": [
+        "vulnerability",
+        "exposure"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "exacerbates",
+      "definition": "Vulnerability or exposure factors exacerbate the impacts of an earthquake.",
+      "domain": [
+        "vulnerability",
+        "exposure"
+      ],
+      "range": [
+        "impact"
+      ],
+      "sources": [
+        {
+          "doc": "HIPs-EarthQuakes.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "id": "coordinates_with",
+      "definition": "An actor coordinates with another actor during earthquake response operations.",
+      "domain": [
+        "actor"
+      ],
+      "range": [
+        "actor"
+      ],
+      "sources": [
+        {
+          "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+          "page": 6
+        }
+      ]
+    }
+  ],
+  "attributes": [
+    {
+      "class": "hazard",
+      "name": "moment_magnitude",
+      "definition": "Logarithmic measure of the total energy released by an earthquake, based on the seismic moment.",
+      "unit": "Mw",
+      "class_": "hazard"
+    },
+    {
+      "class": "hazard",
+      "name": "depth",
+      "definition": "Depth below the earth's surface at which the earthquake rupture originates (focal depth); shallower earthquakes tend to cause more widespread surface damage.",
+      "unit": "km"
+    },
+    {
+      "class": "hazard",
+      "name": "seismic_intensity",
+      "definition": "Qualitative measure of the severity of ground shaking at a location based on observed effects on humans, objects and nature (Modified Mercalli Intensity scale).",
+      "unit": "MMI scale (I-XII)"
+    },
+    {
+      "class": "hazard",
+      "name": "duration",
+      "definition": "Length of time the earthquake shaking lasts, usually a minute or less.",
+      "unit": "seconds/minutes"
+    },
+    {
+      "class": "hazard",
+      "name": "epicentre_distance",
+      "definition": "Distance from a given location to the earthquake's epicentre, influencing the strength of shaking felt there.",
+      "unit": "km"
+    },
+    {
+      "class": "hazard",
+      "name": "peak_ground_acceleration",
+      "definition": "Ground motion parameter measuring the maximum acceleration experienced by the ground during an earthquake.",
+      "unit": "g or m/s^2"
+    },
+    {
+      "class": "hazard",
+      "name": "peak_ground_velocity",
+      "definition": "Ground motion parameter measuring the maximum velocity of ground movement during an earthquake.",
+      "unit": "m/s"
+    },
+    {
+      "class": "hazard",
+      "name": "spectral_acceleration",
+      "definition": "Elastic spectral acceleration for a given period of vibration, used to assess shaking intensity.",
+      "unit": "g"
+    },
+    {
+      "class": "hazard",
+      "name": "time_since_main_shock",
+      "definition": "Elapsed time since the main earthquake, used to characterise temporal decay of aftershock frequency following Omori's law.",
+      "unit": "days"
+    },
+    {
+      "class": "hazard",
+      "name": "aftershock_frequency",
+      "definition": "Rate of occurrence of aftershocks of a given magnitude following a main shock, decaying over time according to Omori's law.",
+      "unit": "events/day"
+    },
+    {
+      "class": "impact",
+      "name": "number_of_deaths",
+      "definition": "Count of people killed as a result of an earthquake and its associated secondary hazardous events.",
+      "unit": "persons"
+    },
+    {
+      "class": "impact",
+      "name": "number_of_injuries",
+      "definition": "Count of injured persons resulting from an earthquake disaster.",
+      "unit": "persons"
+    },
+    {
+      "class": "impact",
+      "name": "survival_time",
+      "definition": "Length of time a victim trapped under rubble can survive, with 85-95% rescued alive within 24-48 hours.",
+      "unit": "hours"
+    },
+    {
+      "class": "exposure",
+      "name": "population_count",
+      "definition": "Number of people exposed to an earthquake hazard, estimated as part of rapid impact estimation.",
+      "unit": "count"
+    },
+    {
+      "class": "vulnerability",
+      "name": "structural_resilience",
+      "definition": "Degree to which a building can withstand seismic shaking without collapsing, influenced by design, construction quality, and compliance with seismic codes.",
+      "unit": "qualitative scale"
+    },
+    {
+      "class": "measure",
+      "name": "lead_time",
+      "definition": "Amount of advance warning time (seconds to minutes) provided by an early warning system before the arrival of strong shaking.",
+      "unit": "seconds/minutes"
+    }
+  ],
+  "validation": []
+}

@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Earthquake Ontology Viewer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+<style>
+/* Same look as the DRM event viewer: header, tab strip, graph canvas + detail rail, dense tables. */
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --surface-2: #e9eef0; --line: #d3dbdf; --fg: #172227; --muted: #56666e;
+  --accent: #0b6870; --accent-soft: #d6ecee;
+  --hazard: #c2410c; --impact: #a16207; --vuln: #7c3aed; --measure: #15803d; --need: #1d4ed8; --actor: #4b5563; --exposure: #be185d;
+  --low: #b91c1c; --mark: #fde68a;
+  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1518; --surface: #161e22; --surface-2: #1e292e; --line: #2b383e; --fg: #e1e8eb; --muted: #92a3ab;
+    --accent: #52b6bf; --accent-soft: #173a3e;
+    --hazard: #fb8a5a; --impact: #e2b04e; --vuln: #a78bfa; --measure: #4ade80; --need: #7ea6ff; --actor: #a7b4c2; --exposure: #f472b6;
+    --low: #f87171; --mark: #6b5a12;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1518; --surface: #161e22; --surface-2: #1e292e; --line: #2b383e; --fg: #e1e8eb; --muted: #92a3ab;
+  --accent: #52b6bf; --accent-soft: #173a3e;
+  --hazard: #fb8a5a; --impact: #e2b04e; --vuln: #a78bfa; --measure: #4ade80; --need: #7ea6ff; --actor: #a7b4c2; --exposure: #f472b6;
+  --low: #f87171; --mark: #6b5a12;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 14px; line-height: 1.5; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 1440px; margin-inline: auto; display: flex; flex-direction: column; gap: 16px; }
+a { color: var(--accent); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+header.top { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+.eyebrow { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: 28px; line-height: 1.15; margin: 4px 0 6px; text-wrap: balance; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 13px; }
+.meta b { color: var(--fg); font-weight: 500; }
+.loader { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn.primary:hover { filter: brightness(1.08); }
+select.btn { max-width: 320px; }
+.filename { font-family: var(--font-mono); font-size: 12px; color: var(--muted); max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.banner { border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 14px; font-size: 13px; }
+.banner.error { background: var(--surface); border-color: var(--low); color: var(--low); }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; font-size: 13px; color: var(--muted); }
+.stat b { font-family: var(--font-mono); color: var(--fg); font-weight: 500; font-variant-numeric: tabular-nums; margin-right: 4px; }
+
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tab { border: 0; background: none; padding: 9px 14px; cursor: pointer; color: var(--muted); font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.tab .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: 4px; }
+
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.neutral { color: var(--muted); }
+.pill.t-hazard { color: var(--hazard); } .pill.t-impact { color: var(--impact); } .pill.t-vulnerability { color: var(--vuln); }
+.pill.t-measure { color: var(--measure); } .pill.t-need { color: var(--need); } .pill.t-actor { color: var(--actor); } .pill.t-exposure { color: var(--exposure); }
+
+.filters { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-start; }
+.fgroup { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.fgroup > span { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 2px 9px; font-size: 12px; cursor: pointer; }
+.chip[aria-pressed="false"] { background: transparent; color: var(--muted); opacity: .55; }
+.chip[aria-pressed="false"] svg { opacity: .4; }
+.chip .c { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.fgroup.end { margin-left: auto; align-self: center; }
+
+.graph-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.search, .graph-tools select { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 10px; min-width: 0; width: 240px; max-width: 100%; }
+.graph-tools select { width: auto; }
+.tog { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); }
+.graph-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 12px; }
+#cy { height: clamp(520px, 78vh, 1000px); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; min-width: 0; }
+.detail { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-y: auto; max-height: clamp(520px, 78vh, 1000px); min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.detail h3 { font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1.25; margin: 0; text-wrap: balance; }
+.detail .row { display: flex; flex-wrap: wrap; gap: 6px; }
+.detail p { margin: 0; }
+.hint { color: var(--muted); font-size: 13px; }
+.detail h4 { margin: 4px 0 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.elist { display: flex; flex-direction: column; gap: 4px; }
+.elink { text-align: left; border: 1px solid var(--line); background: var(--surface-2); border-radius: 6px; padding: 6px 8px; cursor: pointer; font-size: 13px; line-height: 1.35; }
+.elink:hover { border-color: var(--accent); }
+.rel { font-family: var(--font-mono); font-size: 11px; color: var(--accent); }
+.inh { font-size: 11px; color: var(--muted); font-style: italic; }
+.explain { border-left: 3px solid var(--line); padding-left: 10px; font-family: var(--font-display); font-size: 15px; line-height: 1.55; }
+.linkbtn { border: 0; background: none; color: var(--accent); padding: 0; cursor: pointer; font-size: inherit; text-align: left; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { background: var(--surface-2); border-radius: 4px; padding: 1px 6px; font-size: 12px; }
+.cy-missing { padding: 24px; color: var(--muted); }
+
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--surface-2); position: sticky; top: 0; white-space: nowrap; }
+th.sortable { cursor: pointer; }
+th.sortable:hover { color: var(--fg); }
+tbody tr.clickable { cursor: pointer; }
+tbody tr.clickable:hover { background: var(--surface-2); }
+td.num, .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.def { min-width: 280px; max-width: 520px; }
+td.src { min-width: 140px; font-size: 12px; color: var(--muted); }
+.tbl-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.count { color: var(--muted); font-size: 13px; }
+mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card h2 { font-size: 13px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin: 0; font-weight: 600; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; font-size: 13px; margin: 0; }
+.kv dt { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+.card .table-wrap { border-radius: 6px; }
+
+.drop { position: fixed; inset: 0; background: color-mix(in srgb, var(--bg) 85%, transparent); display: grid; place-items: center; z-index: 50; border: 3px dashed var(--accent); font-family: var(--font-display); font-size: 24px; color: var(--accent); }
+
+@media (max-width: 900px) {
+  .graph-wrap { grid-template-columns: minmax(0, 1fr); }
+  .detail { max-height: none; }
+  .fgroup.end { margin-left: 0; }
+  h1 { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div style="min-width:0">
+      <div class="eyebrow">Generic earthquake ontology for DRM knowledge graphs</div>
+      <h1 id="oName">—</h1>
+      <div class="meta" id="oMeta"></div>
+    </div>
+    <div class="loader">
+      <span class="filename" id="fileName"></span>
+      <select id="jsonPick" class="btn" hidden aria-label="Files in the repository"></select>
+      <label class="btn primary" for="fileInput">Open JSON…</label>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </div>
+  </header>
+
+  <div class="banner" id="banner" hidden></div>
+  <div class="banner error" id="errorBox" role="alert" hidden></div>
+  <div class="stats" id="stats"></div>
+
+  <nav class="tabs" role="tablist" id="tabs">
+    <button class="tab" role="tab" data-tab="graph">Graph</button>
+    <button class="tab" role="tab" data-tab="classes">Classes<span class="n" id="nClasses"></span></button>
+    <button class="tab" role="tab" data-tab="relations">Relations<span class="n" id="nRelations"></span></button>
+    <button class="tab" role="tab" data-tab="attributes">Attributes<span class="n" id="nAttributes"></span></button>
+    <button class="tab" role="tab" data-tab="sources">Sources &amp; validation</button>
+  </nav>
+
+  <section class="filters" id="filters" hidden></section>
+
+  <section id="p-graph" class="panel" hidden>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="graph-tools">
+        <input type="search" class="search" id="nodeSearch" placeholder="Highlight classes…" aria-label="Highlight classes">
+        <select id="layoutSel" aria-label="Layout">
+          <option value="radial">Overview: root classes in the centre, subclasses around</option>
+          <option value="tree">Hierarchy: one column per root class (relations hidden)</option>
+          <option value="force">Force-directed</option>
+        </select>
+        <button class="btn" id="relayoutBtn" hidden title="Run the force-directed layout again from new random positions">Re-run layout</button>
+        <label class="tog"><input type="checkbox" id="showHier" checked> Hierarchy (subclass of)</label>
+        <label class="tog"><input type="checkbox" id="showRel" checked> Relations</label>
+        <label class="tog"><input type="checkbox" id="edgeLabels" checked> Relation labels</label>
+        <button class="btn" id="fitBtn">Fit</button>
+        <button class="btn" id="pngBtn" title="Open a PNG of the graph in the detail panel">Snapshot</button>
+      </div>
+      <div class="graph-wrap">
+        <div id="cy"></div>
+        <aside class="detail" id="detail"></aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="p-classes" class="panel" hidden>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="tbl-head"><input type="search" class="search" id="classSearch" placeholder="Search classes, definitions, examples…" aria-label="Search classes"><span class="count" id="classCount"></span></div>
+      <div class="table-wrap"><table id="classTable"></table></div>
+    </div>
+  </section>
+
+  <section id="p-relations" class="panel" hidden>
+    <div class="table-wrap"><table id="relTable"></table></div>
+  </section>
+
+  <section id="p-attributes" class="panel" hidden>
+    <div class="table-wrap"><table id="attrTable"></table></div>
+  </section>
+
+  <section id="p-sources" class="panel" hidden>
+    <div class="grid2" id="srcGrid"></div>
+  </section>
+</div>
+<div class="drop" id="drop" hidden>Drop the ontology.json file</div>
+
+<script>
+(() => {
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const KEY = 'ontoviewer:last';
+
+const ROOT_ORDER = ['actor', 'measure', 'hazard', 'vulnerability', 'exposure', 'impact', 'need'];   // tree columns, left to right
+const ROOT_VAR = { hazard: '--hazard', impact: '--impact', vulnerability: '--vuln', measure: '--measure', need: '--need', actor: '--actor', exposure: '--exposure' };
+const CY_SHAPE = { hazard: 'diamond', impact: 'ellipse', vulnerability: 'triangle', measure: 'round-rectangle', need: 'octagon', actor: 'hexagon', exposure: 'pentagon' };
+const HIER = 'subclass_of';
+
+/* ---------- GitHub Pages auto-load (same logic as the event viewer) ----------
+   On https://<user>.github.io/<repo>/<folder>/ the page loads the ontology JSON that sits next to this HTML file.
+   ?file=name.json loads a given file; ?class=<id> selects a class in the graph.                              */
+const REPO = null;
+const JSON_PATTERN = /^ontology(?!_graph).*\.json$/i;
+
+let O = null, cls = new Map(), children = new Map(), F = null, cy = null, graphDirty = true, currentTab = 'graph';
+let classSort = { key: null, dir: 1 }, pendingClass = null;
+
+/* ---------- sample data (illustrative) ---------- */
+const SAMPLE = {
+  name: 'Sample ontology', sources: ['sample.pdf'], model: '—',
+  drm_phases: { response: 'During or immediately after the event.' }, edge_status: { observed: 'it happened' },
+  classes: [
+    { id: 'hazard', parent: '', definition: 'Physical event or process that can cause harm.', examples: [], sources: [] },
+    { id: 'aftershock', parent: 'hazard', definition: 'Smaller earthquake that follows a larger one.', examples: ['M5.1 aftershock'], sources: [{ doc: 'sample.pdf', page: 1 }] },
+    { id: 'impact', parent: '', definition: 'Effect on people, assets or services.', examples: [], sources: [] },
+    { id: 'building_collapse', parent: 'impact', definition: 'Structural failure of a building.', examples: [], sources: [{ doc: 'sample.pdf', page: 2 }] },
+    { id: 'measure', parent: '', definition: 'Action that reduces risk or impacts.', examples: [], sources: [] }
+  ],
+  relations: [
+    { id: 'causes', definition: 'Source directly produces the target.', domain: ['hazard'], range: ['impact'], sources: [] },
+    { id: 'mitigates', definition: 'A measure reduces the target.', domain: ['measure'], range: ['impact'], sources: [] }
+  ],
+  attributes: [{ class: 'hazard', name: 'magnitude', definition: 'Moment magnitude.', unit: 'Mw' }],
+  validation: []
+};
+
+/* ---------- model ---------- */
+function normalize(d) {
+  if (!d || typeof d !== 'object' || !Array.isArray(d.classes) || !Array.isArray(d.relations))
+    throw new Error('No classes / relations in this file. Open ontology/ontology.json written by 02_build_ontology.py.');
+  return { ...d, attributes: d.attributes || [], validation: d.validation || [], sources: d.sources || [] };
+}
+const parentOf = id => (cls.get(id) || {}).parent || '';
+const lineage = id => { const out = []; for (let c = id; c && !out.includes(c); c = parentOf(c)) out.push(c); return out; };   // id, parent, ..., root
+const rootOf = id => lineage(id).slice(-1)[0];
+const levelOf = id => lineage(id).length - 1;
+const descendants = id => [id, ...(children.get(id) || []).flatMap(descendants)];
+const cite = s => (s || []).map(x => `${x.doc} p.${x.page}`).join('; ');
+const shortDoc = d => String(d).replace(/\.pdf$/i, '');
+
+function loadData(raw, name, kind) {
+  O = normalize(raw);
+  cls = new Map(O.classes.map(c => [c.id, c]));
+  children = new Map();
+  O.classes.forEach(c => { if (c.parent && cls.has(c.parent)) children.set(c.parent, [...(children.get(c.parent) || []), c.id]); });
+  O.roots = O.classes.filter(c => !c.parent || !cls.has(c.parent)).map(c => c.id)
+    .sort((a, b) => ((ROOT_ORDER.indexOf(a) + 1) || 99) - ((ROOT_ORDER.indexOf(b) + 1) || 99));
+  F = { roots: new Set(O.roots), rels: new Set(O.relations.map(r => r.id)) };
+  $('#errorBox').hidden = true;
+  $('#fileName').textContent = name || '';
+  const b = $('#banner');
+  if (kind === 'sample') { b.hidden = false; b.innerHTML = '<b>Sample data.</b> Click <b>Open JSON…</b> or drop <span class="mono">ontology/ontology.json</span> anywhere on the page.'; }
+  else if (kind === 'restored') { b.hidden = false; b.textContent = 'Showing the last file you opened in this browser. Open another file to replace it.'; }
+  else b.hidden = true;
+  renderAll();
+}
+
+function showError(msg) { const e = $('#errorBox'); e.hidden = false; e.textContent = msg; }
+
+function readFile(file) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      loadData(JSON.parse(r.result), file.name, 'file');
+      try { if (r.result.length < 4.5e6) localStorage.setItem(KEY, JSON.stringify({ name: file.name, text: r.result })); } catch (_) {}
+    } catch (err) { showError(`Could not read ${file.name}: ${err.message}`); }
+  };
+  r.onerror = () => showError(`Could not read ${file.name}.`);
+  r.readAsText(file);
+}
+
+async function loadFromUrl(name) {
+  const r = await fetch(new URL(name, location.href), { cache: 'no-cache' });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  loadData(await r.json(), name.split('/').pop(), 'file');
+}
+
+function repoCandidates() {
+  if (REPO && REPO.owner && REPO.repo) return [REPO];
+  if (!location.hostname.toLowerCase().endsWith('.github.io')) return [];
+  const owner = location.hostname.split('.')[0];
+  const parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
+  if (!location.pathname.endsWith('/')) parts.pop();
+  const out = [];
+  if (parts.length) { const repo = parts[0], dir = parts.slice(1).join('/'); out.push({ owner, repo, dir }, { owner, repo, dir: dir ? 'docs/' + dir : 'docs' }); }
+  out.push({ owner, repo: owner + '.github.io', dir: parts.join('/') });
+  return out;
+}
+
+async function listRepoJson() {
+  for (const c of repoCandidates()) {
+    const path = c.dir ? '/' + c.dir.split('/').map(encodeURIComponent).join('/') : '';
+    const ref = c.branch ? `?ref=${encodeURIComponent(c.branch)}` : '';
+    try {
+      const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents${path}${ref}`);
+      if (r.status === 403) throw new Error('GitHub API rate limit reached, try again later or use ?file=ontology.json');
+      if (!r.ok) continue;
+      const list = await r.json();
+      if (!Array.isArray(list)) continue;
+      const files = list.filter(f => f.type === 'file' && JSON_PATTERN.test(f.name)).map(f => f.name).sort();
+      if (files.length) return files;
+    } catch (err) { if (/rate limit/.test(err.message)) throw err; }
+  }
+  return [];
+}
+
+async function start() {
+  const params = new URLSearchParams(location.search);
+  pendingClass = params.get('class');
+  try {
+    if (params.get('file')) { await loadFromUrl(params.get('file')); return; }
+    const files = await listRepoJson();
+    if (files.length) {
+      const sel = $('#jsonPick');
+      sel.innerHTML = files.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+      sel.hidden = files.length < 2;
+      await loadFromUrl(files[0]);
+      return;
+    }
+    try { await loadFromUrl('ontology.json'); return; } catch (_) {}   // plain web server: file next to the HTML
+  } catch (err) {
+    console.warn('Auto-load failed:', err);
+    showError(`Could not load the JSON: ${err.message}`);
+  }
+  try {
+    const s = localStorage.getItem(KEY);
+    if (s) { const o = JSON.parse(s); loadData(JSON.parse(o.text), o.name, 'restored'); return; }
+  } catch (_) { try { localStorage.removeItem(KEY); } catch (__) {} }
+  if (!O) loadData(SAMPLE, 'sample data', 'sample');
+}
+
+/* ---------- small svg legend marks ---------- */
+function shapeSvg(root) {
+  const c = `fill:var(${ROOT_VAR[root] || '--muted'})`;
+  const shapes = {
+    hazard: '<polygon points="6,0 12,6 6,12 0,6"/>', impact: '<circle cx="6" cy="6" r="5.5"/>',
+    vulnerability: '<polygon points="6,0.5 11.5,11 0.5,11"/>', measure: '<rect x="0.5" y="1.5" width="11" height="9" rx="2.5"/>',
+    need: '<polygon points="3.5,0.5 8.5,0.5 11.5,3.5 11.5,8.5 8.5,11.5 3.5,11.5 0.5,8.5 0.5,3.5"/>',
+    actor: '<polygon points="3,0.8 9,0.8 11.8,6 9,11.2 3,11.2 0.2,6"/>', exposure: '<polygon points="6,0.5 11.5,4.5 9.5,11.5 2.5,11.5 0.5,4.5"/>'
+  };
+  return `<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="${c}">${shapes[root] || shapes.impact}</svg>`;
+}
+const clsLink = id => `<button class="linkbtn" data-node="${esc(id)}">${shapeSvg(rootOf(id))} ${esc(id)}</button>`;
+
+/* ---------- filters ---------- */
+function renderFilters() {
+  const nCls = r => O.classes.filter(c => rootOf(c.id) === r).length;
+  const nRel = id => { const r = O.relations.find(x => x.id === id); return r.domain.length * r.range.length; };
+  $('#filters').innerHTML =
+    `<div class="fgroup"><span>Root classes</span><div class="chips">${O.roots.map(r => `<button class="chip" data-f="roots" data-v="${esc(r)}" aria-pressed="${F.roots.has(r)}">${shapeSvg(r)}${esc(r)} <span class="c">${nCls(r)}</span></button>`).join('')}</div></div>` +
+    `<div class="fgroup"><span>Relations</span><div class="chips">${O.relations.map(r => `<button class="chip" data-f="rels" data-v="${esc(r.id)}" aria-pressed="${F.rels.has(r.id)}">${esc(r.id)} <span class="c">${nRel(r.id)}</span></button>`).join('')}</div></div>` +
+    `<div class="fgroup end"><button class="btn" id="resetF">Reset filters</button></div>`;
+}
+
+/* ---------- graph ---------- */
+function cyStyle() {
+  const fg = tok('--fg'), muted = tok('--muted'), surf = tok('--surface'), acc = tok('--accent'), line = tok('--line');
+  return [
+    { selector: 'node', style: { label: 'data(label)', width: 'data(size)', height: 'data(size)', 'font-family': 'IBM Plex Sans, Segoe UI, sans-serif', 'font-size': 12, 'font-weight': 500, color: fg, 'text-wrap': 'wrap', 'text-max-width': 150, 'text-valign': 'bottom', 'text-halign': 'center', 'text-margin-y': 5, 'text-background-color': surf, 'text-background-opacity': 0.92, 'text-background-padding': 2, 'text-background-shape': 'roundrectangle', 'border-width': 2, 'border-color': surf, 'background-color': muted } },
+    { selector: 'node.lr', style: { 'text-valign': 'center', 'text-halign': 'right', 'text-margin-x': 6, 'text-margin-y': 0, 'text-max-width': 170 } },
+    { selector: 'node[level = 0]', style: { 'font-size': 14, 'font-weight': 600 } },
+    ...Object.keys(ROOT_VAR).map(r => ({ selector: `node[root="${r}"]`, style: { 'background-color': tok(ROOT_VAR[r]), shape: CY_SHAPE[r] } })),
+    { selector: 'edge', style: { width: 1.6, 'line-color': acc, 'target-arrow-color': acc, 'target-arrow-shape': 'triangle', 'arrow-scale': 0.9, 'curve-style': 'bezier', opacity: 0.7 } },
+    { selector: 'edge[kind="hierarchy"]', style: { width: 1.2, 'line-color': line, 'target-arrow-color': line, 'target-arrow-shape': 'triangle-backcurve', 'curve-style': 'taxi', 'taxi-direction': 'vertical', opacity: 1 } },
+    { selector: 'edge.free[kind="hierarchy"]', style: { 'curve-style': 'bezier', 'line-style': 'dashed' } },
+    { selector: 'edge.labels[kind="relation"]', style: { label: 'data(relation)', 'font-family': 'IBM Plex Mono, monospace', 'font-size': 10, color: muted, 'text-rotation': 'autorotate', 'text-background-color': surf, 'text-background-opacity': 0.9, 'text-background-padding': 1 } },
+    { selector: '.hidden', style: { display: 'none' } },
+    { selector: 'node.faded', style: { opacity: 0.15 } },
+    { selector: 'edge.faded', style: { opacity: 0.06 } },
+    { selector: 'node.match', style: { 'border-width': 3.5, 'border-color': acc } },
+    { selector: 'node:selected', style: { 'border-width': 4, 'border-color': acc } },
+    { selector: 'edge:selected', style: { 'line-color': acc, 'target-arrow-color': acc, width: 3.5, 'z-index': 10, opacity: 1 } }
+  ];
+}
+
+function buildCy() {
+  graphDirty = false;
+  if (cy) { cy.destroy(); cy = null; }
+  if (typeof cytoscape === 'undefined') { $('#cy').innerHTML = '<div class="cy-missing">The graph library could not load. Check your connection and reload the page; the other tabs still work.</div>'; return; }
+  $('#cy').innerHTML = '';
+  const els = [
+    ...O.classes.map(c => ({ data: { id: c.id, label: c.id.replace(/_/g, ' '), root: rootOf(c.id), level: levelOf(c.id), size: levelOf(c.id) === 0 ? 34 : 22 } })),
+    ...O.classes.filter(c => c.parent && cls.has(c.parent)).map(c => ({ data: { id: 'h:' + c.id, source: c.id, target: c.parent, kind: 'hierarchy', relation: HIER } })),
+    ...O.relations.flatMap((r, i) => r.domain.flatMap(d => r.range.filter(t => cls.has(d) && cls.has(t)).map(t => ({ data: { id: `r:${i}:${d}:${t}`, source: d, target: t, kind: 'relation', relation: r.id, ri: i } }))))
+  ];
+  cy = cytoscape({ container: $('#cy'), elements: els, style: cyStyle(), minZoom: 0.1, maxZoom: 3, selectionType: 'single' });
+  cy.on('tap', 'node', ev => { focusEle(ev.target); showClass(ev.target.id()); });
+  cy.on('tap', 'edge', ev => { focusEle(ev.target); showEdge(ev.target); });
+  cy.on('tap', ev => { if (ev.target === cy) { clearFocus(); showIntro(); } });
+  applyLabels(); applyFilters(); runLayout(); applySearch();
+  showIntro();
+  if (pendingClass) { const id = pendingClass; pendingClass = null; selectClass(id); }
+}
+
+function applyLabels() { if (cy) cy.edges().toggleClass('labels', $('#edgeLabels').checked); }
+
+function applyFilters() {
+  if (!cy) return;
+  const hier = $('#showHier').checked, rel = $('#showRel').checked;
+  cy.batch(() => {
+    cy.nodes().forEach(n => n.toggleClass('hidden', !F.roots.has(n.data('root'))));
+    cy.edges().forEach(e => {
+      const k = e.data('kind');
+      const ok = (k === 'hierarchy' ? hier : rel && F.rels.has(e.data('relation'))) && !e.source().hasClass('hidden') && !e.target().hasClass('hidden');
+      e.toggleClass('hidden', !ok);
+    });
+  });
+}
+
+// Tree: one column per root class, its descendants listed below in depth-first order, indented by level.
+function treePositions() {
+  const pos = {}, colW = 250, rowH = 46, indent = 22;
+  O.roots.filter(r => F.roots.has(r)).forEach((r, ci) => {
+    const walk = (id, depth, row) => { pos[id] = { x: ci * colW + depth * indent, y: row * rowH }; let k = row + 1; (children.get(id) || []).forEach(ch => { k = walk(ch, depth + 1, k); }); return k; };
+    walk(r, 0, 0);
+  });
+  return pos;
+}
+
+// Overview: root classes on an inner circle (relations between them are chords), each root's subclasses
+// on outer rings inside the root's angular sector (sector size ~ number of subclasses).
+function radialPositions() {
+  const pos = {}, roots = O.roots.filter(r => F.roots.has(r));
+  const size = r => descendants(r).length + 1, total = roots.reduce((s, r) => s + size(r), 0);
+  const R = [260, 620, 800];   // radius of level 0, 1, 2+
+  let a = -Math.PI / 2;
+  roots.forEach(r => {
+    const span = 2 * Math.PI * size(r) / total, subs = descendants(r).slice(1);
+    const at = (ang, rad) => ({ x: Math.cos(ang) * rad, y: Math.sin(ang) * rad });
+    pos[r] = at(a + span / 2, R[0]);
+    subs.forEach((s, k) => { pos[s] = at(a + span * (k + 1) / (subs.length + 1), R[Math.min(levelOf(s), 2)]); });
+    a += span;
+  });
+  return pos;
+}
+
+function runLayout() {
+  if (!cy) return;
+  const mode = $('#layoutSel').value, force = mode === 'force';
+  $('#relayoutBtn').hidden = !force;
+  cy.nodes().toggleClass('lr', mode === 'tree');
+  cy.edges('[kind="hierarchy"]').toggleClass('free', mode !== 'tree');
+  const vis = cy.elements().not('.hidden');
+  if (!vis.length) return;
+  if (!force) {
+    const pos = mode === 'tree' ? treePositions() : radialPositions();
+    vis.nodes().layout({ name: 'preset', positions: n => pos[n.id()] || { x: 0, y: 0 }, fit: true, padding: 40 }).run();
+  } else {
+    vis.layout({ name: 'cose', animate: false, fit: true, padding: 50, randomize: true, nodeDimensionsIncludeLabels: true,
+      nodeRepulsion: () => 1200000, idealEdgeLength: () => 200, edgeElasticity: () => 120, nodeOverlap: 60, gravity: 0.2,
+      componentSpacing: 200, numIter: 3000, initialTemp: 2000, coolingFactor: 0.97, minTemp: 1.0 }).run();
+  }
+}
+
+function focusEle(ele) {
+  cy.elements().addClass('faded');
+  (ele.isNode() ? ele.closedNeighborhood() : ele.union(ele.connectedNodes())).removeClass('faded');
+}
+function clearFocus() { if (cy) { cy.elements().removeClass('faded'); cy.elements().unselect(); } }
+
+function applySearch() {
+  if (!cy) return;
+  const q = $('#nodeSearch').value.trim().toLowerCase();
+  cy.nodes().removeClass('match');
+  if (!q) return;
+  cy.nodes().filter(n => { const c = cls.get(n.id()); return [c.id, c.definition, ...(c.examples || [])].join(' ').toLowerCase().includes(q); }).addClass('match');
+}
+
+function selectClass(id) {
+  if (!cls.has(id)) return;
+  if (currentTab !== 'graph') { pendingClass = id; showTab('graph'); return; }
+  if (!cy) { pendingClass = id; return; }
+  const n = cy.getElementById(id);
+  if (n.hasClass('hidden')) { F.roots.add(rootOf(id)); renderFilters(); applyFilters(); runLayout(); }
+  cy.elements().unselect(); n.select(); focusEle(n); showClass(id);
+  cy.animate({ center: { eles: n }, zoom: Math.max(cy.zoom(), 1) }, { duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 300 });
+}
+
+/* ---------- detail panel ---------- */
+function showIntro() {
+  $('#detail').innerHTML = `<h3>Select a class or an edge</h3>
+    <p class="hint">${O.classes.length} classes under ${O.roots.length} root classes, ${O.relations.length} relations and ${O.attributes.length} attributes. Click a class to read its definition, attributes, relations and the pages that support it.</p>
+    <h4>Reading the graph</h4>
+    <p class="hint">Colour and shape give the root class (the categories used by the event knowledge graphs). Grey elbow lines link a class to its parent (subclass of); coloured arrows are relations from the domain class to the range class.</p>
+    <p class="hint">A relation allowed on a class is also allowed on all its subclasses. In the Overview the root classes sit on the inner circle and their subclasses on the outer ring of the same sector.</p>`;
+}
+
+// relations where the class (or one of its ancestors) is in the domain / range
+function relationsOf(id) {
+  const anc = lineage(id), out = [], inc = [];
+  O.relations.forEach((r, i) => {
+    const d = anc.find(a => r.domain.includes(a)), t = anc.find(a => r.range.includes(a));
+    if (d) out.push({ r, i, via: d });
+    if (t) inc.push({ r, i, via: t });
+  });
+  return { out, inc };
+}
+
+function showClass(id) {
+  const c = cls.get(id); if (!c) return;
+  const root = rootOf(id), lin = lineage(id), kids = children.get(id) || [];
+  const attrs = O.attributes.filter(a => lin.includes(a.class));
+  const { out, inc } = relationsOf(id);
+  const via = (v) => v !== id ? ` <span class="inh">inherited from ${esc(v)}</span>` : '';
+  const relLi = (x, dir) => `<button class="elink" data-rel="${x.i}">${dir === 'out' ? '' : x.r.domain.map(esc).join(' | ') + ' '}<span class="rel">${esc(x.r.id)}</span>${dir === 'out' ? ' ' + x.r.range.map(esc).join(' | ') : ''}${via(x.via)}</button>`;
+  $('#detail').innerHTML = `<div class="row"><span class="pill t-${esc(root)}">${shapeSvg(root)} ${esc(root)}</span><span class="pill neutral">level ${lin.length - 1}</span></div>
+    <h3>${esc(id.replace(/_/g, ' '))}</h3>
+    <p class="explain">${esc(c.definition)}</p>
+    <p class="hint mono" style="font-size:12px">${lin.slice().reverse().map(esc).join(' › ')}</p>
+    ${c.parent ? `<h4>Parent</h4><div>${clsLink(c.parent)}</div>` : ''}
+    ${kids.length ? `<h4>Subclasses (${kids.length})</h4><div class="tags">${kids.map(clsLink).join('')}</div>` : ''}
+    ${(c.examples || []).length ? `<h4>Examples</h4><div class="tags">${c.examples.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</div>` : ''}
+    ${attrs.length ? `<h4>Attributes (${attrs.length})</h4><div class="elist">${attrs.map(a => `<div class="elink" style="cursor:default"><span class="mono">${esc(a.name)}</span>${a.unit ? ` <span class="hint">[${esc(a.unit)}]</span>` : ''}${a.class !== id ? ` <span class="inh">from ${esc(a.class)}</span>` : ''}<br><span class="hint">${esc(a.definition)}</span></div>`).join('')}</div>` : ''}
+    ${out.length ? `<h4>As domain (${out.length})</h4><div class="elist">${out.map(x => relLi(x, 'out')).join('')}</div>` : ''}
+    ${inc.length ? `<h4>As range (${inc.length})</h4><div class="elist">${inc.map(x => relLi(x, 'in')).join('')}</div>` : ''}
+    <h4>Sources</h4><p class="hint">${esc(cite(c.sources)) || 'From the seed schema (no page cited).'}</p>`;
+}
+
+function showRelation(i) {
+  const r = O.relations[i]; if (!r) return;
+  $('#detail').innerHTML = `<div class="row"><span class="pill neutral">relation</span></div>
+    <h3 class="mono" style="font-family:var(--font-mono);font-size:17px">${esc(r.id)}</h3>
+    <p class="explain">${esc(r.definition)}</p>
+    <h4>Domain (source classes)</h4><div class="tags">${r.domain.map(clsLink).join('')}</div>
+    <h4>Range (target classes)</h4><div class="tags">${r.range.map(clsLink).join('')}</div>
+    <p class="hint">Subclasses of these classes are allowed too.</p>
+    <h4>Sources</h4><p class="hint">${esc(cite(r.sources)) || 'From the seed schema (no page cited).'}</p>`;
+}
+
+function showEdge(e) {
+  if (e.data('kind') === 'relation') { showRelation(e.data('ri')); return; }
+  $('#detail').innerHTML = `<div class="row"><span class="pill neutral">subclass of</span></div>
+    <p>${clsLink(e.data('source'))} <span class="rel">is a</span> ${clsLink(e.data('target'))}</p>`;
+}
+
+function highlightRelation(i) {
+  showTab('graph');
+  if (!cy) return;
+  const eds = cy.edges(`[ri = ${i}]`);
+  cy.elements().addClass('faded'); eds.union(eds.connectedNodes()).removeClass('faded');
+  showRelation(i);
+}
+
+/* ---------- tables ---------- */
+const CLASS_COLS = [['id', 'Class'], ['parent', 'Parent'], ['root', 'Root'], ['level', 'Level'], ['definition', 'Definition'], ['examples', 'Examples'], ['attributes', 'Attr.'], ['sources', 'Sources']];
+function classRow(c) {
+  return { id: c.id, parent: c.parent || '', root: rootOf(c.id), level: levelOf(c.id), definition: c.definition, examples: (c.examples || []).join('; '),
+           attributes: O.attributes.filter(a => a.class === c.id).length, sources: cite(c.sources) };
+}
+function renderClassTable() {
+  const q = $('#classSearch').value.trim().toLowerCase();
+  let rows = O.classes.map(classRow).filter(r => !q || Object.values(r).join(' ').toLowerCase().includes(q));
+  if (classSort.key) rows.sort((a, b) => (typeof a[classSort.key] === 'number' ? a[classSort.key] - b[classSort.key] : String(a[classSort.key]).localeCompare(String(b[classSort.key]))) * classSort.dir);
+  else {   // default: tree order
+    const order = O.roots.flatMap(descendants);
+    rows.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  }
+  $('#classCount').textContent = `${rows.length} of ${O.classes.length} classes · click a row to see it in the graph`;
+  const arrow = k => classSort.key === k ? (classSort.dir > 0 ? ' ↑' : ' ↓') : '';
+  $('#classTable').innerHTML = `<thead><tr>${CLASS_COLS.map(([k, l]) => `<th class="sortable" data-sort="${k}">${l}${arrow(k)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `
+    <tr class="clickable" data-node="${esc(r.id)}"><td class="mono" style="white-space:nowrap;padding-left:${10 + r.level * 14}px">${shapeSvg(r.root)} ${esc(r.id)}</td><td class="mono">${esc(r.parent)}</td>
+    <td><span class="pill t-${esc(r.root)}">${esc(r.root)}</span></td><td class="num">${r.level}</td><td class="def">${esc(r.definition)}</td>
+    <td>${esc(r.examples)}</td><td class="num">${r.attributes || ''}</td><td class="src">${esc(r.sources)}</td></tr>`).join('') || '<tr><td colspan="8" class="count">No classes match.</td></tr>'}</tbody>`;
+}
+
+function renderRelTable() {
+  $('#relTable').innerHTML = `<thead><tr><th>Relation</th><th>Domain</th><th>Range</th><th>Definition</th><th>Sources</th></tr></thead><tbody>${O.relations.map((r, i) => `
+    <tr class="clickable" data-rel="${i}"><td class="mono">${esc(r.id)}</td><td>${r.domain.map(d => `<div style="white-space:nowrap">${shapeSvg(rootOf(d))} <span class="mono">${esc(d)}</span></div>`).join('')}</td>
+    <td>${r.range.map(d => `<div style="white-space:nowrap">${shapeSvg(rootOf(d))} <span class="mono">${esc(d)}</span></div>`).join('')}</td><td class="def">${esc(r.definition)}</td><td class="src">${esc(cite(r.sources))}</td></tr>`).join('')}</tbody>`;
+}
+
+function renderAttrTable() {
+  $('#attrTable').innerHTML = `<thead><tr><th>Class</th><th>Attribute</th><th>Unit</th><th>Definition</th></tr></thead><tbody>${O.attributes.map(a => `
+    <tr class="clickable" data-node="${esc(a.class)}"><td class="mono" style="white-space:nowrap">${shapeSvg(rootOf(a.class))} ${esc(a.class)}</td><td class="mono">${esc(a.name)}</td><td>${esc(a.unit || '')}</td><td class="def">${esc(a.definition)}</td></tr>`).join('') || '<tr><td colspan="4" class="count">No attributes.</td></tr>'}</tbody>`;
+}
+
+function kv(obj) {
+  const e = Object.entries(obj || {});
+  return e.length ? `<dl class="kv">${e.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(typeof v === 'object' ? JSON.stringify(v) : v)}</dd>`).join('')}</dl>` : '<p class="count">Not in this file.</p>';
+}
+
+function renderSources() {
+  const byDoc = {};   // doc -> page -> {classes, relations}
+  const add = (s, kind, id) => (s || []).forEach(x => { const p = ((byDoc[x.doc] ||= {})[x.page] ||= { classes: [], relations: [] }); if (!p[kind].includes(id)) p[kind].push(id); });
+  O.classes.forEach(c => add(c.sources, 'classes', c.id));
+  O.relations.forEach(r => add(r.sources, 'relations', r.id));
+  const docs = [...new Set([...O.sources, ...Object.keys(byDoc)])];
+  const seedC = O.classes.filter(c => !(c.sources || []).length).map(c => c.id), seedR = O.relations.filter(r => !(r.sources || []).length).map(r => r.id);
+  const V = O.validation || [];
+  $('#srcGrid').innerHTML = `
+    <section class="card"><h2>Ontology</h2>${kv({ name: O.name, model: O.model, documents: O.sources.join(', '), classes: O.classes.length, relations: O.relations.length, attributes: O.attributes.length })}</section>
+    <section class="card"><h2>Validation · ${V.length} message${V.length === 1 ? '' : 's'}</h2>${V.length ? `<ul>${V.map(v => `<li>${esc(v)}</li>`).join('')}</ul>` : '<p class="count">All checks passed: unique ids, existing parents, no cycles, domain and range on existing classes.</p>'}
+      ${seedC.length || seedR.length ? `<p class="hint">Without a page citation (from the seed schema): ${[...seedC, ...seedR].map(esc).join(', ')}.</p>` : ''}</section>
+    ${docs.map(d => { const pages = Object.keys(byDoc[d] || {}).sort((a, b) => a - b); return `<section class="card" style="grid-column:1/-1"><h2>${esc(shortDoc(d))} · ${pages.length} pages cited</h2>
+      <div class="table-wrap"><table><thead><tr><th>Page</th><th>Classes</th><th>Relations</th></tr></thead><tbody>${pages.map(p => `<tr><td class="num">${esc(p)}</td>
+      <td>${byDoc[d][p].classes.map(clsLink).join(' · ')}</td><td>${byDoc[d][p].relations.map(r => `<button class="linkbtn mono" data-rel="${O.relations.findIndex(x => x.id === r)}">${esc(r)}</button>`).join(' · ')}</td></tr>`).join('') || '<tr><td colspan="3" class="count">No citations.</td></tr>'}</tbody></table></div></section>`; }).join('')}
+    <section class="card"><h2>DRM phases</h2>${kv(O.drm_phases)}</section>
+    <section class="card"><h2>Edge status</h2>${kv(O.edge_status)}</section>`;
+}
+
+/* ---------- header ---------- */
+function renderHeader() {
+  $('#oName').textContent = O.name || 'Ontology';
+  $('#oMeta').innerHTML = [['documents', O.sources.map(shortDoc).join(' · ')], ['model', O.model]].filter(x => x[1]).map(([k, v]) => `<span>${esc(k)} <b>${esc(v)}</b></span>`).join('');
+  const pages = new Set(O.classes.flatMap(c => (c.sources || []).map(s => s.doc + s.page)));
+  const st = [[O.classes.length, 'classes'], [O.roots.length, 'root classes'], [O.relations.length, 'relations'], [O.attributes.length, 'attributes'], [pages.size, 'pages cited']];
+  $('#stats').innerHTML = st.map(([n, l]) => `<span class="stat"><b>${n}</b>${esc(l)}</span>`).join('');
+  $('#nClasses').textContent = O.classes.length; $('#nRelations').textContent = O.relations.length; $('#nAttributes').textContent = O.attributes.length;
+}
+
+function renderAll() {
+  renderHeader(); renderFilters(); renderClassTable(); renderRelTable(); renderAttrTable(); renderSources();
+  graphDirty = true;
+  if (currentTab === 'graph') buildCy();
+}
+
+/* ---------- tabs ---------- */
+function showTab(t) {
+  if (!['graph', 'classes', 'relations', 'attributes', 'sources'].includes(t)) t = 'graph';
+  currentTab = t;
+  document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t));
+  document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + t);
+  $('#filters').hidden = !O || t !== 'graph';
+  try { history.replaceState(null, '', location.pathname + location.search + '#' + t); } catch (_) {}
+  if (t === 'graph' && O) {
+    if (graphDirty) buildCy(); else if (cy) cy.resize();
+    if (pendingClass && cy) { const id = pendingClass; pendingClass = null; selectClass(id); }
+  }
+}
+
+/* ---------- events ---------- */
+const onLink = e => {
+  const n = e.target.closest('[data-node]'); if (n) { selectClass(n.dataset.node); return true; }
+  const r = e.target.closest('[data-rel]'); if (r) { highlightRelation(+r.dataset.rel); return true; }
+  return false;
+};
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('.tab'); if (b) showTab(b.dataset.tab); });
+$('#fileInput').addEventListener('change', e => { readFile(e.target.files[0]); e.target.value = ''; });
+$('#jsonPick').addEventListener('change', e => loadFromUrl(e.target.value).catch(err => showError(`Could not load ${e.target.value}: ${err.message}`)));
+$('#filters').addEventListener('click', e => {
+  if (e.target.closest('#resetF')) { F = { roots: new Set(O.roots), rels: new Set(O.relations.map(r => r.id)) }; renderFilters(); applyFilters(); runLayout(); return; }
+  const c = e.target.closest('.chip'); if (!c) return;
+  const set = F[c.dataset.f], v = c.dataset.v;
+  set.has(v) ? set.delete(v) : set.add(v);
+  c.setAttribute('aria-pressed', set.has(v));
+  applyFilters(); if (c.dataset.f === 'roots') runLayout();
+});
+$('#nodeSearch').addEventListener('input', applySearch);
+$('#layoutSel').addEventListener('change', () => { $('#showRel').checked = $('#layoutSel').value !== 'tree'; applyFilters(); runLayout(); });
+$('#relayoutBtn').addEventListener('click', runLayout);
+$('#showHier').addEventListener('change', applyFilters);
+$('#showRel').addEventListener('change', applyFilters);
+$('#edgeLabels').addEventListener('change', applyLabels);
+$('#fitBtn').addEventListener('click', () => cy && cy.fit(cy.elements().not('.hidden'), 40));
+$('#pngBtn').addEventListener('click', () => {
+  if (!cy) return;
+  const uri = cy.png({ full: true, scale: 2, bg: tok('--surface') });
+  $('#detail').innerHTML = `<h3>Graph snapshot</h3><p class="hint">Right-click or long-press the image to copy or save it. For Gephi or Cytoscape use ontology.graphml.</p><img src="${uri}" alt="Snapshot of the ontology graph" style="border:1px solid var(--line);border-radius:6px;max-width:100%">`;
+});
+$('#detail').addEventListener('click', onLink);
+$('#srcGrid').addEventListener('click', onLink);
+$('#relTable').addEventListener('click', onLink);
+$('#attrTable').addEventListener('click', onLink);
+$('#classTable').addEventListener('click', e => {
+  const th = e.target.closest('th[data-sort]');
+  if (th) { const k = th.dataset.sort; classSort = { key: k, dir: classSort.key === k ? -classSort.dir : 1 }; renderClassTable(); return; }
+  onLink(e);
+});
+$('#classSearch').addEventListener('input', renderClassTable);
+
+let dragDepth = 0;
+addEventListener('dragenter', e => { if ([...(e.dataTransfer?.types || [])].includes('Files')) { dragDepth++; $('#drop').hidden = false; } });
+addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) $('#drop').hidden = true; });
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => { e.preventDefault(); dragDepth = 0; $('#drop').hidden = true; const f = e.dataTransfer?.files?.[0]; if (f) readFile(f); });
+
+const restyle = () => { if (cy) cy.style(cyStyle()); };
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', restyle); } catch (_) {}
+new MutationObserver(restyle).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+addEventListener('resize', () => { if (cy && currentTab === 'graph') cy.resize(); });
+
+/* ---------- start ---------- */
+showTab((location.hash || '').slice(1) || 'graph');
+start().finally(() => { $('#filters').hidden = !O || currentTab !== 'graph'; });
+})();
+</script>
+
+</body>
+</html>
