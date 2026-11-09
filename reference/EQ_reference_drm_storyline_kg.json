@@ -1,0 +1,2032 @@
+{
+  "event": {
+    "id": "EQ_reference",
+    "name": "Earthquake – generic reference scenario",
+    "hazard": "Earthquake",
+    "scope": "any earthquake (not a specific event)",
+    "sources": "UNDRR-ISC Hazard Information Profiles 2025; UNDAC Handbook 8th ed., section K"
+  },
+  "storyline": {
+    "overview": {
+      "title": "Overview",
+      "content": "An earthquake is a sudden slip on a fault that releases radiated seismic energy and causes ground shaking; it can also be triggered by volcanic/magmatic activity or other sudden stress changes in the earth. Size is most commonly measured with the Moment Magnitude scale, a logarithmic measure where each one-unit increase corresponds to roughly a 32-fold increase in energy release and a two-unit increase to about a 1000-fold increase; the effects at a given location are instead described with intensity scales such as Modified Mercalli Intensity (MMI, I to XII), with structural damage typically beginning around MMI VI, varying with local building vulnerability. Earthquakes of magnitude 7.0 or above can cause intense, widespread shaking and extensive damage, magnitude 6.0–6.9 may cause significant local damage especially in populated areas, and smaller earthquakes can still damage vulnerable structures near the epicentre. Overall impact is mainly determined by the intensity of ground shaking combined with the quality of structural engineering and building codes in the region, further modulated by soil conditions, distance to the epicentre, depth of the rupture, preparedness of emergency services and resilience of the population.",
+      "confidence": "high"
+    },
+    "hazards": {
+      "title": "Primary and secondary hazards",
+      "content": "Primary earthquake hazards are ground shaking, surface fault rupture and fissures, and subsidence or uplift; secondary hazards caused by these include landslides and debris flows, liquefaction, tsunami, seiche, flooding, fire, and release of ground gases, as well as technological and societal hazards. Aftershocks follow the main shock and can continue for days, weeks or months, decaying in frequency over time according to Omori's law, meaning the first hours and days after the event carry the highest risk of further strong earthquakes; a main shock can also trigger another significant earthquake outside the statistically 'predicted' aftershock area. Saturated sandy sediments can liquefy, causing infrastructural damage and sinking of structures, while large-magnitude shaking can destabilize slopes leading to landslides and debris flows, particularly in mountainous regions. Dams, embankments and levees may fail, causing downstream flooding, and earthquakes near coasts can generate tsunamis (accounting for the large majority of tsunami occurrences) or seiche waves affecting areas near large water bodies; damaged infrastructure can also release flammable liquids or gases, increasing fire risk, and can trigger technological accidents at hazardous installations.",
+      "confidence": "high"
+    },
+    "physical": {
+      "title": "Physical impact",
+      "content": "Buildings on solid bedrock built to seismic design codes are less likely to suffer damage, whereas those on unconsolidated sediments can experience greater amplitude and duration of shaking and therefore more damage; degree of damage also depends on building irregularities, wave characteristics, soil conditions and structural resilience, and buildings only slightly or moderately damaged in the main shock may collapse during large aftershocks. Earthquakes can severely damage infrastructure and lifelines, including power cables, telecommunications, water and sanitation pipes, and gas lines, hampering relief efforts and daily life. Damage to ports, bridges, roads, airports and rail lines disrupts transportation and supply chains, increasing shipment costs and delays, and rubble can block roads and prevent access. Dams and levees may fail causing downstream flooding, and ruptured gas or power lines can ignite fires that are compounded when water lines are also broken, leaving insufficient water for firefighting.",
+      "confidence": "high"
+    },
+    "people": {
+      "title": "Impact on people",
+      "content": "Trauma from building collapse or other seismic activity is the leading cause of death, accounting for up to 75-80% of fatalities, while death is rare among people who were outdoors at the time of the earthquake. People trapped under collapsed structures may survive for several days under favourable conditions, but 85-95% of those rescued alive are found in the first 24-48 hours. Most injuries are minor cuts and bruises, followed by simple fractures and a smaller group with multiple severe fractures, internal injuries or crush syndrome requiring surgery; most injured people reach medical facilities within three to five days, typically in two waves—first casualties from the immediate area, then referred cases from more distant areas, with victims of secondary hazards such as aftershocks and fires arriving later. Epidemics and associated mortality in subsequent weeks are possible but are described as unlikely and usually of modest proportions. Earthquakes can cause lasting mental health effects, notably PTSD, particularly among children and teenagers, while major population displacement is rare except in heavily damaged urban areas, with most households beginning recovery efforts immediately.",
+      "confidence": "high"
+    },
+    "aggravating": {
+      "title": "Aggravating factors",
+      "content": "Impacts are generally worse closer to the epicentre and for shallower earthquakes, which spread shaking over a larger area; nighttime events can cause higher death tolls because more people are asleep inside vulnerable buildings, and emergency response may be hindered by the difficulty of mobilising resources overnight. Poorly designed, inspected or constructed buildings, especially unreinforced masonry, are more likely to collapse, and regions with fragile buildings, high population density or soil conditions that amplify shaking suffer more severe and widespread damage. Lack of earthquake awareness or warning systems increases vulnerability, as people may adopt risky behaviours such as approaching shorelines unaware of tsunami risk or sheltering near structures rather than away from them. Fires are a frequent aggravating secondary effect, worsened if water lines are also broken; cold climates raise the risk of hypothermia and frostbite for survivors and increase fire risk from indoor stoves in collapsed buildings, while hot climates make survival harder for people trapped without water. Hospitals may face power outages threatening intensive-care patients, and staff may abandon posts to find family members.",
+      "confidence": "high"
+    },
+    "early_warning": {
+      "title": "Early warning and rapid assessment",
+      "content": "Earthquakes cannot currently be predicted in terms of location, magnitude or time, though long-term hazard assessments and short-term aftershock forecasts using exponential/Omori decay patterns can indicate increased risk. Earthquake Early Warning systems use dense seismic sensor networks to detect initial energy pulses and send alerts providing up to several seconds of notice, often used for automatic shutdown of critical infrastructure rather than direct public warning; tsunami warning centres use detected earthquake location, depth and magnitude to assess tsunamigenic potential and issue warnings, sometimes with hours of lead time, though a strong or long-lasting earthquake near the coast should itself prompt self-evacuation. Within about 30 minutes of a main event, GDACS produces an automatic rapid impact estimation including affected areas, event and shake maps, meteorological forecasts, exposure and population estimates, critical infrastructure status and estimated casualties, with satellite mapping products available once relevant services are activated.",
+      "confidence": "high"
+    },
+    "needs": {
+      "title": "Typical needs",
+      "content": "Search and rescue by INSARAG-certified USAR teams is a priority to locate and extract survivors trapped in collapsed structures, deployed as quickly as possible. Medical care needs are high as local facilities become overwhelmed, requiring temporary field hospitals with emergency personnel and supplies. Logistics are strained by congested airspace, reduced airport capacity, damaged roads and ports, and disrupted supply chains, requiring temporary transport solutions. Displaced people need emergency shelter (tents, cots, blankets) alongside food, water and hygiene items, often staying outside damaged homes until aftershocks subside and structural assessments are completed; food and water distribution, sanitation infrastructure and hygiene promotion, restoration of power and communications, and debris removal (with care for hazardous materials like asbestos) are all required. Protection needs rise as emergencies exacerbate existing inequalities and increase risks of exploitation, abuse and neglect, with women, female-headed households and children facing heightened vulnerability, while environmental/technological risks from damaged hazardous installations also need to be addressed.",
+      "confidence": "high"
+    },
+    "response": {
+      "title": "Response and coordination",
+      "content": "Effective response requires coordination across government agencies, disaster relief organisations, businesses, community groups and civil society. INSARAG-certified USAR teams are typically among the first international responders, tasked with locating and extracting survivors, with speed being critical to saving lives. A UNDAC team supports on-site coordination of international USAR operations, establishing a Reception & Departure Centre for incoming relief teams, liaising with national emergency management authorities and the Resident/Humanitarian Coordinator, and appointing a dedicated USAR Liaison Officer to link USAR operations with the overall humanitarian operation. Response is complicated by congested air traffic, delays in air and overland transport, and disrupted supply chains, requiring temporary solutions to move aid and enable population movement out of impacted zones.",
+      "confidence": "high"
+    },
+    "risk_reduction": {
+      "title": "Risk reduction",
+      "content": "Earthquakes themselves cannot be prevented and there is no technology to reduce their magnitude, but related vulnerability, exposure and risk can be reduced. The most common and effective mitigation measure is the implementation and enforcement of building codes with earthquake safety provisions, such as those provided by FEMA, the International Association of Earthquake Engineering, and Eurocode 8 in Europe. Other measures include targeted seismic retrofitting of existing structures, strategic urban planning that forbids construction near cliff faces, active faults or on soft soils, and development of public risk awareness campaigns. Global hazard and risk models, such as those from the Global Earthquake Model Foundation, provide scientific bases for developing seismic design codes, and some success has been achieved with early warning systems such as Japan's bullet-train system and Mexico City's building evacuation warning system.",
+      "confidence": "high"
+    },
+    "safety": {
+      "title": "Safety and security",
+      "content": "All earthquakes occur in sequences, and any initial event could be a foreshock preceding a larger earthquake; leftover stress in the fault produces aftershocks of varying magnitude and depth throughout a response mission, posing ongoing risk of further damage and casualties. Buildings damaged by shaking can become unstable and collapse in subsequent aftershocks even if damage is not visible, so no infrastructure should be assumed safe without assessment by certified structural engineers, and escape routes should be established wherever a building is used for work or rest. General safety guidance includes dropping to the floor and taking cover during aftershocks, identifying safe spaces away from windows and heavy furniture, keeping a flashlight, shoes, clothing and a grab bag ready at night, and avoiding elevators and exterior walls in high-rises. Other hazards include downed power lines (electrocution/fire risk), gas leaks and fires, landslides and mudslides near slopes, potential dam failures causing sudden flooding, compromised sanitation increasing illness risk, and toxic chemical releases from damaged premises. Security concerns also rise after earthquakes, with chaos and confusion potentially leading to increased crime and a temporary breakdown of law and order, making secure workplace and rest-place arrangements necessary for responders.",
+      "confidence": "high"
+    }
+  },
+  "kg": {
+    "nodes": [
+      {
+        "id": "ground_shaking_rupture",
+        "label": "Ground shaking and surface rupture",
+        "description": "Primary earthquake hazards: ground shaking, surface fault rupture and fissures, and subsidence/uplift, driven by sudden slip on a fault releasing seismic energy; effects vary with magnitude, distance and local soil conditions.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 1
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ],
+        "type": "hazard"
+      },
+      {
+        "id": "aftershocks",
+        "label": "Aftershocks and triggered earthquakes",
+        "description": "Leftover fault stress generates aftershocks that decay over time following Omori's law, with the highest risk of further strong earthquakes in the first hours and days; a main shock can also trigger another significant earthquake outside the predicted aftershock area.",
+        "drm_phase": "none",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 7
+          }
+        ],
+        "type": "hazard"
+      },
+      {
+        "id": "landslides_liquefaction",
+        "label": "Landslides and liquefaction",
+        "description": "Shaking can destabilize slopes causing landslides and debris flows, especially in mountainous areas, and can cause liquefaction of saturated sandy sediments, leading to infrastructural damage and sinking of structures.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          },
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 1
+          }
+        ],
+        "type": "hazard"
+      },
+      {
+        "id": "tsunami_seiche_flooding",
+        "label": "Tsunami, seiche and flood",
+        "description": "Earthquakes near coasts can generate tsunamis (accounting for the large majority of tsunami occurrences) or seiche waves near large water bodies; dam, embankment and levee failures can also cause downstream flooding.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 7
+          }
+        ],
+        "type": "hazard"
+      },
+      {
+        "id": "fire",
+        "label": "Post-earthquake fire",
+        "description": "Damaged power lines, gas lines, and overturned heating/cooking appliances can ignite fires, which are compounded when water lines are also broken, leaving insufficient water for firefighting.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "hazard"
+      },
+      {
+        "id": "technological_hazard",
+        "label": "Technological and hazardous material release",
+        "description": "Earthquakes can damage hazardous installations, releasing flammable liquids, gases or toxic chemicals, causing fires, explosions, gas leaks or chemical spills, as well as ground gas releases.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 1
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ],
+        "type": "hazard"
+      },
+      {
+        "id": "deaths_trauma",
+        "label": "Deaths from structural trauma",
+        "description": "Trauma from building collapse or other seismic activity is the leading cause of death, accounting for up to 75-80% of fatalities; death is rare among people outdoors at the time of the earthquake.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "trapped_survivors",
+        "label": "People trapped under rubble",
+        "description": "Structural collapses generate trapped victims who may survive for several days under favourable conditions, but 85-95% of those rescued alive are found in the first 24-48 hours.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "injuries",
+        "label": "Injuries requiring medical care",
+        "description": "Most injuries are minor cuts and bruises, followed by simple fractures and a smaller group with severe fractures, internal injuries or crush syndrome; most injured arrive at medical facilities within three to five days in two waves, with secondary-hazard victims arriving later.",
+        "drm_phase": "none",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "building_infrastructure_damage",
+        "label": "Building and lifeline damage",
+        "description": "Buildings may collapse or be damaged depending on construction quality and soil; power, telecommunications, water/sanitation and gas lifelines can be severed, hampering relief and daily life; buildings only slightly damaged may collapse in later aftershocks.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "transport_disruption",
+        "label": "Transport and supply chain disruption",
+        "description": "Damage to ports, bridges, roads, airports and rail lines disrupts transportation and supply chains, increasing shipment costs and delays, while rubble blocks roads and prevents access.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "mental_health_impact",
+        "label": "Mental health effects",
+        "description": "Earthquakes can cause lasting mental health effects, notably PTSD characterized by intrusive memories, hyperarousal and avoidance, particularly among children and teenagers.",
+        "drm_phase": "none",
+        "timeframe": "weeks",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "displacement",
+        "label": "Population displacement",
+        "description": "Major population displacement is rare except in heavily damaged urban areas; most households begin recovery efforts immediately, often settling outside damaged homes until aftershocks subside.",
+        "drm_phase": "none",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "disease_outbreak_risk",
+        "label": "Epidemic risk",
+        "description": "Epidemics and associated mortality in subsequent weeks are possible but are described as unlikely and usually of modest proportions.",
+        "drm_phase": "none",
+        "timeframe": "weeks",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "impact"
+      },
+      {
+        "id": "weak_building_stock",
+        "label": "Unreinforced and poorly built structures",
+        "description": "Poorly designed, inspected or constructed buildings, especially unreinforced masonry, are more likely to collapse; weaker masonry results in higher death tolls.",
+        "drm_phase": "none",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "vulnerability"
+      },
+      {
+        "id": "soft_soil_high_density",
+        "label": "Soft soils and high population density",
+        "description": "Regions with fragile buildings, high population density or local soil conditions that amplify ground shaking suffer more severe and widespread damage; higher density also means more people and infrastructure exposed.",
+        "drm_phase": "none",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "vulnerability"
+      },
+      {
+        "id": "nighttime_occurrence",
+        "label": "Night-time occurrence",
+        "description": "Earthquakes at night can cause higher death tolls because more people are asleep inside vulnerable buildings, and emergency response may be hindered by difficulty mobilising resources overnight.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "vulnerability"
+      },
+      {
+        "id": "low_awareness_no_warning",
+        "label": "Lack of earthquake awareness",
+        "description": "Populations lacking earthquake awareness training and warning systems are more vulnerable, as they may resort to risky behaviours such as approaching shorelines unaware of tsunami risk or sheltering near structures rather than away from them.",
+        "drm_phase": "none",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ],
+        "type": "vulnerability"
+      },
+      {
+        "id": "extreme_weather_exposure",
+        "label": "Extreme weather exposure",
+        "description": "Cold climates raise risk of hypothermia, frostbite and indoor-stove fires for survivors in collapsed buildings; hot climates make survival harder for people trapped without water; bad weather also hinders rescue efforts.",
+        "drm_phase": "none",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "vulnerability"
+      },
+      {
+        "id": "need_search_rescue",
+        "label": "Extraction of trapped survivors",
+        "description": "Survivors trapped in collapsed structures need rapid detection and extraction, as speed is critical for saving lives in the first 24-48 hours.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_medical_care",
+        "label": "Emergency medical care",
+        "description": "Overwhelmed local medical facilities create a need for emergency treatment of injuries, fractures and crush syndrome.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_transport_access",
+        "label": "Functioning transport and logistics access",
+        "description": "Congested airspace, reduced airport capacity, damaged roads and ports, and disrupted supply chains leave people without reliable means to move aid and evacuate affected zones.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_shelter",
+        "label": "Emergency shelter and housing",
+        "description": "People whose homes are destroyed or unsafe lack shelter supplies such as tents, cots and blankets, and need evacuation shelters until structural assessments are completed.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_food_water",
+        "label": "Access to food and safe water",
+        "description": "Disrupted infrastructure cuts off access to food and clean water for the affected population.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_sanitation",
+        "label": "Sanitation and hygiene services",
+        "description": "Without functioning water supply, sewer systems and hygiene items, survivors face deteriorating conditions and rising risk of communicable disease.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_power_communications",
+        "label": "Power and communication networks",
+        "description": "Severely damaged electrical infrastructure and communications systems isolate people and prevent coordination of rescue and relief.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_debris_clearance",
+        "label": "Clearance of blocked access routes",
+        "description": "Rubble blocking roads prevents access for relief and search and rescue, including hazardous materials like asbestos that require safe handling.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "need_protection",
+        "label": "Protection from exploitation and abuse",
+        "description": "Breakdown of social structures and services raises risks of exploitation, abuse and neglect, with women, female-headed households and children facing heightened vulnerability.",
+        "drm_phase": "response",
+        "timeframe": "weeks",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ],
+        "type": "need"
+      },
+      {
+        "id": "seismic_building_codes",
+        "label": "Seismic building codes and enforcement",
+        "description": "Implementation and enforcement of building codes with earthquake safety provisions (e.g. FEMA, IAEE, Eurocode 8) is the most common and effective measure for mitigating earthquake risk.",
+        "drm_phase": "prevention",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          },
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 3
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "seismic_retrofitting",
+        "label": "Seismic retrofitting of structures",
+        "description": "Targeted seismic retrofitting interventions reduce vulnerability of existing buildings and infrastructure to future ground shaking.",
+        "drm_phase": "prevention",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "land_use_planning",
+        "label": "Risk-informed urban planning",
+        "description": "Strategic urban planning forbids construction near cliff faces, active faults or on soft soils, reducing exposure to shaking, landslides and liquefaction.",
+        "drm_phase": "prevention",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "early_warning_systems",
+        "label": "Earthquake and tsunami early warning systems",
+        "description": "Dense seismic sensor networks detect initial energy pulses to send alerts with seconds of notice (e.g. Japan's bullet-train system) and tsunami warning centres assess tsunamigenic potential, sometimes providing hours of lead time; EEW in Mexico City also triggers building evacuation warnings.",
+        "drm_phase": "preparedness",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          },
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 3
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "hazard_risk_modelling_awareness",
+        "label": "Hazard risk modelling and public awareness",
+        "description": "Global hazard and risk models (e.g. GEM Foundation) provide the scientific basis for seismic design codes, complemented by public risk awareness campaigns to reduce risky behaviours.",
+        "drm_phase": "prevention",
+        "timeframe": "pre-event",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          },
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 3
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "usar_deployment",
+        "label": "Deployment of USAR teams",
+        "description": "INSARAG-certified urban search and rescue teams are rapidly deployed to detect and extract survivors trapped in collapsed structures.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "field_hospitals",
+        "label": "Deployment of field hospitals",
+        "description": "Temporary field hospitals with emergency medical personnel, supplies and equipment treat the injured when local facilities are overwhelmed.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "temporary_transport_solutions",
+        "label": "Temporary transport solutions",
+        "description": "Temporary solutions to ferry in aid and allow population movement are established despite congested air traffic, damaged roads, bridges and ports.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "emergency_shelter_provision",
+        "label": "Emergency shelter provision",
+        "description": "Distribution of tents, cots, blankets and opening of evacuation shelters with temporary housing, food/water, hygiene and medical aid.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "food_water_distribution",
+        "label": "Food and water distribution",
+        "description": "Distribution of food rations, bottled water and purification equipment, supported by market and cash-based assistance, stabilizes supplies.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "wash_restoration",
+        "label": "Water and sanitation restoration",
+        "description": "Repair of water supply, treatment and sewer systems alongside distribution of hygiene items, latrines and hygiene promotion reduces disease risk.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "power_comms_restoration",
+        "label": "Power and communications restoration",
+        "description": "Bringing in generators and repair crews restores electricity, while rapid deployment of temporary cell towers, satellite phones and radios restores communications and situational awareness.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "debris_clearance_ops",
+        "label": "Debris clearance operations",
+        "description": "Heavy construction equipment and crews clear roadways and blocked areas, recycling debris where possible and safely handling hazardous materials like asbestos.",
+        "drm_phase": "response",
+        "timeframe": "days",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "protection_programming",
+        "label": "Protection programming for vulnerable groups",
+        "description": "Relief efforts prioritize the unique needs of women, female-headed households and children to prevent exploitation, abuse and neglect, following centrality-of-protection guidance.",
+        "drm_phase": "response",
+        "timeframe": "weeks",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ],
+        "type": "measure"
+      },
+      {
+        "id": "undac_team",
+        "label": "UNDAC team",
+        "description": "Supports on-site coordination of international USAR operations, establishes a Reception & Departure Centre, liaises with national emergency management authorities and the RC/HC, and appoints a USAR Liaison Officer.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 7
+          }
+        ],
+        "type": "actor"
+      },
+      {
+        "id": "insarag_usar_teams",
+        "label": "INSARAG-certified USAR teams",
+        "description": "Specialized international search and rescue teams are typically among the first responders, tasked with locating and extracting survivors trapped under collapsed structures.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ],
+        "type": "actor"
+      },
+      {
+        "id": "gdacs",
+        "label": "GDACS",
+        "description": "Within about 30 minutes of a main event, GDACS produces automatic rapid impact estimation including event/shake maps, exposure, population and casualty estimates, with satellite mapping products via SMCS once activated.",
+        "drm_phase": "response",
+        "timeframe": "hours",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          },
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ],
+        "type": "actor"
+      }
+    ],
+    "edges": [
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "causes",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Trauma from building collapse or other seismic activity is the leading cause of death, up to 75-80% of fatalities.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "causes",
+        "target": "trapped_survivors",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Structural collapses from shaking generate trapped victims, with 85-95% rescued alive within 24-48 hours.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "causes",
+        "target": "injuries",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Shaking causes injuries ranging from minor cuts to severe fractures and crush syndrome.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "causes",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Ground shaking damages buildings and severs power, telecom, water/sanitation and gas lifelines.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "triggers",
+        "target": "landslides_liquefaction",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Shaking can destabilize slopes causing landslides and debris flows and liquefy saturated sandy sediments.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "triggers",
+        "target": "tsunami_seiche_flooding",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Earthquakes near coasts or large water bodies can generate tsunamis or seiches; dam/levee failure can also cause flooding.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "triggers",
+        "target": "fire",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Damaged power and gas lines and overturned appliances ignite fires after earthquakes.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "triggers",
+        "target": "technological_hazard",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Earthquakes can damage hazardous installations releasing flammable or toxic substances, causing fires, explosions or spills.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "ground_shaking_rupture",
+        "relation": "triggers",
+        "target": "aftershocks",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Leftover fault stress after a main shock generates aftershocks following Omori's law, highest risk in first hours/days.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "aftershocks",
+        "relation": "causes",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Buildings only slightly or moderately damaged may collapse during large aftershocks.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "aftershocks",
+        "relation": "causes",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Aftershocks cause further damage and increase risk of building collapse, endangering victims and aid workers.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "landslides_liquefaction",
+        "relation": "causes",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Liquefaction causes infrastructural damage and sinking of structures; landslides block roads and cause surface damage.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "landslides_liquefaction",
+        "relation": "causes",
+        "target": "transport_disruption",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Landslides and debris can block roads causing access difficulties.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "tsunami_seiche_flooding",
+        "relation": "causes",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Tsunamis can be extremely destructive, increasing overall disaster impact including loss of life.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "tsunami_seiche_flooding",
+        "relation": "causes",
+        "target": "transport_disruption",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Critical infrastructure such as ports and airports may become unusable due to tsunami severity.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "tsunami_seiche_flooding",
+        "relation": "causes",
+        "target": "displacement",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Flooding and tsunami damage in low-lying coastal areas can force evacuation and displacement.",
+        "confidence": "low",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "fire",
+        "relation": "causes",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Fires triggered by ruptured gas lines and downed power lines cause additional casualties.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "fire",
+        "relation": "causes",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Post-earthquake fires compound damage, especially when water lines are broken leaving insufficient firefighting water.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "technological_hazard",
+        "relation": "causes",
+        "target": "injuries",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Hazardous material releases, explosions and chemical spills can injure populations and responders.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "technological_hazard",
+        "relation": "causes",
+        "target": "need_protection",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Environmental hazards from technological accidents add to protection and safety concerns for affected populations.",
+        "confidence": "low",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "transport_disruption",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Damage to ports, bridges, roads, airports and rail lines disrupts transportation and supply chains.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "displacement",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "When homes are destroyed or unsafe, people become homeless and may settle outside former homes awaiting assessment.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "need_shelter",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Destroyed or unsafe homes generate need for emergency shelter and housing solutions.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "need_power_communications",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Severely damaged electrical and communications infrastructure isolates people and prevents coordination.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "need_sanitation",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Ruptured water/sanitation pipes create sanitation needs and risk of disease.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "need_debris_clearance",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Collapsed buildings generate rubble blocking roads, requiring debris removal.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "trapped_survivors",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Building collapses generate trapped victims needing search and rescue.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "transport_disruption",
+        "relation": "causes",
+        "target": "need_transport_access",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Damaged roads, ports, airports and congested airspace leave people without reliable means to move aid.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "transport_disruption",
+        "relation": "amplifies",
+        "target": "need_food_water",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Disrupted supply chains and transport increase shipment costs and delays affecting food/water access.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "trapped_survivors",
+        "relation": "causes",
+        "target": "need_search_rescue",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Survivors trapped in collapsed structures need rapid detection and extraction within 24-48 hours.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "injuries",
+        "relation": "causes",
+        "target": "need_medical_care",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Injured individuals overwhelm local medical facilities, requiring emergency treatment.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "deaths_trauma",
+        "relation": "amplifies",
+        "target": "mental_health_impact",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Deaths and trauma events contribute to lasting mental health effects such as PTSD.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "displacement",
+        "relation": "causes",
+        "target": "need_shelter",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Displaced populations require emergency shelter and housing solutions.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "displacement",
+        "relation": "amplifies",
+        "target": "need_protection",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Displacement and breakdown of social structures heighten protection risks especially for women and children.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "displacement",
+        "relation": "amplifies",
+        "target": "disease_outbreak_risk",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Crowded displacement settings with poor sanitation can increase risk of disease outbreaks.",
+        "confidence": "low",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "weak_building_stock",
+        "relation": "amplifies",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Poorly designed, inspected or constructed buildings are more likely to collapse, with weaker masonry causing higher death tolls.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "weak_building_stock",
+        "relation": "amplifies",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Unreinforced masonry buildings pose the greatest danger during strong earthquakes, with weaker masonry resulting in higher death tolls.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "soft_soil_high_density",
+        "relation": "amplifies",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Regions with fragile buildings, high-density populations or soil conditions amplifying shaking suffer more severe, widespread damage.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "soft_soil_high_density",
+        "relation": "amplifies",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Higher population densities increase risk of extensive damage and loss of life as more people and infrastructure are exposed.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "nighttime_occurrence",
+        "relation": "amplifies",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Earthquakes at night cause higher death tolls as more people are asleep inside vulnerable buildings.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "nighttime_occurrence",
+        "relation": "amplifies",
+        "target": "need_search_rescue",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Emergency response may be hindered by challenges of mobilising resources during overnight hours.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "low_awareness_no_warning",
+        "relation": "amplifies",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Lack of earthquake awareness leads to risky behaviours such as sheltering near structures, increasing harm.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "low_awareness_no_warning",
+        "relation": "amplifies",
+        "target": "tsunami_seiche_flooding",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Populations unaware of tsunami risk may approach shorelines, increasing exposure and harm.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "extreme_weather_exposure",
+        "relation": "amplifies",
+        "target": "deaths_trauma",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Cold climates raise risk of hypothermia and frostbite for survivors; hot climates make survival harder for people trapped without water.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "extreme_weather_exposure",
+        "relation": "amplifies",
+        "target": "need_search_rescue",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Bad weather can hinder rescue efforts and make response much harder.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "extreme_weather_exposure",
+        "relation": "amplifies",
+        "target": "fire",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "During cold weather, stoves and fires burning inside collapsed houses significantly increase chances of post-earthquake fires.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "seismic_building_codes",
+        "relation": "prevents",
+        "target": "building_infrastructure_damage",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Implementation and enforcement of seismic building codes is the most common and effective measure for mitigating earthquake risk and building collapse.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "seismic_building_codes",
+        "relation": "mitigates",
+        "target": "weak_building_stock",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Building codes with earthquake safety provisions reduce vulnerability of poorly built structures.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "seismic_retrofitting",
+        "relation": "mitigates",
+        "target": "weak_building_stock",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Targeted seismic retrofitting interventions reduce vulnerability of existing buildings to future ground shaking.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "land_use_planning",
+        "relation": "prevents",
+        "target": "landslides_liquefaction",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Strategic urban planning forbids construction near cliff faces, active faults or on soft soils, reducing exposure to landslides and liquefaction.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "land_use_planning",
+        "relation": "mitigates",
+        "target": "soft_soil_high_density",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Risk-informed planning reduces exposure of populations and buildings to soft-soil amplification and high-density risk zones.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "early_warning_systems",
+        "relation": "mitigates",
+        "target": "deaths_trauma",
+        "drm_phase": "preparedness",
+        "status": "recommended",
+        "explanation": "EEW systems provide seconds of warning enabling automatic shutdown of infrastructure and evacuation, e.g. Japan's bullet-train system and Mexico City's building evacuation alerts.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "early_warning_systems",
+        "relation": "mitigates",
+        "target": "tsunami_seiche_flooding",
+        "drm_phase": "preparedness",
+        "status": "recommended",
+        "explanation": "Tsunami warning centres assess tsunamigenic potential and push warnings providing sometimes hours of lead time to evacuate.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "hazard_risk_modelling_awareness",
+        "relation": "mitigates",
+        "target": "low_awareness_no_warning",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Public risk awareness campaigns complement hazard models to reduce risky behaviours stemming from lack of earthquake awareness.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "hazard_risk_modelling_awareness",
+        "relation": "mitigates",
+        "target": "weak_building_stock",
+        "drm_phase": "prevention",
+        "status": "recommended",
+        "explanation": "Global hazard and risk models like GEM provide scientific basis for seismic design codes that reduce weak building stock risk.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "HIPs-EarthQuakes.pdf",
+            "page": 3
+          }
+        ]
+      },
+      {
+        "source": "usar_deployment",
+        "relation": "addresses",
+        "target": "need_search_rescue",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "INSARAG-certified USAR teams are crucial for detecting and extracting survivors trapped in collapsed buildings, deployed as quickly as possible.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "field_hospitals",
+        "relation": "addresses",
+        "target": "need_medical_care",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Temporary field hospitals with emergency medical personnel treat the injured when local facilities are overwhelmed.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "temporary_transport_solutions",
+        "relation": "addresses",
+        "target": "need_transport_access",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Temporary solutions help ferry in aid and allow population movement despite damaged roads, bridges and ports.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "emergency_shelter_provision",
+        "relation": "addresses",
+        "target": "need_shelter",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Distribution of tents, cots, blankets and opening of evacuation shelters addresses emergency shelter needs.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "food_water_distribution",
+        "relation": "addresses",
+        "target": "need_food_water",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Distribution of food rations, bottled water and purification equipment stabilizes food and water supplies.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "wash_restoration",
+        "relation": "addresses",
+        "target": "need_sanitation",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Repair of water supply and sewer systems alongside hygiene item distribution reduces disease risk and addresses sanitation needs.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "power_comms_restoration",
+        "relation": "addresses",
+        "target": "need_power_communications",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Generators, repair crews and temporary cell towers/satellite phones restore power and communications access.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "debris_clearance_ops",
+        "relation": "addresses",
+        "target": "need_debris_clearance",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Heavy equipment and crews clear roadways and blocked areas, safely handling hazardous materials like asbestos.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "protection_programming",
+        "relation": "addresses",
+        "target": "need_protection",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Relief efforts prioritize unique needs of women, female-headed households and children following centrality-of-protection guidance.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "wash_restoration",
+        "relation": "mitigates",
+        "target": "disease_outbreak_risk",
+        "drm_phase": "response",
+        "status": "recommended",
+        "explanation": "Proper sanitation and waste management prevents deterioration of conditions and reduces risk of communicable disease.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "insarag_usar_teams",
+        "relation": "implements",
+        "target": "usar_deployment",
+        "drm_phase": "response",
+        "status": "typical",
+        "explanation": "INSARAG-certified USAR teams are typically among the first responders tasked with locating and extracting survivors.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      },
+      {
+        "source": "undac_team",
+        "relation": "implements",
+        "target": "usar_deployment",
+        "drm_phase": "response",
+        "status": "typical",
+        "explanation": "UNDAC supports on-site coordination of international USAR operations and appoints a USAR Liaison Officer.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 6
+          }
+        ]
+      },
+      {
+        "source": "gdacs",
+        "relation": "implements",
+        "target": "hazard_risk_modelling_awareness",
+        "drm_phase": "preparedness",
+        "status": "typical",
+        "explanation": "GDACS produces automatic rapid impact estimation including shakemaps, exposure, population and casualty estimates within 30 minutes of an event.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 2
+          }
+        ]
+      },
+      {
+        "source": "mental_health_impact",
+        "relation": "causes",
+        "target": "need_protection",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "PTSD and lasting psychological trauma, particularly among children and teenagers, heighten the need for protective support and safeguarding of vulnerable groups.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "disease_outbreak_risk",
+        "relation": "causes",
+        "target": "need_medical_care",
+        "drm_phase": "none",
+        "status": "possible",
+        "explanation": "Epidemics occurring in the weeks following an earthquake, though described as unlikely and usually modest in scale, would increase the need for emergency medical treatment.",
+        "confidence": "medium",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 4
+          }
+        ]
+      },
+      {
+        "source": "building_infrastructure_damage",
+        "relation": "causes",
+        "target": "need_food_water",
+        "drm_phase": "none",
+        "status": "typical",
+        "explanation": "Disrupted infrastructure cuts off access to food and clean water for the affected population.",
+        "confidence": "high",
+        "sources": [
+          {
+            "doc": "UNDAC_Handbook_8th_edition_section_K.PDF",
+            "page": 5
+          }
+        ]
+      }
+    ],
+    "validation": {
+      "dropped_edges": [],
+      "dropped_nodes": [],
+      "merged_nodes": []
+    }
+  },
+  "passages": [
+    {
+      "n": 1,
+      "reliefweb_id": "HIPs-EarthQuakes.pdf",
+      "title": "HIPs-EarthQuakes – page 1",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDRR-ISC Hazard Information Profiles 2025"
+      ],
+      "field": "pdf",
+      "pdf_filename": "HIPs-EarthQuakes.pdf",
+      "phases": [
+        "reference"
+      ],
+      "text": "UNDRR - ISC Hazard Information Profiles – 2025 Update \n224 GEOLOGICAL \nContents \n\nGH0101 / GEOLOGICAL / Seismic \n\nEarthquake \nDefinition \nEarthquake is a term used to describe the sudden slip on a fault and the ground \nshaking that occurs from the radiated seismic energy during the slipping event. \nThe sudden slip can be caused by stress changes in the earth or \nvolcanic/magmatic activity (USGS, no date). \n\nReference \nUSGS, no date. Earthquake glossary. United States Geological Survey (USGS). \nhttps://www.usgs.gov/glossary/earthquake-hazards-program#E, accessed 18 January 2025. \n\nAnnotations \nSynonyms \nQuake or earth tremor. \nAdditional scientific description \nPrimary earthquake hazards are those phenomena that occur most directly from an earthquake: ground shaking, surface rupture (and \nfissures), and subsidence/uplift. Secondary earthquake hazards are those that are caused by primary hazards and include landslides \n(and debris flow), liquefaction, tsunami, seiche, flooding, fire, and ground gases (Daniell et al., 2017), as well as technological and \nsocietal hazards. Usage of the term earthquake for ground shaking associated with non-seismic events (e.g. volcanic shocks that are \nnot caused by fault movement), as well as human-induced events (e.g. nuclear explosions) is discouraged. \nMetrics and numerical limits \nThe size or strength of an earthquake can be measured using a magnitude scale. The ‘Moment magnitude’ (Hanks and Kanamori, \n1979) scale is one of the most common systems to measure an earthquake’s size, as it quantifies the energy released by the \nearthquake. Magnitude scales are logarithmic, meaning that each increase of one magnitude unit (i.e., 4.3 to 5.3) corresponds to a \ntenfold (factor of 10) increase in the amplitude of the seismic measurements, and a factor of 32 increase in the energy release of an \nearthquake (USGS, no date a). \nEarthquakes of magnitude 7.0 and above can be expected to cause widespread intense ground shaking as well as other triggered \nsecondary hazards, and extensive damage Earthquakes of magnitudes 6.0 to 6.9 may cause local damage, while smaller \nearthquakes can cause damage to vulnerable structures at short distances. The severity and extent of earthquake damage is heavily \ndependent on other factors, such as the distance from the earthquake source and local conditions. Losses may be more severe and \nwidespread for an earthquake of a given magnitude in regions of fragile buildings, high-density populations or regions with local \nsoil conditions that cause the amplification of ground shaking. \nThere are many different metrics for measuring the effects of earthquakes at a particular location. Qualitative intensity measures, \nlike the Modified Mercalli intensity (MMI) scale (Wood and Neumann, 1931), and similar scales such as the Medvedev-SponheuerKárník (MSK) scale or the European Macroseismic Scale (EMS-98) describe the severity of the ground shaking on the basis of \nobserved effects on humans, on objects and on nature, in a limited area (Grünthal, 1998). Modified Mercalli intensity values range \nfrom I (Not felt) to XII (Total damage), and the threshold for seismic intensity after which structural damage is expected begins at \nVI, although this varies according to the vulnerability of the built environment in a given region. Since 1931, it has become clear that \nmany of the damage phenomena described by Wood and Neumann (1931) were less related to ground shaking, and more to other \nfactors that can cause destruction such as ground failure (Dewey et al., 1995). \nGround motion parameters related to ground shaking intensity include peak ground acceleration (PGA), peak ground velocity (PGV), \nand elastic spectral acceleration for a given period of vibration (SA). Most of these are commonly measured at seismic stations."
+    },
+    {
+      "n": 2,
+      "reliefweb_id": "HIPs-EarthQuakes.pdf",
+      "title": "HIPs-EarthQuakes – page 2",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDRR-ISC Hazard Information Profiles 2025"
+      ],
+      "field": "pdf",
+      "pdf_filename": "HIPs-EarthQuakes.pdf",
+      "phases": [
+        "reference"
+      ],
+      "text": "UNDRR - ISC Hazard Information Profiles – 2025 Update \n225 GEOLOGICAL \nContents \n\nSeismic intensity and ground motion parameters can be combined with vulnerability functions and exposure datasets to \ncalculate earthquake losses and damages (Silva et al., 2020). Some organizations have used these measures of ground \nshaking to quantify earthquake hazard globally such as the Global Earthquake Model (GEM) Foundation, which maintains \nglobal earthquake hazard maps (Pagani et al., 2020) or the U.S. Geological Survey that creates ShakeMaps® every time that a \ndamaging event occurs (Wald et al., 2008). \nKey relevant UN convention(s) / multilateral treaty(ies) / Framework(s) \nSendai Framework for Disaster Risk Reduction 2015-2030, the United Nations 17 Sustainable Development Goals. \nExamples of hazard drivers, impacts and risk management \nHazard Drivers: Earthquakes are primarily driven by natural geological processes. \nImpacts: The extent of impacts commonly relates to the intensity of the earthquake, the number and intensity of aftershocks, the \nvulnerability of the built environment, and the time of the event. Nearly 830,000 people were killed during earthquakes and associated \nsecondary hazardous events between 1994 and 2024 mainly due to physical (e.g., fragile building constructions) and/or social (e.g., \nage or health conditions) vulnerability (CRED, 2024). Impacts can be exacerbated by factors such as building construction and location \nof buildings (for example, structures built on soft soils), and in more vulnerable populations. \nMulti-hazard Context: The figure below summarizes common interactions between earthquakes and other hazards. This information \nshould be used with caution and not be solely relied upon in Disaster Risk Management, particularly as some interactions may not have \nbeen included. Note that hazardous events occurring together or locally in space or time may not necessarily cause, amplify or be \notherwise related to each other. Specific examples of multi-hazard context can be found in the ‘Hazard drivers’ and ‘Impacts’ sections \nabove. \n\nMonitoring: The section and the table below offer an overview of monitoring earthquakes. This information can be used for forecasting \nwithin a national early warning system (EWS). Since EWS capacities and processes differ across countries, the most current and \nspecific information regarding EWS should be obtained from the appropriate national or regional agency/authority responsible for \ndisaster management. \nWhich institution(s) produce(s) \nDisaster Risk Data/Information? \nEarthquake Early Warning (EEW) systems, which trigger warnings of an earthquake \nin regions remote to the source, are maintained by national organizations with the \nremit to monitor seismic activity (e.g., USGS for the United States). For some \ncountries, some local/urban systems also exist that are maintained by the local \ngovernment. \nHow is the Hazard \nObserved/Monitored/Forecast? \nThe effectiveness of EEW systems is highly dependent on the quality and density of \nseismic networks. It is fundamental to have seismic stations/sensors relatively \nclose to the regions where earthquakes are expected to occur (e.g., active faults), \nto allow sufficient lead times. \nRisk Management: Earthquakes cannot be prevented (and there is no technology to reduce their magnitude). However, earthquakerelated vulnerability, exposure and hence risk can be reduced through proper risk reduction measures. These can include targeted \nseismic retrofitting interventions, the enforcement of modern design regulations, strategic urban planning (that forbids construction \nnear cliff faces, active faults or on soft soils), and development of risk awareness campaigns."
+    },
+    {
+      "n": 3,
+      "reliefweb_id": "HIPs-EarthQuakes.pdf",
+      "title": "HIPs-EarthQuakes – page 3",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDRR-ISC Hazard Information Profiles 2025"
+      ],
+      "field": "pdf",
+      "pdf_filename": "HIPs-EarthQuakes.pdf",
+      "phases": [
+        "reference"
+      ],
+      "text": "UNDRR - ISC Hazard Information Profiles – 2025 Update \n226 GEOLOGICAL \nContents \n\nThe most common and effective measure for mitigating earthquake risk is the implementation and enforcement of building codes with \nprovisions for earthquake safety. The US Federal Emergency Management Agency (FEMA, 2020) and the International Association of \nEarthquake Engineering (IAEE) provide online resources with Seismic Building Codes. Eurocode 8 is the reference European Standard \nthat applies to the design and construction of buildings and other civil engineering works in seismic regions. \nThe Global Earthquake Model Foundation recently produced a global map of earthquake hazard and risk (Pagani et al., 2020; Silva et al., \n2020) and is releasing the underlying national and regional models. Many of GEM’s hazard models have been developed by or in \ncollaboration with national governments to provide a scientific basis for the development of seismic design codes. \nSome success has been achieved in the development of early warning systems, which detect earthquakes close to the source or fault \nrupture, and trigger warnings to more distant locations, providing seconds to minutes of advance warning (Gasparini et al., 2007). \nExamples include the warning system for Japan’s bullet trains (Tajima and Hayashida 2018) and Mexico City’s warning system for \nevacuating occupants in vulnerable buildings (Suárez, 2022). \nReferences \nCRED, 2024. International Disasters Database of the Centre for Research on the Epidemiology of Disasters. Available from: \nhttps://www.emdat.be. Accessed on 15/05/2025. \nDaniell, J.E., Schafer, A.M., Wenzel, F., 2017. Losses Associated with Secondary Effects in Earthquakes. Frontiers in Built \nEnvironment. DOI: 10.3389/fbuil.2017.00030. \nDewey, J.W., Reagor, B.G., Dengler, L., Moley, K., 1995. Intensity distribution and isoseismal maps for the Northridge, California, \nearthquake of January 17, 1994. U.S. Geological Survey Open-File Report 95-92. doi: 10.3133/ofr9592. \nFEMA, 2023. Seismic building codes. Last updated 23 May 2023. US Federal Emergency Management Agency (FEMA). Available \nfrom: www.fema.gov/emergency-managers/risk-management/earthquake/seismic-building-codes Accessed 1 5 M a y 2025. \nGasparini, P., Manfredi, G., Zschau, J. (eds.), 2007. Earthquake Early Warning Systems (p. 350). Springer. \nGrünthal, G. (ed), 1998. The European Macroseismic Scale EMS. Available from: www.gfz-potsdam.de/en/section/seismic-hazard-andrisk-dynamics/data-products-services/ems-98-european-macroseismic-scale Accessed 1 5 M a y 2 0 2 5 . \nHanks, T.C., Kanamori, H.,1979. A moment magnitude scale. Journal of Geophysical Research, Solid Earth, 84: 2348-2350. \nPagani, M., Garcia-Pelaez, J., Gee, R., Johnson, K., Silva, V., Simionato, M., Styron, R., Vigano, D., Danciu, L., Monelli, D., Poggi, V., \nWeatherill, G., 2020. The 2018 version of the Global Earthquake Model: Hazard component. Earthquake Spectra, 36(1_suppl), pp.226251. Available from: doi.org/10.1177/8755293020931866 Accessed 1 5 M a y 2025. \nSilva, V., Amo-Oduro, D., Calderon, A., Costa, C., Dabbeek, J., Despotaki, V., Martins, L., Pagani, M., Rao, A., Simionato, M., Viganò, \nD., Yepes-Estrada, C., Acevedo, A., Crowley, H., Horspool, N., Jaiswal, K., Journeay, M., Pittore, M.,2020. Development of a Global \nSeismic Risk Model. Earthquake Spectra, 36(1_suppl), pp.372-394. Available from: https://doi.org/10.1177/8755293019899953 \nAccessed 15 May 2025. \nSuárez G., 2022. The Seismic Early Warning System of Mexico (SASMEX): A Retrospective View and Future Challenges. Frontiers in \nEarth Science. 10:827236, doi.org/10.3389/feart.2022.827236. \nTajima F, Hayashida, T., 2018. Earthquake early warning: what does “seconds before a strong hit” mean? Progress in Earth and \nPlanetary Science, 5 pp. 1-25, doi.org/10.1186/s40645-018-0221-6. \nUSGS, no date a. Earthquake glossary. United States Geological Survey (USGS). Available from: \nhttps://www.usgs.gov/glossary/earthquake-hazards-program#E. Accessed 15 May 2025. \nWald, D.J., Lin, K., Quitoriano, V., 2008. Quantifying and Qualifying USGS ShakeMap Uncertainty: U.S. Geological Survey Open File \nReport 2008–1238, 26 pp. \nWood, H.O., Neumann, F., 1931. Modified Mercalli intensity scale of 1931. Bulletin of the Seismological Society of America, 21:277283. \nCoordinating agency or organization(s) \nGlobal Earthquake Model (GEM) Foundation, International Association of Seismology and Physics of the Earth Interior (IASPEI), \nInternational Association of Earthquake Engineering"
+    },
+    {
+      "n": 4,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 1",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "I\n387\nUNDAC HANDBOOK - 8TH EDITION\nK. HAZARD IMPACT SUMMARIES\nThese hazard summaries offer a general overview \nof the potential impact of the most common natural \nhazards that UNDAC teams may be deployed to. \nThey aim to assist in understanding the impact and \npriority needs in the immediate aftermath of a sudden-onset disaster caused by a natural hazard-related disaster in an affected society. \nFurthermore, they aim to develop hazard-specific \nliteracy among UNDAC members to better understand the challenges of operating in an area affected by natural hazard-related disasters and how they \ncan impact the UNDAC mission.\nThe summaries are not meant to offer a detailed \nanalysis of the specific impact of different hazards \nin various settings. It’s important to thoroughly \nassess the context during deployment, as each \ndisaster has its own unique characteristics, and \ncontextual factors will greatly influence humanitarian needs and response. The summaries can, \nhowever, be used as a starting point after an alert \nof a hazard impact has been received to prepare for \nan emergency response and guide further information collection.\nK.1 Earthquakes\nAn earthquake is a phenomenon that occurs when \nthere is a sudden slip on a fault line, which results \nin ground shaking and radiated seismic energy. This \ncan also be caused by volcanic or magmatic activity or other sudden stress changes in the earth. The \nduration of most earthquakes is usually a minute \nor less. However, aftershocks can occur on and off \nfor a few days, weeks, or even months following the \nmain earthquake, depending on its magnitude. \nThere are different ways to measure the magnitude \nof an earthquake. The Moment Magnitude Scale \n(Mw) is the most used as it is based on the seismic \nmoment, which is related to the amount of total \nenergy released by the earthquake. Similar to the \nRichter scale, an increase of one step on the logarithmic scale of moment magnitude corresponds to \na 101.5 ≈ 32 times increase in the amount of energy \nreleased, and an increase of two steps corresponds \nto a 103 = 1000 times increase in energy. Consequently, an earthquake of 7.0 Mw contains 1000 \ntimes as much energy as a 5.0 Mw and about 32 \ntimes that of a 6.0 Mw. \nEarthquakes with a magnitude of 7.0 or higher \ncan cause intense shaking and other serious \nconsequences over a wide area. Earthquakes with \nmagnitudes between 6.0 and 6.9 may cause a lot \nof damage in very populated areas, while smaller \nearthquakes can still cause damage to weak structures near the epicentre.\nThere are qualitative intensity measures that describe the severity of an earthquake based on its effects on the earth’s surface, infrastructure, and population. One such measure is the Modified Mercalli \nIntensity (MMI) scale. The MMI scale ranges from I \n(not felt) to XII (Total Damage). Structural damage \ntypically begins at VI, but this can vary depending \non the fragility of buildings in a given region.\nOther measures to quantify ground shaking intensity include ground motion parameters such as peak \nground acceleration (PGA), peak ground velocity \n(PGV), and elastic spectral acceleration for a given \nperiod of vibration (SA).\nThe basic rule is that earthquakes are unpredictable natural phenomena that cannot be forecasted \nin terms of location, magnitude, or time. Ground \nshaking from an earthquake is unique and can vary \nsignificantly from location to location. However, \nas many other natural hazards that are occurring around us, earthquakes obey simple laws of \nnature, that allow us to infer how these complex \nevents may unfold.\nSeveral properties of the earthquake rupture, such \nas rupture directivity or so-called ‘super-shear’ ruptures, may impact the strong ground motion generated. Theoretically, for two identical earthquakes \nthat differ only in depth, the deeper earthquake \nwould be expected to result in lesser intensity \non the surface."
+    },
+    {
+      "n": 5,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 2",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "388\nUNDAC HANDBOOK - 8TH EDITION\nI\nEarthquakes release the stress accumulated along \nfault lines, but not all the stress is released during \na single large earthquake, and this ‘left-over’ stress \nis the origin of any sequence of aftershocks that \nfollow the first EQ. When the size and position of \nthe fault line that generated the main EQ is known, \none can roughly ‘predict’ the area where the aftershocks will occur. However, in some cases, the \nmain EQ may trigger another EQ of considerable \nmagnitude because of the stress transfer, which \nmay be outside this ‘predicted’ area. Again, the size, \nlocation and magnitude of such ‘triggered’ cannot \nbe ‘known’. \nWhile there may be some exceptions, the temporal \ndecay of the aftershock frequency can generally \nbe characterized by Omori’s law, which states that \nthe rate of earthquakes triggered by a main shock \ndecay with time according to an inverse power 1/\ntp of time with an exponent p≈1. This mathematical \nmodel explains how the number of aftershocks is \nvery high during the first days following the earthquake and decreases following a predictable pattern. Conclusively, the first hours and days following \nan earthquake will have the highest risk of new and \nstrong earthquakes, referred to as aftershocks. The \nmagnitude and frequency of these aftershocks \nwill follow the same trend, making it possible to \n“predict” the number of earthquakes with the same \nmagnitude following a main shock. For example, if \nthe main shock was M6 you can expect to have 10 \nM5s, 100 M4s, etc.\nThese considerations have almost universal validity and do not depend on geological or tectonic \nsettings. There is, however, a caveat one should be \nacutely aware of. When applied to a sequence of \nseismic events these laws are strongly linked to the \nfault rupture mechanism. In other words, they are \nvalid only if we have a single rupture along a single \nfault, i.e., only one major seismic event along the \nconsidered fault line. Whenever there is a new rupture in the fault line, like a major aftershock, the \nconsiderations described above are reset and new \ncalculations must be made. \nK.1.1 Early warning\nIt is currently not possible to predict earthquakes or \nprovide early warnings which could greatly reduce \nthe risk of loss of life. However, some early warning \nsystems and signs can provide a few seconds of \nnotice before the earthquake shaking waves arrive:\n• \nEarthquake Early Warning Systems – These \nsystems rely on a network of seismic sensors \nthat can detect the initial pulses of energy when \nan earthquake begins. The data is then analysed \nin real-time to predict the expected intensity of \nshaking and alerts are sent to surrounding areas, \nproviding up to several seconds of warning. It \nis important to note that these alerts may not \nalways target the public directly but instead \nfocus on the automatic shutdown of critical \ninfrastructures, such as natural gas distribution \npipelines, etc.\n• \nTsunami warnings – Earthquake parameters \n(location, depth, magnitude) detected through \nseismic networks would assist Tsunami Early \nwarning Centres to determine the tsunamigenic potential of the earthquake. Warnings are \npushed out to threatened coastal areas, sometimes providing hours of lead time to evacuate. \nFor earthquakes in close proximity to coastal \nareas, such warnings may not be possible, but \nthe occurrence of a strong or long earthquake \nshould be interpreted as a natural sign of \nself-evacuation. (See also Section K.2 for more \non tsunamis.)\n• \nEarthquake forecasting – Long-term earthquake \nhazard assessments using historical data, and \nshort-term aftershock forecasts, using the \npattern known as exponential decay described \nabove can indicate increased risk. \nK.1.2 Rapid impact estimations\nGDACS rapid impact estimation: Within ⪅ 30min \nfrom the main event there is an automatic definition of alert level for humanitarian activation, \nthis includes: \n• \nAreas that are mostly affected,\n• \nEvent map,\n• \nShakemap,\n• \nMeteorological forecast map, \n• \nExposure estimate (affected area - intensity polygons, intensity affected places),\n• \nExposed population,"
+    },
+    {
+      "n": 6,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 3",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "I\n389\nUNDAC HANDBOOK - 8TH EDITION\n• \nCritical infrastructures,\n• \nEstimated casualties.\nWithin the Global Disaster Alert and Coordination \nSystem (GDACS), under the Satellite Mapping \nCoordination Systems (SMCS), satellite mapping \ninformation products also become available when \nthe relative mapping services are activated. \nK.1.3 Physical impact\n• \nGeological hazards like earthquakes do not \noccur as frequently as climate-related disasters. \nHowever, earthquakes have killed more people \nthan any other type of natural hazard in the past \ntwenty years.\n• \nThe impact of a shallow earthquake is typically characterised by surface fault rupture (and \nfissures), as well as subsidence or uplift. The \nstrength and duration of ground shaking at any \ngiven location depends on several factors, such \nas the magnitude of the earthquake, the distance \nto the earthquake’s epicentre, and the local \nsoil conditions.\n• \nSome types of terrain transmit seismic waves \nmore easily than others. Buildings constructed \non solid bedrock in compliance with the applicable seismic design codes are less likely to suffer \ndamage, while those built on unconsolidated \nrock and sediments may experience greater amplitude and duration of seismic waves, thereby \nincreasing the potential for damage. \n• \nWhen saturated, certain terrain types, such as \nsandy sediments, can liquefy, meaning that the \nsoil can behave like a liquid, causing both infrastructural damage and sinking of structures.\n• \nThe impact of an earthquake is mainly determined by two factors: the intensity of ground \nshaking caused by the quake, and the quality of \nstructural engineering in the region, e.g., building \ncodes, inspection before, during and after construction. Soil conditions, the level of preparedness of emergency services, and the resilience of \nthe local population are also factors contributing \nto the level of impact. \n• \nThe degree of damage to buildings depends \non various factors such as the horizontal and \nvertical irregularities of the building, the type and \nfrequency of the waves the shake creates, the \nsoil conditions, and the resilience of the building. \nBuildings that are only slightly or moderately \ndamaged may collapse during large aftershocks.\n• \nEarthquakes can cause considerable damage to \ninfrastructure, e.g., power cables, telecommunications systems, water and sanitation pipes, and \ngas lines can be ruptured, severed, or extensively \ndamaged, hampering relief efforts and dayto-day living.\n• \nDamage to infrastructure following an earthquake can result in the release of flammable \nliquids or gases. This increases the risk of fires \nwhen they come into contact with ignition sources. Additionally, heating and cooking appliances \nmay be overturned, which can also trigger destructive fires during and after the earthquake.\n• \nDams, embankments, and levees may fail during \nan earthquake, causing downstream flooding \ndue to cracks and instability.\n• \nShaking caused by large-magnitude events \ncan result in destabilization of slopes, leading \nto landslides and debris flows, particularly in \nmountainous regions. In addition, destruction \nof roads, bridges, and other infrastructure can \nmake access and communication difficult. \nLandslides and debris can block roads or cause \nsurface damage. \n• \nEarthquakes that occur near coasts or oceans \ncan cause tsunamis, which can be extremely destructive and increase the overall impact of the \ndisaster. Locations situated at sea level are particularly vulnerable to such events. Furthermore, \ncritical infrastructure such as ports and airports \nmay become unusable due to the severity of the \nearthquake and/or tsunami.\n• \nTsunami-like seiche waves can impact areas \nclose to large bodies of water. Earthquakes can \nchange the course of rivers and result in flash \nfloods. For more information on tsunamis generated by earthquakes, refer to Section K.2. \nK.1.4 Direct impact on the population\n• \nThe leading cause of death after an earthquake \nis trauma resulting from building collapse or other seismic activity, accounting for up to 75-80% \nof fatalities.\n• \nDeath is rare for people who are outside a building at the time of the earthquake."
+    },
+    {
+      "n": 7,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 4",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "390\nUNDAC HANDBOOK - 8TH EDITION\nI\n• \nDiseases and mortality rates in the weeks \nfollowing an earthquake depend largely on the \noccurrence of epidemics. Outbreaks of diseases, \nhowever, are unlikely and usually of very modest proportions.\n• \nStructural collapses from earthquakes generate \ntrapped victims who may survive for several \ndays. Under special, ideal conditions with food, \nwater and temperate climatic conditions, survival \nmay extend considerably. However, 85-95% of \npersons rescued alive from collapsed buildings are rescued in the first 24-48 hours after \nan earthquake.\n• \nAfter an earthquake, the majority of injuries are \nminor cuts and bruises, followed by a smaller \ngroup with simple bone fractures, and a minority with multiple severe fractures and internal \ninjuries, requiring surgery and intensive treatment for crush syndrome. Within the first three \nto five days, most injured individuals will arrive \nat medical facilities. There may be two waves of \npatients. The first wave will consist of casualties \nfrom the immediate surrounding area of the \nmedical facility, followed by a second wave of \nreferred cases from more distant areas as relief \nefforts are organised. Victims of secondary hazards, such as aftershocks and fires, may arrive at \na later stage. \n• \nEarthquakes can have long-lasting effects on \nmental health, particularly among children and \nteenagers. One of the most common mental \ndisorders that can result from earthquakes is \nPost-Traumatic Stress Disorder (PTSD). PTSD is \ncharacterized by persistent, intrusive memories \nof the traumatic event, hyperarousal, avoidance \nof trauma-related cues, and negative changes in \nthinking and mood.\n• \nHouseholds begin their recovery efforts immediately after the earthquake. Major population \nmovements are rare; however, it may occur in \nheavily damaged urban areas.\nK.1.5 Aggravating factors\n• \nIn most cases, the closer an area is to the earthquake epicentre, the more intense the shaking \nwill be, which in turn increases the likelihood of \nsevere damage. The area closest to the epicentre is generally the hardest hit.\n• \nEarthquakes closer to the surface cause more \nwidespread damage due to the shaking spreading over a larger area.\n• \nThe time of day can have a significant impact \non the severity of an earthquake, as it governs \nthe number of people in large buildings, attending work or school, etc. Earthquakes occurring \nduring nighttime hours can result in higher death \ntolls because more people may be asleep inside \nvulnerable buildings that may collapse. Additionally, emergency response efforts may be hindered by the challenges of mobilising resources \nduring overnight hours.\n• \nDuring an earthquake, poorly designed, inspected and constructed buildings and structures are \nmore likely to fail and collapse, exacerbating \nthe impacts. Unreinforced masonry buildings \npose the greatest danger during strong earthquakes, with weaker masonry resulting in higher \ndeath tolls. \n• \nRegions with fragile buildings, high-density \npopulations, or local soil conditions that promote \nground shaking may experience more severe and \nwidespread damage from earthquakes of a given \nmagnitude and other characteristics.\n• \nAreas with higher population densities are at a \ngreater risk of extensive damage and loss of life \nin the event of an earthquake, as more people \nand infrastructure are exposed.\n• \nPopulations that lack earthquake awareness \ntraining and warning systems are more vulnerable to adverse impacts as they may resort to \nbehaviours that put them at greater risk. For \nexample, going close to a shoreline not knowing of the tsunami risk, or taking cover close to \nstructures rather than away from them, etc.\n• \nFire is a secondary effect of earthquakes that \noften causes damage. Because power lines may \nbe knocked down and natural gas lines may \nrupture during an earthquake, fires are often triggered. Fire damages may be compounded if water lines are also broken during the earthquake, \nas there will not be enough water to extinguish \nthe fires once they have started.\n• \nIn the event of an earthquake during winter in \ncold climates, survivors are at high risk of experiencing hypothermia, frostbite, and other illnesses caused by prolonged exposure to the damp \nand cold weather. Additionally, bad weather can"
+    },
+    {
+      "n": 8,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 5",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "I\n391\nUNDAC HANDBOOK - 8TH EDITION\nhinder rescue efforts and make response much \nharder. Furthermore, during the cold weather, \nthere is a higher likelihood that stoves and fires \nare burning inside the houses that have collapsed, which significantly increases the chances \nof fires after the earthquake.\n• \nWhen earthquakes occur in hot climates, the lack \nof water makes it harder for people trapped in \nrubble to survive. \n• \nHospitals could face power outages that could \nlead to the death of patients in intensive care \nunits. Hospital personal may abandon their \nduty post in desperate need to reach out to \ntheir relatives.\nK.1.6 Typical needs\nMobilizing an effective response after a major \nearthquake requires coordination across government agencies, disaster relief organizations, \nbusinesses, community groups, and civil society \norganisations.\n• \nSearch and rescue - Specialized INSARAG-certified urban search and rescue (USAR) teams are \ncrucial for detecting survivors trapped in collapsed buildings and structures. Some of the first \nresponders deployed are USAR teams tasked \nwith locating and extracting survivors trapped \nunder collapsed structures. Speed is critical for \nsaving lives so these teams are deployed as \nquickly as possible to the most affected areas.\n• \nMedical care – Local medical facilities are often \noverwhelmed by injured individuals, and, temporary field hospitals equipped with emergency \nmedical personnel, supplies, and equipment are \nessential for treating those in need.\n• \nLogistics – A combination of increased air \ntraffic, congested air space and reduced airport \ncapacities in the affected area will cause delays \naffecting all forms of relief transported by air. \nIn-country air traffic will be similarly affected \nas international. Overland transport may be \naffected by increased population movements, \ndamaged roads/train lines, and reduced capacity \nshould be expected. Supply chains will also be \ndisrupted. Destruction or damage to ports, bridges, and roads increases transportation costs \nand substantial shipment delays. With disruption to roads, rail lines, airports, etc., temporary \nsolutions help ferry in aid and allow people to \nleave impacted zones.\n• \nShelter – When homes are destroyed, many people become homeless and require emergency \nshelter and housing solutions. The risk from aftershocks often leads to people settling outside \ntheir former homes, not wanting to move back in \nuntil the number of aftershocks decreases, and \nthe building has been assessed by structural engineers. Resources to assist displaced persons \nare crucial in the aftermath. Immediate needs \nare shelter supplies such as tents, cots, blankets and essential living items like food, water \nand hygiene items. The opening of evacuation \nshelters equipped with temporary housing, food/\nwater, hygiene services, medical aid, etc., should \nbe prioritised.\n• \nFood/Water— Disrupted infrastructure may cut \noff access to food and clean water. Distributing food rations, bottled water, and purification \nequipment helps stabilize supplies. Market support and cash incentives should be considered.\n• \nSanitation – Water supply, treatment and reconstruction of water supply systems and drainage/\nsewer systems is vital. Without proper sanitation \nand waste management, the situation for survivors will deteriorate rapidly and increase the \nrisk of communicable diseases. Distribution of \nhygiene items, latrines and hygiene promotion \nshould be prioritised.\n• \nPower supply – Electrical infrastructure can be \nseverely damaged. Bringing in generators, repair \ncrews, and equipment, and coordinating repairs \nis key to restoring power access.\n• \nCommunication networks – Damaged communications systems isolate people and prevent \ncoordination. Rapid deployment of temporary \ncell towers, satellite phones, radios, and internet \nconnectivity aids rescue coordination, supports \nsituational awareness and reconnects affected population.\n• \nDebris removal – Rubble can block roads and \nprevent access. Heavy construction equipment, \nincluding bulldozers, excavators, cranes, and \ncrews, are indispensable assets for clearing \nroadways, providing access to blocked areas, \nand enabling search and rescue efforts. Finding \nareas to dispose of rubble can be a challenge, \nhowever, and debris should be recycled as far"
+    },
+    {
+      "n": 9,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 6",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "392\nUNDAC HANDBOOK - 8TH EDITION\nI\nas possible. It is also important to be aware of \nhazardous materials, like asbestos, that may be \npart of the rubble and ensure this is removed in \na safe manner.\n• \nProtection – Emergency situations also tend to \nexacerbate existing inequalities among the population and lead to a rise in human rights and protection concerns. Special considerations should \nbe given to known protection risks in the context. \nSee also Chapter G.2 Centrality of protection and \nquality response. A breakdown of social structures and services can result in increased risks \nof exploitation, abuse, and neglect for vulnerable \ngroups, and relief efforts must prioritize the \nunique needs of these groups to ensure their \nsafety and well-being. \n• \nWomen and children often face heightened \nvulnerability and are disproportionately affected. \nFemale-led households may have less access to \nresources, financial independence, and decision-making power, which complicates their ability to recover. Children are particularly susceptible to physical harm and psychological trauma. \nThey may be orphaned, and displacement often \ndisrupts their education and routine, leading to \nlong-term challenges. \n• \nEnvironmental—Technological accidents can \nbe triggered by earthquakes, which can damage \nhazardous installations and release hazardous \nsubstances, leading to fires or explosions, gas \nleaks, damaged facilities, chemical spills, etc. \nK.1.7 UNDAC mission\n• \nMobilisation and deployment happen within \nhours of the event. Selected team members \nmust be fully self-sufficient with food/water for \n72 hours, a tent, a sleeping bag, a field mattress, \nand hygiene articles. Check climate and weather \nwhen packing and be prepared to work and sleep \nin tented conditions for weeks. \n• \nExpect congested air traffic and severe delays. \nTravelling with an international USAR team or \nanother relief flight is preferable. The risk of \ndelayed luggage is also higher, so make sure to \npack essentials in carry-on luggage.\n• \nOn arrival, ensure a Reception & Departure \nCentre (RDC) for international relief teams has \nbeen established and be prepared to stay behind \nat the airport to support it. Liaise with National \nEmergency Management representatives already \nat the airport if they’re there or immediately afterwards. Alert the RC/HC of your arrival in parallel. \nIt is UNDAC’s role to support on-site coordination \nof international USAR operations and the UNDAC \nteam and the UCC should establish liaison and \ncoordinate with each other as soon as possible in the mission. A dedicated UNDAC USAR \nLiaison Officer (LO) should be appointed as soon \nas possible and ensur that the USAR operations \nis linked with the overall humanitarian operation. \nSee also Chapter D.5 on the Reception & Departure Centre and Chapter G.10.1.5 for more on \nUNDAC USAR Liaison. \n• \nNormal hygiene services will be disrupted or \nnon-functional. Make sure to bring sanitary items \nand other articles for washing and staying clean, \nsuch as wet wipes, toilet paper, and sufficient \nclothing. Take care of any bruises, small wounds, \nor injuries immediately to prevent infection.\n• \nAccess to food and water in the disaster area \nmay be disrupted. Consider acquiring field rations from USAR teams.\nK.1.8 Safety concerns\nAll earthquakes happen in sequences. Be aware \nthat some earthquakes are actually foreshocks, \nand a larger earthquake might still occur. Leftover stress will remain in the fault lines where the \noriginal earthquake happened, and this stress will \nbe released as aftershocks or new earthquakes \nof various magnitudes and depths throughout the \nmission. Aftershocks pose a significant risk, causing further damage and increasing stress for both \nvictims and aid workers.\nConsider staying outside and a safe distance from \ninfrastructure throughout the mission.\nSpecific safety considerations:\n• \nBuilding collapse—Buildings and other structures damaged by shaking can become more \nunstable and collapse after the initial earthquake, \nputting anyone inside or nearby in danger. Even \na small aftershock can lead to the collapse of a \nbuilding if it has already been damaged. Several damages may not be visible to the naked \neye, and therefore, it is important to thoroughly"
+    },
+    {
+      "n": 10,
+      "reliefweb_id": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "title": "UNDAC_Handbook_8th_edition_section_K – page 7",
+      "url": "",
+      "date": "",
+      "days_after_event": null,
+      "sources": [
+        "UNDAC Handbook 8th ed., section K"
+      ],
+      "field": "pdf",
+      "pdf_filename": "UNDAC_Handbook_8th_edition_section_K.PDF",
+      "phases": [
+        "reference"
+      ],
+      "text": "I\n393\nUNDAC HANDBOOK - 8TH EDITION\ninspect any structure that has been impacted by \nan earthquake.\n• \nNo infrastructure can be assumed safe without \nproper assessment by subject matter experts, \nsuch as certified structural engineers. These \nprofessionals are the only ones who can provide \nadvice on the extent to which infrastructure has \nbeen compromised, and they should check both \nworkplaces and resting places. Incoming USAR \nteams may have the capacity to carry out such \nassessments. Should a building be cleared as \na work or rest space, make sure to establish escape routes and be prepared to evacuate at short \nnotice. As general guidance:\n »\nIf caught in an aftershock, drop to the floor, \ntake cover and hold on.\n »\nIdentify safe places in buildings, such as under sturdy tables or desks or against interior \nwalls away from windows, bookcases, or tall \nfurniture that could fall on you.\n »\nKeep a flashlight, a pair of shoes, appropriate \nclothing that can be put on fast, a grab bag \nwith essential items packed, and your personal identification documents near your resting \nplace in case you need to evacuate at night. \nYou may also want to consider sleeping with \nmost of your clothes on to avoid spending \ntime dressing.\n »\nIn a high-rise building, avoid using the elevators and stay away from windows and \noutside walls.\n »\nWear a whistle to attract attention to yourself \nand a facemask to protect yourself from dust.\n• \nPower lines – Shorted lines, damaged poles, and \nwires heighten the risk of electrocution and fires. \nStay clear of any sparking or downed cables.\n• \nGas leaks and fires – Ruptured gas pipes lead \nto leaks, which increase the chance of fire or \nexplosions. Evacuate areas where you smell or \nhear gas leaks. Gas leaks, electrical shorts and \ntoppled heat sources heighten fire risk. Have \nextinguishers ready and avoid sources of sparks \nwhile evacuating.\n• \nLandslides/mudslides – Earthquakes can destabilize slopes and loosen debris. Watch for falling \nrocks, debris flows, and mudslides - especially \nnear mountains/hills after heavy rains.\n• \nDam failures – Damage can cause dams to fail \nwithout warning, rapidly flooding downstream \nareas. Stay away from dams and low-lying areas.\n• \nSanitation – Compromised water and sanitation \ninfrastructure can lead to sickness from poor \nhygiene. Store clean water safely and apply good \nhygiene practices to prevent contamination.\n• \nChemical releases— Failure to contain toxic \nchemicals may occur even in small premises, \nlike shops, etc. Do not enter unless the space \nhas been declared a safe atmosphere.\nK.1.9 Security concerns\nChaos and confusion can lead to potential security \nrisks. These can include increased crime rates due \nto overwhelmed law enforcement and a temporary \nbreakdown of law and order. The risk of regular \ncrime and petty theft may rise as people who have \nbeen severely affected by the event may resort to \nnegative coping mechanisms. Both workplace and \nrest-place need to be established with sufficient \nsecurity measures in place.\nK.2 Tsunamis\nA tsunami is a series of ocean waves caused by \nearthquakes or other phenomena such as volcanic \neruptions, underwater landslides, coastal rock falls, \nand meteorite impacts, leading to significant water \ndisplacement in the ocean. It is a complex event \nthat can last for many hours before the situation \nreturns to normal. A tsunami consists of multiple \nwaves in succession, and the first to arrive on the \ncoast is not always the largest or most destructive. \nOut of all the listed phenomena, earthquakes are \nthe primary cause of tsunamis, accounting for 80% \nof occurrences. Particularly, when earthquakes \noccur in the regions where tectonic plates converge, \nand one plate subducts beneath another, the resulting tsunamis can be exceptionally catastrophic in \ntheir size and impact.\nTsunami waves have the potential to grow to \nenormous dimensions and can travel across entire \nocean basins with very little energy loss. They are \nmuch faster than any wave produced by the wind in"
+    }
+  ],
+  "kind": "reference",
+  "model": "claude-sonnet-5",
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "calls": 0,
+    "cached": 4
+  },
+  "edge_status": {
+    "typical": "the documents present it as common or expected",
+    "possible": "it happens only under some conditions (say which in the explanation)",
+    "recommended": "a measure the documents recommend"
+  },
+  "documents": {
+    "HIPs-EarthQuakes.pdf": "UNDRR-ISC Hazard Information Profiles 2025",
+    "UNDAC_Handbook_8th_edition_section_K.PDF": "UNDAC Handbook 8th ed., section K"
+  },
+  "settings": {
+    "budget": {
+      "hazard": 6,
+      "impact": 8,
+      "vulnerability": 5,
+      "need": 9,
+      "measure_before": 5,
+      "measure_response": 9,
+      "actor": 3
+    },
+    "max_edges": 80
+  }
+}
