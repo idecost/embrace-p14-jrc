@@ -312,6 +312,7 @@ const JSON_PATTERN = /_drm_storyline_kg\.json$/i;
 
 let D = null, nodeById = new Map(), F = null, cy = null, graphDirty = true, currentTab = 'storyline';
 let edgeSort = { key: null, dir: 1 }, passPhaseSel = null, pendingSelect = null;
+let pendingNode = new URLSearchParams(location.search).get('node');   // ?node=<id> selects a node in the graph
 
 /* ---------- sample data (illustrative, fictional place) ---------- */
 const SAMPLE = {
@@ -626,6 +627,7 @@ function buildCy() {
   cy.on('zoom', onZoom);
   applyLabels(); applyCyFilters(); runLayout(); applyNodeSearch();
   showDetailIntro();
+  if (pendingNode && nodeById.has(pendingNode)) { const id = pendingNode; pendingNode = null; selectNodeInGraph(id); }
 }
 
 function applyLabels() { if (cy) cy.edges().toggleClass('labels', $('#edgeLabels').checked); }
