@@ -111,6 +111,10 @@ select.btn { max-width: 320px; }
 .chip[aria-pressed="false"] svg { opacity: .4; }
 .chip .c { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
 .fgroup.end { margin-left: auto; align-self: center; }
+.fgroup.typeblock { flex-basis: 100%; gap: 6px; }
+.subtypes { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 12px; align-items: center; padding-left: 10px; border-left: 2px solid var(--line); }
+.subhead { display: inline-flex; gap: 5px; align-items: center; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.fgroup > span.subtitle { margin-top: 4px; text-transform: none; letter-spacing: 0; font-size: 12px; }
 
 /* graph */
 .graph-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -193,6 +197,7 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
   .story { grid-template-columns: minmax(0, 1fr); }
   .toc { position: static; flex-direction: row; flex-wrap: wrap; }
   .fgroup.end { margin-left: 0; }
+  .subtypes { grid-template-columns: minmax(0, 1fr); }
   h1 { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
@@ -225,7 +230,6 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
     <button class="tab" role="tab" data-tab="graph" id="t-graph">Graph</button>
     <button class="tab" role="tab" data-tab="edges" id="t-edges">Edges<span class="n" id="nEdges"></span></button>
     <button class="tab" role="tab" data-tab="passages" id="t-passages">Passages<span class="n" id="nPass"></span></button>
-    <button class="tab" role="tab" data-tab="run" id="t-run">Run &amp; validation</button>
   </nav>
 
   <section class="filters" id="filters" hidden></section>
@@ -282,9 +286,6 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
     </div>
   </section>
 
-  <section id="p-run" class="panel" hidden>
-    <div class="grid2" id="runGrid"></div>
-  </section>
 </div>
 <div class="drop" id="drop" hidden>Drop the *_drm_storyline_kg.json file</div>
 
@@ -294,8 +295,6 @@ const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const KEY = 'drmviewer-kgref:last';
-const REF_VIEWER = '../reference/viewer.html';   // generic earthquake graph viewer
-
 const TYPE_ORDER = ['hazard', 'vulnerability', 'impact', 'need', 'measure', 'actor'];
 const TYPE_VAR = { hazard: '--hazard', impact: '--impact', vulnerability: '--vuln', measure: '--measure', need: '--need', actor: '--actor' };
 const CY_SHAPE = { hazard: 'diamond', impact: 'ellipse', vulnerability: 'triangle', measure: 'round-rectangle', need: 'octagon', actor: 'hexagon' };
@@ -556,6 +555,17 @@ function statusSvg(st) {
   return `<svg width="22" height="8" viewBox="0 0 22 8" aria-hidden="true"><line x1="1" y1="4" x2="21" y2="4" style="stroke:${col}" stroke-width="2" stroke-dasharray="${dash}" stroke-linecap="round"/></svg>`;
 }
 
+// node types, then the subtypes of each type (categories of the generic earthquake graph)
+function typesBlock(cT, cS, subtitle) {
+  const chip = (key, v, n, deco = '') => `<button class="chip" data-f="${key}" data-v="${esc(v)}" aria-pressed="${F[key].has(v)}">${deco}${esc(v)} <span class="c">${n || 0}</span></button>`;
+  const subs = t => uniqOrdered(D.kg.nodes.filter(n => n.type === t).map(refOf), []);
+  return `<div class="fgroup typeblock"><span>Node types</span>
+    <div class="chips">${D.vals.types.map(t => chip('types', t, cT[t], shapeSvg(t))).join('')}</div>
+    <span class="subtitle"><b>Subtypes</b> of each node type: ${subtitle}</span>
+    <div class="subtypes">${D.vals.types.map(t => `<span class="subhead">${shapeSvg(t)} ${esc(t)} ›</span>
+      <div class="chips">${subs(t).map(v => chip('ref', v, cS[v])).join('')}</div>`).join('')}</div></div>`;
+}
+
 function renderFilters() {
   const E = D.kg.edges, N = D.kg.nodes;
   const count = (arr, f) => arr.reduce((m, x) => (m[f(x)] = (m[f(x)] || 0) + 1, m), {});
@@ -563,12 +573,9 @@ function renderFilters() {
   const group = (label, key, vals, counts, deco) => `<div class="fgroup"><span>${label}</span><div class="chips">${vals.map(v =>
     `<button class="chip" data-f="${key}" data-v="${esc(v)}" aria-pressed="${F[key].has(v)}">${deco ? deco(v) : ''}${esc(v)} <span class="c">${counts[v] || 0}</span></button>`).join('')}</div></div>`;
   $('#filters').innerHTML =
-    group('Node types', 'types', D.vals.types, cT, shapeSvg) +
+    typesBlock(cT, cG, 'the categories of the generic earthquake graph each node belongs to') +
     group('Relations', 'relations', D.vals.relations, cR) +
-    group('Status', 'status', D.vals.status, cS, statusSvg) +
     group('Edge phase', 'phases', D.vals.phases, cP) +
-    group('Confidence', 'conf', D.vals.conf, cC) +
-    group('Category (generic graph)', 'ref', D.vals.ref, cG, v => { const n = D.kg.nodes.find(x => refOf(x) === v); return n ? shapeSvg(n.type) : ''; }) +
     `<div class="fgroup end"><button class="btn" id="resetF">Reset filters</button></div>`;
 }
 
@@ -750,10 +757,9 @@ function showNode(id) {
 
 function refBox(n) {
   if (!n.category || n.category === 'none')
-    return '<div class="refbox"><span class="hint">No category of the generic earthquake graph: specific to this event.</span></div>';
-  return `<div class="refbox"><span><span class="hint">Category</span> <b>${esc(n.category_label || n.category)}</b></span>
-    ${n.reference_label ? `<span><span class="hint">Item of the reference documents</span> <b>${esc(n.reference_label)}</b></span>` : '<span class="hint">New item: not listed in the reference documents.</span>'}
-    <a href="${REF_VIEWER}?node=${encodeURIComponent(n.category)}#graph" target="_blank" rel="noopener">Open the category in the generic earthquake graph ↗</a></div>`;
+    return '<div class="refbox"><span class="hint">No subtype of the generic earthquake graph: specific to this event.</span></div>';
+  return `<div class="refbox"><span><span class="hint">Subtype</span> <b>${esc(n.category_label || n.category)}</b></span>
+    ${n.reference_label ? `<span><span class="hint">Item of the reference documents</span> <b>${esc(n.reference_label)}</b></span>` : '<span class="hint">New item: not listed in the reference documents.</span>'}</div>`;
 }
 
 function showEdge(i) {
@@ -841,54 +847,6 @@ function renderPassages() {
   </article>`).join('') || '<p class="count">No passages match.</p>';
 }
 
-/* ---------- run info ---------- */
-function kv(obj) {
-  const entries = Object.entries(obj || {});
-  if (!entries.length) return '<p class="count">Not in this file.</p>';
-  return `<dl class="kv">${entries.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v === null ? 'None' : typeof v === 'object' ? JSON.stringify(v) : (typeof v === 'number' ? v.toLocaleString() : v))}</dd>`).join('')}</dl>`;
-}
-function renderRun() {
-  const E = D.kg.edges, V = D.kg.validation || {};
-  const rels = D.vals.relations, phs = D.vals.phases;
-  const cell = (r, p) => E.filter(e => (r == null || e.relation === r) && (p == null || (e.drm_phase || 'none') === p)).length;
-  const matrix = `<div class="table-wrap"><table><thead><tr><th>relation</th>${phs.map(p => `<th>${esc(p)}</th>`).join('')}<th>all</th></tr></thead><tbody>
-    ${rels.map(r => `<tr><td class="mono">${esc(r)}</td>${phs.map(p => `<td class="num">${cell(r, p) || ''}</td>`).join('')}<td class="num"><b>${cell(r, null)}</b></td></tr>`).join('')}
-    <tr><td><b>all</b></td>${phs.map(p => `<td class="num"><b>${cell(null, p)}</b></td>`).join('')}<td class="num"><b>${E.length}</b></td></tr></tbody></table></div>`;
-  const byType = Object.fromEntries(D.vals.types.map(t => [t, D.kg.nodes.filter(n => n.type === t).length]));
-  const byStatus = Object.fromEntries(D.vals.status.map(s => [s, E.filter(e => e.status === s).length]));
-  const de = V.dropped_edges || [], dn = V.dropped_nodes || [], mn = V.merged_nodes || [];
-  const pair = x => Array.isArray(x) ? x : [x && (x.id || x.node || JSON.stringify(x)), x && x.reason];
-  $('#runGrid').innerHTML = `
-    <section class="card"><h2>Event</h2>${kv(D.event)}</section>
-    <section class="card"><h2>Run</h2>${kv({ model: D.model, embedding_model: D.embedding_model, ...Object.fromEntries(Object.entries(D.usage || {}).map(([k, v]) => ['usage.' + k, v])) })}</section>
-    <section class="card"><h2>Passage selection</h2>${kv(D.settings)}</section>
-    <section class="card"><h2>Graph contents</h2><div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px">
-      <div>${Object.entries(byType).map(([t, c]) => `<div style="display:flex;gap:6px;align-items:center;font-size:13px">${shapeSvg(t)} ${esc(t)} <span class="mono" style="margin-left:auto">${c}</span></div>`).join('')}</div>
-      <div>${Object.entries(byStatus).map(([s, c]) => `<div style="display:flex;gap:6px;align-items:center;font-size:13px">${statusSvg(s)} ${esc(s)} <span class="mono" style="margin-left:auto">${c}</span></div>`).join('')}</div></div></section>
-    ${coverageCard()}
-    <section class="card" style="grid-column:1/-1"><h2>Edges by relation and DRM phase</h2>${matrix}</section>
-    <section class="card" style="grid-column:1/-1"><h2>Validation · ${de.length} edges dropped, ${dn.length} nodes dropped, ${mn.length} nodes merged</h2>
-      ${de.length ? `<div class="table-wrap"><table><thead><tr><th>Dropped edge</th><th>Reason</th></tr></thead><tbody>${de.map(d => `<tr><td class="mono">${esc(d.edge)}</td><td>${esc(d.reason)}</td></tr>`).join('')}</tbody></table></div>` : '<p class="count">No edges were dropped.</p>'}
-      ${dn.length ? `<div class="table-wrap"><table><thead><tr><th>Dropped node</th><th>Reason</th></tr></thead><tbody>${dn.map(d => { const [a, b] = pair(d); return `<tr><td class="mono">${esc(a)}</td><td>${esc(b)}</td></tr>`; }).join('')}</tbody></table></div>` : ''}
-      ${mn.length ? `<div class="table-wrap"><table><thead><tr><th>Merged node</th><th>Into</th></tr></thead><tbody>${mn.map(d => { const [a, b] = pair(d); return `<tr><td class="mono">${esc(a)}</td><td class="mono">${esc(b)}</td></tr>`; }).join('')}</tbody></table></div>` : ''}
-    </section>`;
-}
-
-// one row per category of the generic graph: event nodes it contains, items of the documents reported / total
-function coverageCard() {
-  const C = (D.coverage || []).slice().sort((a, b) => TYPE_ORDER.indexOf(a.type) - TYPE_ORDER.indexOf(b.type));
-  if (!C.length) return '';
-  const used = C.filter(c => c.event_nodes.length).length, max = Math.max(1, ...C.map(c => c.event_nodes.length));
-  const bars = C.map(c => `<span>${shapeSvg(c.type)} ${esc(c.label)}</span><span class="bar"><span style="width:${Math.round(100 * c.event_nodes.length / max)}%"></span></span><span class="mono">${c.event_nodes.length}</span>`).join('');
-  return `<section class="card" style="grid-column:1/-1"><h2>How this event extends the generic earthquake graph · ${used} of ${C.length} categories reported</h2>
-    <p class="hint">Bars: event nodes per category. Items: concepts of the reference documents found in this event / all items of the category.</p>
-    <div class="cov">${bars}</div>
-    <div class="table-wrap"><table><thead><tr><th>Category</th><th>Event nodes</th><th>Items reported</th></tr></thead><tbody>
-    ${C.map(c => `<tr><td style="white-space:nowrap">${shapeSvg(c.type)} <a href="${REF_VIEWER}?node=${encodeURIComponent(c.category)}#graph" target="_blank" rel="noopener">${esc(c.label)}</a></td>
-      <td>${c.event_nodes.length ? c.event_nodes.map(esc).join(' · ') : '<span class="pill lacking">not reported</span>'}</td>
-      <td><span class="mono">${c.items_reported.length} / ${c.items_total}</span> ${c.items_reported.map(esc).join(', ')}</td></tr>`).join('')}</tbody></table></div></section>`;
-}
-
 /* ---------- header ---------- */
 function renderHeader() {
   const ev = D.event;
@@ -902,14 +860,14 @@ function renderHeader() {
 }
 
 function renderAll() {
-  renderHeader(); renderFilters(); renderStoryline(); renderEdgeTable(); renderPassages(); renderRun();
+  renderHeader(); renderFilters(); renderStoryline(); renderEdgeTable(); renderPassages();
   graphDirty = true;
   if (currentTab === 'graph') buildCy();
 }
 
 /* ---------- tabs ---------- */
 function showTab(t) {
-  if (!['storyline', 'graph', 'edges', 'passages', 'run'].includes(t)) t = 'storyline';
+  if (!['storyline', 'graph', 'edges', 'passages'].includes(t)) t = 'storyline';
   currentTab = t;
   document.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === t));
   document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + t);
