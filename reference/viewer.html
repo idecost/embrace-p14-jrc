@@ -714,7 +714,7 @@ function applyNodeSearch() {
   const q = $('#nodeSearch').value.trim().toLowerCase();
   cy.nodes().removeClass('match');
   if (!q) return;
-  cy.nodes().filter(n => { const d = nodeById.get(n.id()); return (d.label || '').toLowerCase().includes(q) || (d.description || '').toLowerCase().includes(q); }).addClass('match');
+  cy.nodes().filter(n => { const d = nodeById.get(n.id()); return [d.label, d.description, ...(d.includes || []).map(i => i.label)].join(' ').toLowerCase().includes(q); }).addClass('match');
 }
 
 function nodeLabel(id) { const n = nodeById.get(id); return n ? (n.label || id) : id; }
@@ -740,6 +740,7 @@ function showNode(id) {
     <h3>${esc(n.label || n.id)}</h3>
     ${n.description ? `<p class="explain">${esc(n.description)}</p>` : ''}
     <p class="hint mono" style="font-size:12px">${esc(n.id)}</p>
+    ${(n.includes || []).length ? `<h4>Includes (${n.includes.length})</h4><div class="elist">${n.includes.map(i => `<div class="elink" style="cursor:default"><b>${esc(i.label)}</b>${i.timeframe ? ` <span class="pill neutral" style="font-size:10px">${esc(i.timeframe)}</span>` : ''}<br><span class="hint">${esc(i.description)}</span><br><span class="hint mono" style="font-size:11px">${esc(cite(i.sources))}</span></div>`).join('')}</div>` : ''}
     ${n.sources ? `<h4>Sources</h4><p class="hint">${esc(cite(n.sources))}</p>` : ''}
     ${out.length ? `<h4>Outgoing (${out.length})</h4><div class="elist">${out.map(e => li(e, 'out')).join('')}</div>` : ''}
     ${inc.length ? `<h4>Incoming (${inc.length})</h4><div class="elist">${inc.map(e => li(e, 'in')).join('')}</div>` : ''}
@@ -872,7 +873,8 @@ function renderHeader() {
   $('#evMeta').innerHTML = m.map(([k, v]) => `<span>${esc(k)} <b>${esc(v)}</b></span>`).join('');
   const P = D.passages, dates = P.map(p => p.date).filter(Boolean).sort();
   const reports = new Set(P.map(p => p.reliefweb_id)).size;
-  const st = [[D.kg.nodes.length, 'nodes'], [D.kg.edges.length, 'edges'], [D.kg.edges.filter(e => e.status === 'lacking' || e.status === 'recommended').length, 'recommended measures (edges)'], [P.length, `pages from ${reports} documents`]];
+  const nItems = D.kg.nodes.reduce((s, n) => s + (n.includes || []).length, 0);
+  const st = [[D.kg.nodes.length, 'categories'], [nItems, 'items from the documents'], [D.kg.edges.length, 'edges'], [P.length, `pages from ${reports} documents`]];
   $('#stats').innerHTML = st.map(([n, l]) => `<span class="stat"><b>${n}</b>${esc(l)}</span>`).join('') + (dates.length ? `<span class="stat">reports dated <b>${esc(dates[0])}</b>to <b>${esc(dates[dates.length - 1])}</b></span>` : '');
 }
 

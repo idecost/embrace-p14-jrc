@@ -304,7 +304,7 @@ const PHASE_ORDER = ['prevention', 'preparedness', 'response', 'recovery', 'none
 const CONF_ORDER = ['high', 'medium', 'low'];
 const REL_ORDER = ['causes', 'triggers', 'amplifies', 'prevents', 'mitigates', 'addresses', 'implements'];
 const COL = { actor: 0, measure: 1, hazard: 2, vulnerability: 2, impact: 3, need: 4 };
-const REF_ORDER = ['in generic graph', 'not in generic graph'];
+const REF_ORDER = [];   // categories sorted alphabetically
 const STOP = new Set(['the', 'and', 'for', 'with', 'from', 'into', 'that', 'this', 'are', 'was', 'were', 'has', 'have', 'its', 'not']);
 
 /* ---------- GitHub Pages auto-load ----------
@@ -531,7 +531,7 @@ async function start() {
 function allFilters() {
   return { types: new Set(D.vals.types), relations: new Set(D.vals.relations), status: new Set(D.vals.status), phases: new Set(D.vals.phases), conf: new Set(D.vals.conf), ref: new Set(D.vals.ref) };
 }
-function refOf(n) { return n.reference_id && n.reference_id !== 'none' ? 'in generic graph' : 'not in generic graph'; }
+function refOf(n) { return n.category_label || 'no category'; }   // category of the generic graph
 const nodeVisible = n => n && F.types.has(n.type) && F.ref.has(refOf(n));
 function edgeVisible(e) {
   return F.relations.has(e.relation) && F.status.has(e.status) && F.phases.has(e.drm_phase || 'none') && F.conf.has(e.confidence)
@@ -568,7 +568,7 @@ function renderFilters() {
     group('Status', 'status', D.vals.status, cS, statusSvg) +
     group('Edge phase', 'phases', D.vals.phases, cP) +
     group('Confidence', 'conf', D.vals.conf, cC) +
-    group('Generic graph', 'ref', D.vals.ref, cG) +
+    group('Category (generic graph)', 'ref', D.vals.ref, cG, v => { const n = D.kg.nodes.find(x => refOf(x) === v); return n ? shapeSvg(n.type) : ''; }) +
     `<div class="fgroup end"><button class="btn" id="resetF">Reset filters</button></div>`;
 }
 
@@ -749,11 +749,11 @@ function showNode(id) {
 }
 
 function refBox(n) {
-  if (!n.reference_id || n.reference_id === 'none')
-    return '<div class="refbox"><span class="hint">Not in the generic earthquake graph: specific to this event.</span></div>';
-  const c = (D.coverage || []).find(x => x.reference_id === n.reference_id);
-  return `<div class="refbox"><span><span class="hint">Generic concept</span> <b>${esc(n.reference_label || (c && c.concept) || n.reference_id)}</b></span>
-    <a href="${REF_VIEWER}?node=${encodeURIComponent(n.reference_id)}#graph" target="_blank" rel="noopener">Open in the generic earthquake graph ↗</a></div>`;
+  if (!n.category || n.category === 'none')
+    return '<div class="refbox"><span class="hint">No category of the generic earthquake graph: specific to this event.</span></div>';
+  return `<div class="refbox"><span><span class="hint">Category</span> <b>${esc(n.category_label || n.category)}</b></span>
+    ${n.reference_label ? `<span><span class="hint">Item of the reference documents</span> <b>${esc(n.reference_label)}</b></span>` : '<span class="hint">New item: not listed in the reference documents.</span>'}
+    <a href="${REF_VIEWER}?node=${encodeURIComponent(n.category)}#graph" target="_blank" rel="noopener">Open the category in the generic earthquake graph ↗</a></div>`;
 }
 
 function showEdge(i) {
@@ -874,19 +874,19 @@ function renderRun() {
     </section>`;
 }
 
+// one row per category of the generic graph: event nodes it contains, items of the documents reported / total
 function coverageCard() {
-  const C = D.coverage || [];
+  const C = (D.coverage || []).slice().sort((a, b) => TYPE_ORDER.indexOf(a.type) - TYPE_ORDER.indexOf(b.type));
   if (!C.length) return '';
-  const types = uniqOrdered(C.map(c => c.type), TYPE_ORDER);
-  const rows = types.map(t => { const all = C.filter(c => c.type === t), got = all.filter(c => c.reported).length;
-    return `<span>${shapeSvg(t)} ${esc(t)}</span><span class="bar"><span style="width:${Math.round(100 * got / all.length)}%"></span></span><span class="mono">${got} / ${all.length}</span>`; }).join('');
-  const missing = C.filter(c => !c.reported);
-  return `<section class="card" style="grid-column:1/-1"><h2>Coverage of the generic earthquake graph · ${C.length - missing.length} of ${C.length} concepts reported</h2>
-    <div class="cov">${rows}</div>
-    <div class="table-wrap"><table><thead><tr><th>Type</th><th>Generic concept</th><th>Reported for this event as</th></tr></thead><tbody>
-    ${C.slice().sort((a, b) => TYPE_ORDER.indexOf(a.type) - TYPE_ORDER.indexOf(b.type) || a.reported - b.reported).map(c => `<tr><td>${shapeSvg(c.type)} ${esc(c.type)}</td>
-      <td><a href="${REF_VIEWER}?node=${encodeURIComponent(c.reference_id)}#graph" target="_blank" rel="noopener">${esc(c.concept)}</a></td>
-      <td>${c.reported ? esc(c.event_nodes) : '<span class="pill lacking">not reported</span>'}</td></tr>`).join('')}</tbody></table></div></section>`;
+  const used = C.filter(c => c.event_nodes.length).length, max = Math.max(1, ...C.map(c => c.event_nodes.length));
+  const bars = C.map(c => `<span>${shapeSvg(c.type)} ${esc(c.label)}</span><span class="bar"><span style="width:${Math.round(100 * c.event_nodes.length / max)}%"></span></span><span class="mono">${c.event_nodes.length}</span>`).join('');
+  return `<section class="card" style="grid-column:1/-1"><h2>How this event extends the generic earthquake graph · ${used} of ${C.length} categories reported</h2>
+    <p class="hint">Bars: event nodes per category. Items: concepts of the reference documents found in this event / all items of the category.</p>
+    <div class="cov">${bars}</div>
+    <div class="table-wrap"><table><thead><tr><th>Category</th><th>Event nodes</th><th>Items reported</th></tr></thead><tbody>
+    ${C.map(c => `<tr><td style="white-space:nowrap">${shapeSvg(c.type)} <a href="${REF_VIEWER}?node=${encodeURIComponent(c.category)}#graph" target="_blank" rel="noopener">${esc(c.label)}</a></td>
+      <td>${c.event_nodes.length ? c.event_nodes.map(esc).join(' · ') : '<span class="pill lacking">not reported</span>'}</td>
+      <td><span class="mono">${c.items_reported.length} / ${c.items_total}</span> ${c.items_reported.map(esc).join(', ')}</td></tr>`).join('')}</tbody></table></div></section>`;
 }
 
 /* ---------- header ---------- */
