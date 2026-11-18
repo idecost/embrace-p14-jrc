@@ -1,0 +1,1346 @@
+{
+  "meta": {
+    "kind": "event_kg_cited",
+    "event": {
+      "name": "Earthquake Venezuela June 2026",
+      "hazard": "Earthquake",
+      "country": "Venezuela",
+      "location": "Venezuela",
+      "date": "2026-06-24",
+      "id": "EQ_1548377",
+      "documents": "JRC documents: GEER report, JRC health security note, ECHO Flash"
+    },
+    "model": "claude-sonnet-5",
+    "embedding_model": "DataScience-UIBK/uibk-embedding-v1",
+    "usage": {
+      "input_tokens": 219922,
+      "output_tokens": 31344,
+      "calls": 3,
+      "cached": 0
+    },
+    "schema": "jrc",
+    "reference": "reference\\EQ_reference_jrc_drm_storyline_kg.json",
+    "coverage": [
+      {
+        "category": "primary_hazards",
+        "type": "hazard",
+        "label": "Primary earthquake hazards",
+        "event_nodes": [
+          "M7.2 San Felipe earthquake",
+          "M7.5 Catia La Mar earthquake",
+          "Strike-slip earthquake doublet",
+          "Seismic amplification on Quaternary deposits"
+        ],
+        "items_reported": [
+          "Ground shaking",
+          "Seismic site amplification",
+          "Supershear rupture propagation"
+        ],
+        "items_total": 7
+      },
+      {
+        "category": "aftershocks_foreshocks",
+        "type": "hazard",
+        "label": "Aftershocks and foreshocks",
+        "event_nodes": [
+          "Venezuela aftershock sequence"
+        ],
+        "items_reported": [
+          "Aftershock sequence"
+        ],
+        "items_total": 11
+      },
+      {
+        "category": "landslides_debris_flow",
+        "type": "hazard",
+        "label": "Landslides and debris flows",
+        "event_nodes": [
+          "Cordillera de la Costa landslides",
+          "Debris-flow remobilization risk"
+        ],
+        "items_reported": [
+          "Induced landslides, rockfalls, debris flows",
+          "Quake lakes from landslide river blockage"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "liquefaction",
+        "type": "hazard",
+        "label": "Liquefaction",
+        "event_nodes": [
+          "La Guaira coastal liquefaction"
+        ],
+        "items_reported": [
+          "Soil liquefaction"
+        ],
+        "items_total": 14
+      },
+      {
+        "category": "tsunami_seiche",
+        "type": "hazard",
+        "label": "Tsunami and seiche",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 10
+      },
+      {
+        "category": "dam_failure_flood",
+        "type": "hazard",
+        "label": "Dam failure and flooding",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 11
+      },
+      {
+        "category": "fire_following_earthquake",
+        "type": "hazard",
+        "label": "Fire following earthquake",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 8
+      },
+      {
+        "category": "technological_natech",
+        "type": "hazard",
+        "label": "Technological and Natech accidents",
+        "event_nodes": [
+          "El Palito Refinery oil leak",
+          "Morón Petrochemical Complex damage"
+        ],
+        "items_reported": [
+          "Industrial accident triggered by earthquake",
+          "Rupture of hazardous process equipment"
+        ],
+        "items_total": 11
+      },
+      {
+        "category": "physical_damage_buildings",
+        "type": "impact",
+        "label": "Damage to buildings",
+        "event_nodes": [
+          "Mass building collapse/damage"
+        ],
+        "items_reported": [
+          "Mass building collapse with high death/damage toll"
+        ],
+        "items_total": 19
+      },
+      {
+        "category": "physical_damage_bridges_viaducts",
+        "type": "impact",
+        "label": "Damage to bridges and viaducts",
+        "event_nodes": [
+          "Road/transport infrastructure damage"
+        ],
+        "items_reported": [
+          "Destruction of roads and bridges hampering access"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "physical_damage_lifelines",
+        "type": "impact",
+        "label": "Damage to lifelines",
+        "event_nodes": [
+          "Power grid/transmission tower loss",
+          "Water/wastewater infrastructure damage",
+          "Telecommunications network damage",
+          "Precautionary gas supply shutdown"
+        ],
+        "items_reported": [
+          "Power infrastructure damage",
+          "Precautionary gas supply shutdown",
+          "Telecommunications network damage",
+          "Water and sanitation infrastructure damage"
+        ],
+        "items_total": 16
+      },
+      {
+        "category": "physical_damage_critical_facilities",
+        "type": "impact",
+        "label": "Damage to critical facilities",
+        "event_nodes": [
+          "Damage to 38 hospitals",
+          "Damage to 433 schools",
+          "Simón Bolívar airport closure",
+          "Port of La Guaira damage"
+        ],
+        "items_reported": [
+          "Airport damage/closure",
+          "Collapse of school buildings",
+          "Hospital collapse or damage",
+          "Port damage and fire"
+        ],
+        "items_total": 12
+      },
+      {
+        "category": "human_impact_casualties",
+        "type": "impact",
+        "label": "Deaths and injuries",
+        "event_nodes": [
+          "Reported earthquake fatalities",
+          "Reported earthquake injuries",
+          "Unresolved missing persons count",
+          "People trapped under rubble"
+        ],
+        "items_reported": [
+          "Missing persons",
+          "People trapped under rubble",
+          "Reported earthquake fatalities",
+          "Reported earthquake injuries"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "human_impact_health",
+        "type": "impact",
+        "label": "Disease and mental health effects",
+        "event_nodes": [
+          "Outbreak risk among displaced populations",
+          "Overwhelmed hospital/health capacity",
+          "Mental health/psychosocial burden"
+        ],
+        "items_reported": [
+          "Disease outbreaks after earthquakes",
+          "Overwhelmed medical/health capacity",
+          "PTSD and long-term mental health effects"
+        ],
+        "items_total": 10
+      },
+      {
+        "category": "displacement_homelessness",
+        "type": "impact",
+        "label": "Displacement and homelessness",
+        "event_nodes": [
+          "Population displacement",
+          "Homelessness from housing loss",
+          "Substandard temporary shelters"
+        ],
+        "items_reported": [
+          "Homelessness from housing loss",
+          "Population displacement in damaged areas",
+          "Temporary shelter and tent camps"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "service_disruption",
+        "type": "impact",
+        "label": "Service and access disruption",
+        "event_nodes": [
+          "Transport/logistics disruption",
+          "Power supply disruption",
+          "Water supply/sanitation disruption",
+          "Puerto Cabello partial operation"
+        ],
+        "items_reported": [
+          "Port and airport disruption",
+          "Power supply disruption",
+          "Transport and logistics disruption",
+          "Water supply and sanitation disruption"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "social_security_impact",
+        "type": "impact",
+        "label": "Social and security impacts",
+        "event_nodes": [
+          "Looting and breakdown of order",
+          "Protection risks in shelters"
+        ],
+        "items_reported": [
+          "Protection risks for displaced populations",
+          "Rising crime and petty theft"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "economic_losses",
+        "type": "impact",
+        "label": "Economic losses",
+        "event_nodes": [
+          "Direct economic losses"
+        ],
+        "items_reported": [
+          "Direct economic loss (repair cost)"
+        ],
+        "items_total": 17
+      },
+      {
+        "category": "environmental_impact",
+        "type": "impact",
+        "label": "Environmental and hazardous material impact",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 7
+      },
+      {
+        "category": "built_environment_vulnerability",
+        "type": "vulnerability",
+        "label": "Built environment vulnerability",
+        "event_nodes": [
+          "Unreinforced masonry/adobe housing stock",
+          "Thick unconsolidated Quaternary deposits"
+        ],
+        "items_reported": [
+          "Soft soil/unconsolidated ground amplification",
+          "Unreinforced/poorly tied masonry walls"
+        ],
+        "items_total": 12
+      },
+      {
+        "category": "exposure_timing",
+        "type": "vulnerability",
+        "label": "Exposure and timing factors",
+        "event_nodes": [
+          "Proximity to Caracas metropolitan corridor"
+        ],
+        "items_reported": [
+          "Proximity to epicentre concentrates damage"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "social_vulnerability",
+        "type": "vulnerability",
+        "label": "Social vulnerability",
+        "event_nodes": [
+          "Chronic health-system fragility",
+          "Pre-existing aid dependency"
+        ],
+        "items_reported": [
+          "Pre-existing aid dependency",
+          "Socioeconomic vulnerability index"
+        ],
+        "items_total": 10
+      },
+      {
+        "category": "environmental_conditions",
+        "type": "vulnerability",
+        "label": "Environmental conditions",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 6
+      },
+      {
+        "category": "infrastructure_vulnerability",
+        "type": "vulnerability",
+        "label": "Critical infrastructure vulnerability",
+        "event_nodes": [
+          "Narrow boulder-rich alluvial fans",
+          "Reduced sediment-dam storage capacity"
+        ],
+        "items_reported": [
+          "Large dam seismic vulnerability",
+          "Limited exposure and vulnerability databases"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "energy_building_vulnerability",
+        "type": "vulnerability",
+        "label": "Energy inefficiency and building stock vulnerability",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 9
+      },
+      {
+        "category": "life_saving_needs",
+        "type": "need",
+        "label": "Life-saving needs",
+        "event_nodes": [
+          "Urban search and rescue need",
+          "Emergency medical care need"
+        ],
+        "items_reported": [
+          "Emergency medical care for injured",
+          "Urban search and rescue (USAR) teams"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "basic_needs",
+        "type": "need",
+        "label": "Basic needs",
+        "event_nodes": [
+          "Emergency shelter and housing need",
+          "WASH and hygiene services need",
+          "Food and water distribution need"
+        ],
+        "items_reported": [
+          "Emergency shelter and housing",
+          "Food and water distribution",
+          "WASH and hygiene services"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "services_access_needs",
+        "type": "need",
+        "label": "Services and access needs",
+        "event_nodes": [
+          "Power restoration need",
+          "Water/sanitation restoration need",
+          "Communications restoration need",
+          "Debris removal need",
+          "Rapid damage assessment need"
+        ],
+        "items_reported": [
+          "Communications network restoration",
+          "Debris removal need",
+          "Power restoration need",
+          "Rapid damage and debris mapping need",
+          "Water and sanitation infrastructure restoration"
+        ],
+        "items_total": 11
+      },
+      {
+        "category": "protection_psychosocial_need",
+        "type": "need",
+        "label": "Protection and psychosocial needs",
+        "event_nodes": [
+          "Protection need for vulnerable groups",
+          "Psychosocial/mental health support need"
+        ],
+        "items_reported": [
+          "Protection risks for vulnerable groups",
+          "Psychosocial/mental health support need"
+        ],
+        "items_total": 6
+      },
+      {
+        "category": "information_needs",
+        "type": "need",
+        "label": "Information and assessment needs",
+        "event_nodes": [
+          "Missing-persons tracking need",
+          "Disease surveillance and early warning need",
+          "Improved local liquefaction hazard modelling need"
+        ],
+        "items_reported": [
+          "Epidemic intelligence monitoring",
+          "Fatality and injury count monitoring",
+          "National seismic risk quantification"
+        ],
+        "items_total": 20
+      },
+      {
+        "category": "prevention_mitigation_codes",
+        "type": "measure",
+        "label": "Building codes and standards",
+        "event_nodes": [
+          "COVENIN 1756-82 seismic design code"
+        ],
+        "items_reported": [
+          "Seismic design spectra in codes"
+        ],
+        "items_total": 15
+      },
+      {
+        "category": "retrofitting_renovation",
+        "type": "measure",
+        "label": "Retrofitting and renovation",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 12
+      },
+      {
+        "category": "land_use_planning",
+        "type": "measure",
+        "label": "Land-use planning and risk-informed siting",
+        "event_nodes": [
+          "Post-1999 sediment-control dams",
+          "Debris-flow hazard zoning (Proyecto Ávila)"
+        ],
+        "items_reported": [
+          "Improved land-use practices"
+        ],
+        "items_total": 3
+      },
+      {
+        "category": "seismic_risk_modelling",
+        "type": "measure",
+        "label": "Seismic risk assessment and modelling",
+        "event_nodes": [
+          "In-situ liquefaction hazard testing"
+        ],
+        "items_reported": [],
+        "items_total": 29
+      },
+      {
+        "category": "structural_testing_research",
+        "type": "measure",
+        "label": "Structural testing and research",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 13
+      },
+      {
+        "category": "preparedness_warning",
+        "type": "measure",
+        "label": "Early warning and preparedness",
+        "event_nodes": [
+          "FUNVISIS seismic monitoring network",
+          "Disease surveillance and epidemic intelligence"
+        ],
+        "items_reported": [
+          "Earthquake early warning systems"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "response_search_rescue",
+        "type": "measure",
+        "label": "Search and rescue operations",
+        "event_nodes": [
+          "National search-and-rescue deployment",
+          "International USAR team mobilisation"
+        ],
+        "items_reported": [
+          "International USAR team mobilisation",
+          "National USAR teams"
+        ],
+        "items_total": 12
+      },
+      {
+        "category": "response_relief_shelter",
+        "type": "measure",
+        "label": "Relief distribution and shelter",
+        "event_nodes": [
+          "EU emergency humanitarian aid funding",
+          "PAHO/WHO-coordinated Emergency Medical Teams",
+          "WFP food assistance operations",
+          "World Central Kitchen meal distribution",
+          "UNICEF WASH and health response",
+          "IOM WASH and shelter assistance",
+          "International Medical Corps mobile medical units",
+          "IFRC temporary health posts",
+          "CISP handwashing point installation",
+          "Psychological First Aid provision",
+          "UNHCR rapid protection monitoring"
+        ],
+        "items_reported": [
+          "Cash-based and market support assistance",
+          "Field hospitals and emergency medical care",
+          "Psychosocial support",
+          "Relief item distribution",
+          "WASH services"
+        ],
+        "items_total": 6
+      },
+      {
+        "category": "response_restoration_debris",
+        "type": "measure",
+        "label": "Debris clearance and service restoration",
+        "event_nodes": [
+          "USS Fort Lauderdale port support",
+          "Electrical power restoration operations",
+          "Water/pipeline restoration operations",
+          "Satellite connectivity (Starlink) workaround",
+          "Cargo rerouting via Puerto Cabello"
+        ],
+        "items_reported": [
+          "Communication network restoration",
+          "Logistics and transport route restoration",
+          "Power supply restoration",
+          "Water and sanitation system restoration"
+        ],
+        "items_total": 10
+      },
+      {
+        "category": "coordination_mechanisms",
+        "type": "measure",
+        "label": "Response coordination mechanisms",
+        "event_nodes": [
+          "EU Civil Protection Mechanism activation"
+        ],
+        "items_reported": [
+          "Civil protection mechanism activation"
+        ],
+        "items_total": 17
+      },
+      {
+        "category": "reconnaissance_field_missions",
+        "type": "measure",
+        "label": "Post-event reconnaissance and field missions",
+        "event_nodes": [
+          "GEER geotechnical reconnaissance mission"
+        ],
+        "items_reported": [
+          "Perishable data reconnaissance"
+        ],
+        "items_total": 20
+      },
+      {
+        "category": "rapid_scientific_analysis_mapping",
+        "type": "measure",
+        "label": "Rapid scientific analysis and mapping",
+        "event_nodes": [
+          "USGS PAGER rapid impact estimation",
+          "GEM rapid impact estimates for ERCC",
+          "Copernicus EMS rapid mapping (EMSR884)"
+        ],
+        "items_reported": [
+          "Copernicus EMS rapid mapping activation",
+          "GDACS rapid impact estimation and alert",
+          "Near-real-time earthquake loss estimation systems"
+        ],
+        "items_total": 11
+      },
+      {
+        "category": "recovery_reconstruction",
+        "type": "measure",
+        "label": "Recovery and reconstruction",
+        "event_nodes": [
+          "Refinery/petrochemical restart operations",
+          "Airport runway resurfacing",
+          "Port of La Guaira reopening",
+          "World Bank GRADE damage assessment"
+        ],
+        "items_reported": [
+          "Post Disaster Needs Assessment",
+          "Rehabilitation of critical and social infrastructure"
+        ],
+        "items_total": 19
+      },
+      {
+        "category": "lessons_learned",
+        "type": "measure",
+        "label": "Lessons learned and knowledge transfer",
+        "event_nodes": [],
+        "items_reported": [],
+        "items_total": 12
+      },
+      {
+        "category": "national_authorities",
+        "type": "actor",
+        "label": "National and local authorities",
+        "event_nodes": [
+          "Venezuelan national authorities",
+          "CORPOELEC (power utility)"
+        ],
+        "items_reported": [
+          "National command center for disaster prevention and mitigation",
+          "National disaster management coordination"
+        ],
+        "items_total": 9
+      },
+      {
+        "category": "international_humanitarian",
+        "type": "actor",
+        "label": "International humanitarian system",
+        "event_nodes": [
+          "UN OCHA",
+          "PAHO/WHO",
+          "UNHCR",
+          "UNICEF",
+          "IOM",
+          "World Food Programme",
+          "World Central Kitchen",
+          "IFRC/Red Cross",
+          "International Medical Corps",
+          "CISP",
+          "EU ERCC / Civil Protection Mechanism",
+          "US Southern Command"
+        ],
+        "items_reported": [
+          "EU Civil Protection Mechanism mobilisation",
+          "Emergency medical teams (EMT)",
+          "International in-kind relief assistance",
+          "NGO and international organisation mobilisation",
+          "Red Cross/Red Crescent response operations",
+          "UN OCHA Assessment & Analysis (A&A) Cell",
+          "UN agency humanitarian response"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "scientific_monitoring",
+        "type": "actor",
+        "label": "Scientific and monitoring agencies",
+        "event_nodes": [
+          "USGS",
+          "GEM Foundation",
+          "FUNVISIS"
+        ],
+        "items_reported": [
+          "Global Earthquake Model (GEM) calculations",
+          "Seismic monitoring networks",
+          "USGS ShakeMap"
+        ],
+        "items_total": 13
+      },
+      {
+        "category": "affected_communities",
+        "type": "actor",
+        "label": "Affected communities",
+        "event_nodes": [
+          "Affected communities in La Guaira/Caracas"
+        ],
+        "items_reported": [
+          "Household self-recovery efforts"
+        ],
+        "items_total": 12
+      },
+      {
+        "category": "research_engineering_institutions",
+        "type": "actor",
+        "label": "Research and engineering institutions",
+        "event_nodes": [
+          "GEER Association",
+          "Venezuelan academic/engineering institutions",
+          "GEER and Venezuelan geotechnical researchers"
+        ],
+        "items_reported": [
+          "Collaborative research networks"
+        ],
+        "items_total": 10
+      }
+    ],
+    "node_types": {
+      "hazard": "A physical event or process that can cause harm, including the main earthquake shock, aftershocks/foreshocks, and secondary/cascading hazards such as landslides, liquefaction, tsunami, dam failure, fire or technological accidents.",
+      "impact": "A concrete effect of a hazard or vulnerability on people, assets, services, the economy or the environment, including deaths, damage to buildings and infrastructure, displacement, service disruption, social/security effects and economic losses.",
+      "vulnerability": "A pre-existing physical, social, environmental or systemic condition that increases susceptibility to harm from hazards, such as unreinforced structures, poverty, exposure factors or infrastructure fragility.",
+      "measure": "An action, plan, system, policy, technology or capacity - spanning prevention, preparedness, response, and recovery - that prevents, mitigates, or addresses hazards, impacts, vulnerabilities or needs.",
+      "need": "An unmet requirement or gap reported in the documents, ranging from life-saving needs to basic needs, services/access needs, protection and information needs.",
+      "actor": "An organisation, institution or group that acts before, during or after an earthquake, including authorities, humanitarian organisations, scientific/monitoring bodies, research institutions and affected communities."
+    },
+    "relations": {
+      "causes": {
+        "definition": "Source directly produces the target.",
+        "sources": [
+          "hazard",
+          "impact",
+          "vulnerability"
+        ],
+        "targets": [
+          "impact",
+          "need",
+          "hazard"
+        ]
+      },
+      "prevents": {
+        "definition": "A measure stops the target from happening at all (or would have, if recommended/lacking).",
+        "sources": [
+          "measure"
+        ],
+        "targets": [
+          "hazard",
+          "impact",
+          "vulnerability"
+        ]
+      },
+      "mitigates": {
+        "definition": "A measure reduces the severity or extent of the target.",
+        "sources": [
+          "measure"
+        ],
+        "targets": [
+          "impact",
+          "vulnerability",
+          "need",
+          "hazard"
+        ]
+      },
+      "triggers": {
+        "definition": "A hazard sets off another (cascading) hazard.",
+        "sources": [
+          "hazard"
+        ],
+        "targets": [
+          "hazard"
+        ]
+      },
+      "amplifies": {
+        "definition": "A vulnerability or impact makes the target worse without causing it alone.",
+        "sources": [
+          "vulnerability",
+          "impact"
+        ],
+        "targets": [
+          "impact",
+          "need",
+          "hazard"
+        ]
+      },
+      "addresses": {
+        "definition": "A measure responds to a need.",
+        "sources": [
+          "measure"
+        ],
+        "targets": [
+          "need"
+        ]
+      },
+      "implements": {
+        "definition": "An actor carries out or provides a measure.",
+        "sources": [
+          "actor"
+        ],
+        "targets": [
+          "measure"
+        ]
+      },
+      "informs": {
+        "definition": "An actor or a measure (e.g. monitoring, modelling, reconnaissance, rapid mapping) produces information/data that supports or guides another measure.",
+        "sources": [
+          "actor",
+          "measure"
+        ],
+        "targets": [
+          "measure"
+        ]
+      },
+      "exacerbates": {
+        "definition": "A vulnerability increases the likelihood or severity of another vulnerability or of a hazard occurring/worsening.",
+        "sources": [
+          "vulnerability"
+        ],
+        "targets": [
+          "vulnerability",
+          "hazard"
+        ]
+      },
+      "coordinates_with": {
+        "definition": "An actor coordinates or collaborates with another actor in planning, response or research activities.",
+        "sources": [
+          "actor"
+        ],
+        "targets": [
+          "actor"
+        ]
+      }
+    },
+    "settings": {
+      "max_passages": 65,
+      "max_chars": 160000,
+      "max_edges": 120
+    },
+    "citations": {
+      "nodes": 3,
+      "edges": 3,
+      "node_citations": 19,
+      "edge_citations": 16,
+      "support": {
+        "node": {
+          "unverified": 3
+        },
+        "edge": {
+          "unverified": 2,
+          "partial": 1
+        }
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "m72_san_felipe",
+      "label": "M7.2 San Felipe earthquake",
+      "type": "hazard",
+      "drm_phase": "none",
+      "description": "Mainshock M7.2 near San Felipe, Yaracuy, 24 June 2026, 10km depth",
+      "category": "primary_hazards",
+      "reference_item": "ground_shaking",
+      "category_label": "Primary earthquake hazards",
+      "reference_label": "Ground shaking",
+      "question": "What do the documents report about \"M7.2 San Felipe earthquake\" (hazard) in the earthquake in Venezuela, June 2026?",
+      "answer": "The M7.2 San Felipe earthquake occurred on 24 June 2026 at 18:04:31 local time (22:04:31 UTC), with its epicenter about 21 km ENE of San Felipe, Yaracuy State, at coordinates 10.371, −68.556, and a hypocentral depth of 10 km, according to USGS.[1] It struck during a statutory Federal holiday in Venezuela and was followed about 30 seconds later by a separate M7.5 earthquake offshore near Catia La Mar, La Guaira State, with the sequence occurring within the transpressional Caribbean–South American plate boundary zone involving the Boconó–San Sebastián–El Pilar fault systems.[1][2] Near its epicentral area, the M7.2 event produced long, deep ground fissures in cultivated alluvial lowland (e.g., a roughly 380 m fissure at Pueblo Ferriar and fissure systems in Veroes municipality, Yaracuy), interpreted as liquefaction-driven bank spreading, along with PGA and PGV ground-motion maps documented by USGS.[3][4][5][6][7]",
+      "support": "unverified",
+      "n_citations": 7,
+      "citations": [
+        {
+          "n": 1,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 35,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 35",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 33 August 2026 1. INTRODUCTION On June 24, 2026, while Venezuela was on a statutory Federal holiday, at 18:04:31 local time (22:04:31 Coordinated Universal Time [UTC]) a moment magnitude, M, 7.2 earthquake occurred with its epicenter near the city of San Felipe, in the State of Yaracuy, according to the United States Geological Survey (USGS). The epicenter was located at 10.371, −68.556, approximately 21 kilometers (km) ENE of San Felipe (see Figure 1-1) and exhibited a hypocentral depth of 10 km (USGS 2026a). About 30 seconds later, the M7.5 Catia La Mar earthquake occurred at 18:05:03 local time (22:05:03 UTC). This earthquake had an epicenter located at 10.622, −67.194 km ENE of Catia La Mar, in the State of La Guaira (see Figure 1-1). The hypocentral depth of this earthquake was 10 km (USGS 2026b). Figure 1-1. Map of Venezuela showing the location of the June 2026 earthquake epicenters in San Felipe (M 7.2) and Catia La Mar (M 7.5). Focal mechanisms (from USGS) are shown for both events. As of the date of publication of this report, the Fundación Venezolana de Investigaciones Sismológicas (FUNVISIS), which oversees the Venezuelan network of strong ground motion recording stations, has not made available to the public recordings for these events."
+        },
+        {
+          "n": 2,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 3,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 3",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24 2026 San Felipe and Catia La Mar Earthquakes i August, 2026 EXECUTIVE SUMMARY On June 24, 2026, two earthquakes affected northern Venezuela within approximately 30 seconds of one another: an M7.2 event near San Felipe, Yaracuy, followed by an M7.5 event offshore La Guaira near Catia La Mar. The sequence occurred within the broad transpressional plate-boundary zone between the Caribbean and South American plates, where right-lateral motion is distributed across the Boconó–San Sebastián–El Pilar and related fault systems. The earthquakes produced severe and spatially variable impacts across the north-central region of the country, with the most significant damage concentrated in La Guaira, particularly Catia La Mar, Caraballeda, Macuto, Maiquetía, and neighboring coastal communities, as well as localized but notable impacts in Caracas, including San Bernardino and Los Palos Grandes. The events caused major loss of life, widespread damage to buildings and infrastructure, displacement of residents, disruption to essential services, and direct physical losses estimated in the tens of billions of U.S. dollars. dollars. The GEER Association organized a rapid hybrid reconnaissance effort to document the geotechnical, geological, seismological, and infrastructure-related effects of these earthquakes. The reconnaissance combined remote data collection, satellite and aerial imagery review, social media and news media georeferencing, collaboration with local professionals and students, field visits, drone surveys, limited subsurface investigation, and coordination with national and international organizations. The GEER team worked closely with Venezuelan academic institutions, the Venezuelan Society of Geotechnical Engineering, local engineering practitioners, students, government agencies, and international organizations to collect and preserve perishable data before cleanup, demolition, rainfall, and emergency response activities altered the evidence. This report provides a coordinated, source-documented record of early observations and identifies priority needs for future investigation. The M7.5 rupture was located close to the densely populated coastal corridor of La Guaira, and the sequence appears to have involved west-to-east rupture progression along strike-slip fault segments."
+        },
+        {
+          "n": 3,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 223,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 223",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 221 August 2026 Figure 9-20. Ground fissures in cultivated alluvial land, Veroes municipality, Yaracuy, in the epicentral area of the M7.2 earthquake: (a) deep open fissure with near-vertical walls; (b, c) fissure system extending continuously across fields, with local residents for scale. Frames extracted from public social-media video (TikTok users @edgarjaviercast42 and @notiyaradigital); exact locations not yet surveyed."
+        },
+        {
+          "n": 4,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 145,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 145",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 143 August 2026 (a) (b) Figure 6-21. Peak Ground Acceleration (PGA) maps of the (a) M7.2 and (b) M7.5 events. Retrieved from the U.S. Geological Survey, Earthquake Hazards Program. (a) (b) Figure 6-22. Peak Ground Velocity (PGV) maps of the (a) M7.2 and (b) M7.5 events. Retrieved from the U.S. Geological Survey, Earthquake Hazards Program."
+        },
+        {
+          "n": 5,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 221,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 221",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 219 August 2026 Figure 9-18. Terminal Catia La Mar (10.600856°, –67.040550°): (a–d) damage documented on 10 July 2026, including separation at the parking slabs, which were displaced by approximately 270 mm; (e) site on pre-event aerial imagery (Google Earth, 21 December 2025). Photographs courtesy of E. Núñez, R. Mata et al. 9.5.6 Epicentral Area and Central Coast Within a few kilometers of the epicenter of the M7.2 earthquake, the evidence is of a different character: long, deep fissures in cultivated alluvial lowland. At Pueblo Ferriar a fissure extends roughly 380 m parallel to the river, at most about 3 m from the channel (Figure 9-19). Video from Veroes municipality (Figure 9-20) shows fissures of comparable scale, open cracks a meter or more deep running continuously through fields, whose positions have not yet been surveyed. These represent liquefaction-driven bank spreading as described by Dr. Franck Audemard in this video"
+        },
+        {
+          "n": 6,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 316,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 316",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 314 August 2026 Name Type Latitude () Longitude () Distance to M7.2 San Felipe Epicenter (km) Distance to Caracas (km) La Becerra Dam Earthfill 9.031487 −65.311870 385 238 La Estancia Dam Earthfill 9.422631 −64.793241 424 260 La Honda Dam Earthfill 7.912625 −71.747049 444 600 La Mariposa Dam Earthfill 10.408795 −66.927163 177 10 La Pereza Dam Rockfill 10.446399 −66.738021 198 20 La Tigra Dam Earthfill 10.102635 −65.456369 339 164 La Vueltosa Dam Earthfill 7.750468 −71.467311 433 583 Lagartijo Dam Earthfill 10.187544 −66.720337 201 40 Las Majaguas Dam Earthfill 9.655631 −68.990512 96 245 Los Algarrobos Dam Earthfill 10.164137 −64.304792 463 286 Los Quediches Dam Earthfill 9.942064 −70.429505 210 388 Macagua I Dam Concrete 8.304430 −62.667869 683 523 Macagua II Dam Concrete 8.303711 −62.678007 682 522 Macarao Dam Rockfill 10.425599 −67.045998 164 17 Machango Dam Earthfill 10.097699 −70.965011 264 443 Mapara Dam Earthfill 10.790627 −69.603733 121 294 Masparro Dam Earthfill 8.836807 −70.102291 242 393 Matícora Dam Earthfill 10.680352 −70.997018 267 444 Ocumarito Dam Earthfill 10.098632 −66.800492 194 46 Onia Dam Earthfill 8.585997 −71.693887 397 563 Pao Cachinche Dam[3] Earthfill 9.873800 −68.129600 75 150 Pao La Balsa Dam[1,3] Earthfill 9.580100 −68.149800 102 169 Pedregal Dam Earthfill 10.877970 −70.152698 181 355 Petaquire Dam Hydraulic Fill 10.468095 −67.152465 153 26 Pueblo Viejo Dam Earthfill 10.180332 −71.040555 271 451 Quebrada Seca Dam Earthfill 10.211011 −66.737312 199 37 San Juan Dam Gravity 11.021365 −63.937674 506 328 Santo Domingo Dam Arch 8.884495 −70.633787 282 443 Taguacita Dam Arch 10.215820 −66.559425 218 50 Taguaza Dam Earthfill 10.180370 −66.432029 233 63 Tierra Blanca Dam Earthfill 9.979751 −67.416662 133 80 Tiznados Dam Earthfill 9.530189 −67.621148 141 132"
+        },
+        {
+          "n": 7,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 222,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 222",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 220 August 2026 https://www.instagram.com/p/DaRgq1aswOa/. They are within a day trip of the epicenter of the M7.2 event and remain accessible for ground truthing. On the central coast, beach and backshore cracking east of Puerto Cabello (Figure 9-21) and the georeferenced Boca de Aroa evidence complete a picture of triggering in loose coastal sands over at least 130 km of coastline. The Boca de Aroa material deserves particular attention. Video documented and later geolocated in the StEER media repository shows sand ejecta and settlement of light structures in a low-lying coastal settlement founded on loose sands, and the interviewed resident describes water and sediment rising through cracks during the shaking — a first-hand account of the phenomenon of the kind rarely captured. The site has not been visited by any engineering team and is flagged in Section 9.8 as a priority for ground truthing. Figure 9-19. Pueblo Ferriar, Yaracuy (10.465698°, –68.561734°): (a) river-parallel fissure extending approximately 380 m, located at most about 3 m from the channel and roughly 4 km from the M7.5 epicenter; (b) site on pre-event aerial imagery (Google Earth, 21 October 2023). Photograph courtesy of R. Mata, E. Núñez et al., 12 July 2026."
+        }
+      ]
+    },
+    {
+      "id": "m75_catia_la_mar",
+      "label": "M7.5 Catia La Mar earthquake",
+      "type": "hazard",
+      "drm_phase": "none",
+      "description": "Second mainshock M7.5 offshore Catia La Mar, La Guaira, ~30s after M7.2",
+      "category": "primary_hazards",
+      "reference_item": "ground_shaking",
+      "category_label": "Primary earthquake hazards",
+      "reference_label": "Ground shaking",
+      "question": "What do the documents report about \"M7.5 Catia La Mar earthquake\" (hazard) in the earthquake in Venezuela, June 2026?",
+      "answer": "On June 24, 2026, an M7.5 earthquake struck offshore La Guaira near Catia La Mar, occurring roughly 30-33 seconds after a separate M7.2 event near San Felipe, Yaracuy, as part of a sequence in the Caribbean-South American plate boundary zone.[1][2] The rupture, located close to the densely populated coastal corridor of La Guaira, appears to have progressed west-to-east, producing a maximum Modified Mercalli Intensity of IX along the coastal corridor (Catia La Mar, Caraballeda, La Guaira, Morón, and Maiquetía) and causing severe, spatially variable damage, major loss of life, and displacement, especially in Catia La Mar, Caraballeda, Macuto, and Maiquetía.[1][3] USGS ShakeMap estimates around the rupture indicate a PGA of 0.5g, PGV of 50 cm/s, PSA(T=1s) of 0.5g, and PSA(T=3s) of 0.1g, with the epicenter location for the M7.5 event revised eastward to near Catia La Mar after a 33-day review of the USGS catalog solution.[4][5]",
+      "support": "unverified",
+      "n_citations": 5,
+      "citations": [
+        {
+          "n": 1,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 3,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 3",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24 2026 San Felipe and Catia La Mar Earthquakes i August, 2026 EXECUTIVE SUMMARY On June 24, 2026, two earthquakes affected northern Venezuela within approximately 30 seconds of one another: an M7.2 event near San Felipe, Yaracuy, followed by an M7.5 event offshore La Guaira near Catia La Mar. The sequence occurred within the broad transpressional plate-boundary zone between the Caribbean and South American plates, where right-lateral motion is distributed across the Boconó–San Sebastián–El Pilar and related fault systems. The earthquakes produced severe and spatially variable impacts across the north-central region of the country, with the most significant damage concentrated in La Guaira, particularly Catia La Mar, Caraballeda, Macuto, Maiquetía, and neighboring coastal communities, as well as localized but notable impacts in Caracas, including San Bernardino and Los Palos Grandes. The events caused major loss of life, widespread damage to buildings and infrastructure, displacement of residents, disruption to essential services, and direct physical losses estimated in the tens of billions of U.S. dollars. dollars. The GEER Association organized a rapid hybrid reconnaissance effort to document the geotechnical, geological, seismological, and infrastructure-related effects of these earthquakes. The reconnaissance combined remote data collection, satellite and aerial imagery review, social media and news media georeferencing, collaboration with local professionals and students, field visits, drone surveys, limited subsurface investigation, and coordination with national and international organizations. The GEER team worked closely with Venezuelan academic institutions, the Venezuelan Society of Geotechnical Engineering, local engineering practitioners, students, government agencies, and international organizations to collect and preserve perishable data before cleanup, demolition, rainfall, and emergency response activities altered the evidence. This report provides a coordinated, source-documented record of early observations and identifies priority needs for future investigation. The M7.5 rupture was located close to the densely populated coastal corridor of La Guaira, and the sequence appears to have involved west-to-east rupture progression along strike-slip fault segments."
+        },
+        {
+          "n": 2,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 114,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 114",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 112 August 2026 Figure 5-2. Screenshot reproduced from USGS aftershock forecast (last accessed August 5th 2026). Colors indicate aftershocks that have occurred within the past week (yellow), month (white), older than one month (gray). The updated location of the M7.5 epicenter is depicted with a star. Figure 5-3. Updated USGS catalog locations of the M7.2 and M7.5 earthquakes, showing the western M7.2 epicenter and the eastern M7.5 epicenter offshore La Guaira, near Catia La Mar. U.S. Geological Survey (2026b, 2026c). The GEOFON event records (GFZ Helmholtz Centre for Geosciences, 2026a, 2026b) locate the first subevent at 10.41°N, 68.52°W and 22:04:32.3 UTC and the second at 10.69°N, 67.10°W and 22:05:05.5 UTC, giving an origin-time interval of 33.2 seconds (Figure 5-4). The current USGS and GEOFON epicenters of the second (larger) subevent are approximately 13 km apart (GFZ 2026a, 2026b; USGS, 2026c). USGS, 2026c). The GFZ status report notes that overlapping waveforms make the magnitude and location of the second source difficult to determine and considers the sequence physically compatible with one earthquake containing two major subruptures (GFZ 2026c)."
+        },
+        {
+          "n": 3,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 143,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 143",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 141 August 2026 N Net Code Lat. (°) Lon. (°) Elev (m) 𝑹𝒆𝒑𝒊 (km) 𝑽𝒔𝟑𝟎 (m/s) Instrument Type M7.2 M7.5 9 WI BIM 14.518 −61.066 391 932.5 793.0 373 Trillium 120PA 10 G FDFM 14.735 −61.160 320 935.3 797.7 579 Trillium120PH 11 CM RUS 5.893 -73.083 3697 705.8 833.3 565 Trillium240 12 CM SJC 9.897 −75.180 596 727.9 878.5 591 RT151 Elev.: elevation km: kilometer Lat.: latitude Lon.: longitude m: meter m/s: meter per second 𝑅௘௣௜: epicentral distance 𝑉௦ଷ଴: average shear wave velocity in the upper 30 m of the subsurface 6.2.2 Indirect Observations of Ground Motion In the absence of waveform records, indirect observations, like Modified Mercalli Intensity (MMI) maps or “Did You Feel it?” (DYFI) reports, are a valuable data resource to describe the effects of an earthquake and the extent of damage (Quitoriano and Wald, 2020). For the M7.2 and M7.5 events, 813 DYFI reports were submitted. Most reports came from Chacao (113), Capital District (49), and Valencia (39) in Venezuela, and the closest Caribbean islands (8 from Aruba, 20 from Curaçao, and 12 from Bonaire). A maximum MMI of IX was reported along the coastal corridor in La Guaira (Catia La Mar, Caraballeda, La Guaira, Morón, and Maiquetía). Figure 6-20 shows the corresponding MMI maps as reported by the USGS. The areas of maximum intensity are consistent with the predominantly eastward rupture of the USGS finite-fault model."
+        },
+        {
+          "n": 4,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 144,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 144",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 142 August 2026 (a) (b) Figure 6-20. Modified Mercalli Intensity (MMI) maps of the (a) M7.2 and (b) M7.5 events. Retrieved from the U.S. Geological Survey, Earthquake Hazards Program. USGS ShakeMaps estimate a PGA of 0.5g, a PGV of 50 cm/s, PSA(T=1s) of 0.5g, and a PSA(T=3s) of 0.1g around the rupture (Figure 6-21 to Figure 6-24). Higher PSAs are predicted at the municipality of Juan José Mora, Carabobo (close to the epicenter of M7.2 event), with a maximum of 1g and 0.2g at 1 and 3 s periods, respectively. A localized increase of PSA(T=3s) is estimated around the cities of Valencia and Maracay, likely indicative of basin effects."
+        },
+        {
+          "n": 5,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 113,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 113",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 111 August 2026 placed the M7.2 and M7.5 epicenters near one another in the western source region; the current solution (updated on July 28th 2026) relocates the M7.5 hypocenter eastward to near Catia La Mar (USGS, 2026b, 2026c). The solution evolved over 33 days. The USGS catalog snapshot reproduced by Hubbard and Bradley (2026) is shown in Figure 5-1. The initial estimate of the location of the epicenter corresponding to the M7.5 earthquake is shown, as well as the locations for the M7.2 and M4+ events through 1 July 2026. Figure 5-2 presents an updated version of the aftershock forecast produced by the USGS (last accessed August 5th 2026). Figure 5-3 also illustrates the current estimation of the epicenter location of the M7.5 earthquake according to the USGS. Figure 5-1. USGS catalog snapshot reproduced by Hubbard and Bradley (2026), showing the initial locations reported for the M7.2 and M7.5 earthquakes and M4+ events through 1 July 2026; the lower panel shows magnitude versus time. The two large-event locations in this snapshot have been superseded; the current USGS catalog places the M7.5 hypocenter offshore La Guaira, near Catia La Mar."
+        }
+      ]
+    },
+    {
+      "id": "strike_slip_doublet",
+      "label": "Strike-slip earthquake doublet",
+      "type": "hazard",
+      "drm_phase": "none",
+      "description": "Two large strike-slip subevents along Boconó-San Sebastián-El Pilar fault system",
+      "category": "primary_hazards",
+      "reference_item": "supershear_rupture_propagation",
+      "category_label": "Primary earthquake hazards",
+      "reference_label": "Supershear rupture propagation",
+      "question": "What do the documents report about \"Strike-slip earthquake doublet\" (hazard) in the earthquake in Venezuela, June 2026?",
+      "answer": "The June 24, 2026 Venezuela earthquake was a strike-slip doublet consisting of two large subevents (M7.2 and M7.5) along the Boconó–San Sebastián–El Pilar fault system, separated by about 29.6 seconds in the USGS catalog and 33.2 seconds in the GFZ/GEOFON catalog.[1][2][3][4] The first subevent (M7.2) originated in the western source region on the Boconó Fault, with coseismic fracture propagating northeastward offshore along the San Sebastián Fault, where the larger, more destructive M7.5 subevent occurred offshore La Guaira near Catia La Mar.[1][2][3][4] Moment-tensor solutions from USGS, GFZ/GEOFON, and GCMT all indicate predominantly strike-slip (right-lateral) mechanisms for both subevents, and the USGS finite-fault model represents the sequence as slip on two steeply dipping strike-slip segments (strikes ~81°/86°, dip ~78°) with eastward rupture propagation, though the exact rupture speed and fault strand transferring slip between the Boconó and San Sebastián systems remain uncertain.[3][5][6][7]",
+      "support": "unverified",
+      "n_citations": 7,
+      "citations": [
+        {
+          "n": 1,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 112,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 112",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 110 August 2026 5. SEISMICITY AND EARTHQUAKE-SOURCE CHARACTERISTICS Table 5-1. Main Authors of this Section Name Affiliation Shiying Nie Senior Earthquake Scientist at Karen Clark & Company, USA 5.1 Summary Northern Venezuela lies within a broad transpressional plate-boundary zone between the Caribbean and South American plates. The principal dextral structure is the Boconó–San Sebastián–El Pilar fault system; the Oca-Ancón system is an important secondary dextral system in northwestern Venezuela (Audemard et al., 2000, 2006). The first subevent (M7.2) originated in the western source region, where the regional fault map shows the northeast-striking Boconó system approaching the approximately east–west San Sebastián system (Figure 1-2). The strand that hosted the initial subevent and the transfer geometry remains uncertain (USGS, 2026a, 2026b). The June 24, 2026, Venezuela earthquakes were two large strike-slip subevents separated by approximately 29.6 seconds in the current USGS catalog and 33.2 seconds in the GFZ/GEOFON catalog. Current USGS and GFZ moment tensor solutions place the first origin in the western source region and the M7.5 hypocenter offshore La Guaira, near Catia La Mar. The USGS finitefault solution represents sequence-related slip on two steeply dipping segments using seismic, InSAR, and GNSS constraints. The spatial sequence and rapid source information are broadly consistent with west-to-east source progression, although rupture speed and the transfer path remain uncertain. Possible transition paths include transfer between the Boconó and San Sebastián fault systems and participation of parallel or branching strands. Optical image correlation identifies possible tectonic near-surface deformation at La Guaira, while the Caraballeda signal is more consistent with lateral spreading or gravitational sliding. Eastward progression makes directivity plausible, but source proximity and Caracas basin response also require evaluation."
+        },
+        {
+          "n": 2,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 98,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 98",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 96 August 2026 Satellite geodesy has demonstrated that the Maracaibo Block is currently moving in a northnortheasterly direction relative to the South American Plate at rates on the order of 9–13 millimeters per year (mm/yr) to the west and a compression rate at ~2-4 mm/yr (Perez et al, 2001; Pérez et al., 2018; Reinoza et al., 2020; Pousse-Beltran et al., 2017) while the Caribbean plate moves ~20 mm/yr eastward relative to South America (e.g., Perez et al., 2011 and Weber et al., 2001, Mora-Páez and Audemard, 2021). Long-term slip-rate analyses suggest that the fault may absorb most of the relative motion between the Maracaibo Block, Bonaire Block, Caribbean Plate, and stable South America Plate, highlighting the concentration of deformation along the major strike-slip dextral fault systems, including Boconó, Oca-Ancon, San Sebastián, and El Pilar system faults (Pérez et al., 2001; Audemard 2002; Reinoza, 2020). The epicenter of the first earthquake, M7.2, was located on the Boconó Fault System, one of the principal structures controlling crustal deformation in Venezuela. This dextral strike-slip fault system extends for approximately 500 km from the Colombian border across the Venezuelan Andes and continues into the Yaracuy region, where it merges northeastward with the San Sebastián Fault System (Audemard et al., 2000; Audemard and Audemard, 2002; Pousse-Beltran et al., 2017). Coseismic fracture of the June 24, 2026, M7.2 earthquake propagated along the northeast continuation of the Boconó Fault offshore, known as the San Sebastián fault, where the second and most destructive earthquake, M7.5, occurred. The San Sebastián Fault is a dextral strike-slip fault system that extends east-west for approximately 470 km, from the Moron-Puerto Cabello region to the Araya Gulf in eastern Venezuela, defining the southern limit of the Caribbean Plate (Schubert and Krause, 1984; Audemard, 2000; Colón et al., 2015; Colón-Useche et al., 2021). The right lateral displacement of the San Sebastián Fault has been estimated at 17 mm/year (Pérez et al., 2018) and has produced most of the destructive earthquakes in the north-central region of Venezuela. Although the San Sebastian fault is predominantly an offshore fault, its name has been assigned due to its presence in San Sebastián de Maiquetía (known as Maiquetía), where the fault crops out for approximately nine kilometers and has a transpressive relay with the northern dextral strike-slip fault segment observed at the north of the Maiquetía International Airport, originally called Bruscas Fault (Weisbord, 1957). The San Sebastian fault has also been interpreted as crossing the debris flow fan of Caraballeda and following the southern border of the alluvial deposits, making its onshore expression uncertain and controversial. The possible onshore displacement of the San Sebastián fault and its effect on the massive structural damage in La Guaira State and Caracas city will be discussed in the following sections."
+        },
+        {
+          "n": 3,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 115,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 115",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 113 August 2026 Figure 5-4. Locations of the 24 June 2026 northern Venezuela earthquakes and an early M4.6 aftershock as reported by GFZ/GEOFON. Screenshot reproduced from GFZ Helmholtz Centre for Geosciences (2026c); current USGS origins: U.S. Geological Survey (2026b, 2026c). Moment-tensor solutions from both agencies provide an additional comparison of the two subevents. Although reported magnitudes, source depths, and centroid parameters differ. Table 5-2. Comparison of current and dated source solutions and rupture products. Source / product Representation of Event Principal Source-Location / Mechanism Result USGS catalog (U.S. Geological Survey, 2026b, 2026c) Current catalog origins and Wphase moment tensors Origins 29.6 s apart: M7.2 west and M7.5 near Catia La Mar. Predominantly strike-slip; the steep east–west nodal-plane interpretation is right-lateral GEOFON event records (GFZ Helmholtz Centre for Geosciences, 2026a, 2026b) Catalog origins and GEOFON standard moment tensors Origins 33.2 s apart: first west and second offshore La Guaira, near Catia La Mar. Predominantly strike-slip; Predominantly strike-slip; the steep east–west nodal-plane interpretation is right-lateral Global CMT catalog (Global CMT Project, 2026) Single centroid-moment-tensor solution associated with the M7.5 subevent Centroid at 10.59°N, 67.30°W and 12 km depth; Predominantly strike-slip mechanism; no separate GCMT solution for the preceding subevent. USGS finite-fault model (U.S. Geological Survey, 2026a) Finite-fault representation of sequence-related slip using seismic, InSAR, and GNSS constraints Two steep segments (approximately 81°/78° and 86°/78°); western Event 1 and eastern Event 2; maximum"
+        },
+        {
+          "n": 4,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 112,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 112",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 110 August 2026 5. SEISMICITY AND EARTHQUAKE-SOURCE CHARACTERISTICS Table 5-1. Main Authors of this Section Name Affiliation Shiying Nie Senior Earthquake Scientist at Karen Clark & Company, USA 5.1 Summary Northern Venezuela lies within a broad transpressional plate-boundary zone between the Caribbean and South American plates. The principal dextral structure is the Boconó–San Sebastián–El Pilar fault system; the Oca-Ancón system is an important secondary dextral system in northwestern Venezuela (Audemard et al., 2000, 2006). The first subevent (M7.2) originated in the western source region, where the regional fault map shows the northeast-striking Boconó system approaching the approximately east–west San Sebastián system (Figure 1-2). The strand that hosted the initial subevent and the transfer geometry remains uncertain (USGS, 2026a, 2026b). The June 24, 2026, Venezuela earthquakes were two large strike-slip subevents separated by approximately 29.6 seconds in the current USGS catalog and 33.2 seconds in the GFZ/GEOFON catalog. Current USGS and GFZ moment tensor solutions place the first origin in the western source region and the M7.5 hypocenter offshore La Guaira, near Catia La Mar. The USGS finitefault solution represents sequence-related slip on two steeply dipping segments using seismic, InSAR, and GNSS constraints. The spatial sequence and rapid source information are broadly consistent with west-to-east source progression, although rupture speed and the transfer path remain uncertain. Possible transition paths include transfer between the Boconó and San Sebastián fault systems and participation of parallel or branching strands. Optical image correlation identifies possible tectonic near-surface deformation at La Guaira, while the Caraballeda signal is more consistent with lateral spreading or gravitational sliding. Eastward progression makes directivity plausible, but source proximity and Caracas basin response also require evaluation. Local recordings, field observations, and event-specific modeling are needed to separate these effects. 5.2 Event Chronology and Evolution of Source Solutions Current catalogs identify two major subevents separated by about 30 seconds. The current USGS and GEOFON origins place the first subevent in the western source region and the second offshore La Guaira, near Catia La Mar. The moment-tensor solutions indicate predominantly strike-slip faulting for both subevents and together with their relative origin times favor west-to-east source progression, although the particular fault strands and transfer path remain uncertain (GFZ Helmholtz Centre for Geosciences, 2026c; USGS, 2026a, 2026b, 2026c). The Global Centroid Moment Tensor (GCMT) catalog provides a single solution of a M7.5 event Global CMT Project, 2026. The current USGS catalog characterizes the sequence as an M7.2 event at 10.4085°N, 68.5571°W and 22:04:34.363 UTC, followed by an M7.5 event at 10.6221°N, 67.1935°W and 22:05:03.992 UTC. The current catalog origins are approximately 29.6 seconds apart."
+        },
+        {
+          "n": 5,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 120,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 120",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 118 August 2026 Figure 5-11 shows the July 27th 2026 version of the USGS finite-fault model for the June 24th 2026 Venezuela earthquakes. The USGS finite-fault solution represents sequence-related slip on two steeply dipping strike-slip segments with strikes of approximately 81° and 86° and a dip of 78°. It shows western and eastern event locations and uses teleseismic waveforms, InSAR, and GNSS constraints. The plotted slip scale reaches approximately 1.8 m. The rupture speed and the specific fault strand connecting the modeled western and eastern slip regions remain uncertain (USGS, 2026a). Figure 5-11. USGS finite-fault model for the June 24th 2026 Venezuela earthquakes; updated 27 July 2026. Top: cross-sections of modeled slip on two fault segments, with segment strike and dip, slip amplitude, slip-direction arrows, event-location stars, and rupture-front contours at 10-second intervals. Bottom: surface projection showing the western Event 1 and eastern Event 2 locations, modeled slip, fault geometry, and observed and synthetic GNSS vectors. Source: U.S. Geological Survey (2026a). Regional geometry permits rupture transfer from the Boconó Fault to the San Sebastián Fault, while parallel strands and geometric complexity allow other transition paths (as also discussed in Chapter 3). Interferograms and source inversions show a broad coastal deformation pattern"
+        },
+        {
+          "n": 6,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 117,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 117",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 115 August 2026 Figure 5-6. GFZ/GEOFON standard moment-tensor solutions for the M7.3 and M7.4 subevents, including event origin, source location, source depth, and the strike, dip, and rake of both nodal planes. The GEOFON standard solution uses body and surface waves. Compiled from the GEOFON event records (GFZ Helmholtz Centre for Geosciences, 2026a, 2026b; CC BY 4.0). Figure 5-7. GCMT catalog information and moment-tensor solution for the M7.5 event. The GCMT catalog provides a single solution for the M7.5 subevent, with a centroid at 10.59°N, 67.30°W and 12 km depth. The solution also indicates predominantly strike-slip faulting; no separate GCMT solution was identified for the preceding subevent (Global CMT Project, 2026, Figure 5-7). One steep, approximately east–west nodal plane in each USGS solution has strike/dip/rake values of 270°/74°/−169° for the M7.2 subevent and 86°/74°/-176° for the M7.5 subevent. The corresponding GFZ planes are 267°/88°/−167° and 85°/83°/175°, respectively. The single GCMT"
+        },
+        {
+          "n": 7,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 116,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 116",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 114 August 2026 Source / product Representation of Event Principal Source-Location / Mechanism Result modeled slip approximately 1.8 m IREA-CNR/INGV InSAR inversion (INGVterremoti, 2026) Preliminary geodetic source model based on Sentinel-1 interferograms Preliminary near-vertical, rightlateral source model extending approximately 180 km, with two principal slip regions Back-projection synthesis (EarthScope Consortium, 2026) Automatically generated, unreviewed rapid backprojection product Plotted peak beam-power locations trend broadly eastward; interpretation depends on array geometry and processing resolution Figure 5-5. USGS W-phase moment-tensor solutions for the M7.2 and M7.5 subevents. Values shown beside the nodal planes are strike, dip, and rake; the reported seismic moment magnitude, and centroid depth are listed below each focal mechanism. Compiled from U.S. Geological Survey (2026b, 2026c)."
+        }
+      ]
+    },
+    {
+      "id": "aftershock_sequence_ve",
+      "label": "Venezuela aftershock sequence",
+      "type": "hazard",
+      "drm_phase": "none",
+      "description": "Over 1,000 aftershocks recorded by 7 July, including M4.9-5.2 on 29 June and M4.2 near Caraballeda",
+      "category": "aftershocks_foreshocks",
+      "reference_item": "aftershock_sequence",
+      "category_label": "Aftershocks and foreshocks",
+      "reference_label": "Aftershock sequence"
+    },
+    {
+      "id": "la_guaira_liquefaction",
+      "label": "La Guaira coastal liquefaction",
+      "type": "hazard",
+      "drm_phase": "none",
+      "description": "68 lateral-spreading/liquefaction features inventoried along La Guaira coast by GEER",
+      "category": "liquefaction",
+      "reference_item": "soil_liquefaction",
+      "category_label": "Liquefaction",
+      "reference_label": "Soil liquefaction"
+    }
+  ],
+  "edges": [
+    {
+      "source": "m72_san_felipe",
+      "relation": "triggers",
+      "target": "m75_catia_la_mar",
+      "drm_phase": "none",
+      "status": "observed",
+      "explanation": "M7.5 event occurred about 30 seconds after M7.2, interpreted as rupture propagating from Boconó to San Sebastián fault.",
+      "confidence": "high",
+      "question": "What evidence do the documents give that \"M7.2 San Felipe earthquake\" triggers \"M7.5 Catia La Mar earthquake\" in the earthquake in Venezuela, June 2026?",
+      "answer": "The documents report that the M7.2 San Felipe event and the M7.5 Catia La Mar event occurred within about 30-33 seconds of each other, with GEOFON timing the two subevents at 22:04:32.3 UTC and 22:05:05.5 UTC respectively, an origin-time interval of 33.2 seconds, and GEER describes the sequence as a predominantly west-to-east rupture progression along the Boconó and San Sebastián fault segments.[1][2][3][4] The Helmholtz Centre for Geosciences (GFZ) further notes that overlapping waveforms make it difficult to separate the two sources, and considers the sequence 'physically compatible with one earthquake containing two major subruptures' rather than two fully independent events, which supports a causal/triggering relationship between the San Felipe rupture and the subsequent Catia La Mar rupture.[3] However, none of the sources explicitly state a confirmed causal 'triggering' mechanism (e.g., stress transfer calculations) linking the two ruptures; they describe spatial-temporal proximity and rupture propagation consistent with triggering but do not provide direct proof of causation.[1][2][3]",
+      "support": "unverified",
+      "n_citations": 4,
+      "citations": [
+        {
+          "n": 1,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 3,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 3",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24 2026 San Felipe and Catia La Mar Earthquakes i August, 2026 EXECUTIVE SUMMARY On June 24, 2026, two earthquakes affected northern Venezuela within approximately 30 seconds of one another: an M7.2 event near San Felipe, Yaracuy, followed by an M7.5 event offshore La Guaira near Catia La Mar. The sequence occurred within the broad transpressional plate-boundary zone between the Caribbean and South American plates, where right-lateral motion is distributed across the Boconó–San Sebastián–El Pilar and related fault systems. The earthquakes produced severe and spatially variable impacts across the north-central region of the country, with the most significant damage concentrated in La Guaira, particularly Catia La Mar, Caraballeda, Macuto, Maiquetía, and neighboring coastal communities, as well as localized but notable impacts in Caracas, including San Bernardino and Los Palos Grandes. The events caused major loss of life, widespread damage to buildings and infrastructure, displacement of residents, disruption to essential services, and direct physical losses estimated in the tens of billions of U.S. dollars. dollars. The GEER Association organized a rapid hybrid reconnaissance effort to document the geotechnical, geological, seismological, and infrastructure-related effects of these earthquakes. The reconnaissance combined remote data collection, satellite and aerial imagery review, social media and news media georeferencing, collaboration with local professionals and students, field visits, drone surveys, limited subsurface investigation, and coordination with national and international organizations. The GEER team worked closely with Venezuelan academic institutions, the Venezuelan Society of Geotechnical Engineering, local engineering practitioners, students, government agencies, and international organizations to collect and preserve perishable data before cleanup, demolition, rainfall, and emergency response activities altered the evidence. This report provides a coordinated, source-documented record of early observations and identifies priority needs for future investigation. The M7.5 rupture was located close to the densely populated coastal corridor of La Guaira, and the sequence appears to have involved west-to-east rupture progression along strike-slip fault segments."
+        },
+        {
+          "n": 2,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 36,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 36",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 34 August 2026 As shown in Figure 1-2 and Figure 1-3, Northern Venezuela is located within a broad transpressional plate-boundary zone between the Caribbean and South American plates. Rightlateral plate motion is distributed among several active faults, principally the Boconó-San Sebastián-El Pilar and Oca-Ancón systems (Audemard 2000). Figure 1-2. Diagram of Plate Boundaries for Venezuela (modified from Audemard 2000). The M7.5 event occurred as a result of shallow strike-slip faulting near the Caribbean and South America plate boundary (USGS; last accessed August 2, 2026). As seen in Figure 1-2, the Caribbean plate is moving eastward relative to the South America plate at an approximate rate of 18-20 millimeters per year (mm/yr). The USGS finite rupture model developed for the M7.5 event indicates a length of rupture of about 175 km and a width of approximately 20 km. The Helmholtz Centre for Geosciences reported two sub-ruptures of M7.3 (at the northeastern end of the Boconó Fault) and M7.4 (along the right-lateral San Sebastián Fault). The latter trends east-west (as seen in Figure 1-2 and Figure 1-3) and is located 10 to 15 km north of Caracas, Venezuela’s capital. The epicenter of these earthquakes were within 250 km of the most populated area of the country including the capital, Caracas, with a population of about 5.5 million, and Valencia and Maracay, which are the third and fifth largest cities in the country (see Figure 1-4). News reports immediately following the seismic events indicated significant damage to structures located to the east and south of the first and second epicenters, respectively. The June 24, 2026 earthquakes caused over 6,000 deaths, and injured nearly 61,000 people according to official figures released by the Venezuelan government on August 3, 2026 (Reuters1). The earthquakes also generated $19.6 billion USD in direct physical damage according to the World Bank Group and based on the Global Rapid Damage Estimation (GRADE) methodology."
+        },
+        {
+          "n": 3,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 114,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 114",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 112 August 2026 Figure 5-2. Screenshot reproduced from USGS aftershock forecast (last accessed August 5th 2026). Colors indicate aftershocks that have occurred within the past week (yellow), month (white), older than one month (gray). The updated location of the M7.5 epicenter is depicted with a star. Figure 5-3. Updated USGS catalog locations of the M7.2 and M7.5 earthquakes, showing the western M7.2 epicenter and the eastern M7.5 epicenter offshore La Guaira, near Catia La Mar. U.S. Geological Survey (2026b, 2026c). The GEOFON event records (GFZ Helmholtz Centre for Geosciences, 2026a, 2026b) locate the first subevent at 10.41°N, 68.52°W and 22:04:32.3 UTC and the second at 10.69°N, 67.10°W and 22:05:05.5 UTC, giving an origin-time interval of 33.2 seconds (Figure 5-4). The current USGS and GEOFON epicenters of the second (larger) subevent are approximately 13 km apart (GFZ 2026a, 2026b; USGS, 2026c). USGS, 2026c). The GFZ status report notes that overlapping waveforms make the magnitude and location of the second source difficult to determine and considers the sequence physically compatible with one earthquake containing two major subruptures (GFZ 2026c)."
+        },
+        {
+          "n": 4,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 143,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 143",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 141 August 2026 N Net Code Lat. (°) Lon. (°) Elev (m) 𝑹𝒆𝒑𝒊 (km) 𝑽𝒔𝟑𝟎 (m/s) Instrument Type M7.2 M7.5 9 WI BIM 14.518 −61.066 391 932.5 793.0 373 Trillium 120PA 10 G FDFM 14.735 −61.160 320 935.3 797.7 579 Trillium120PH 11 CM RUS 5.893 -73.083 3697 705.8 833.3 565 Trillium240 12 CM SJC 9.897 −75.180 596 727.9 878.5 591 RT151 Elev.: elevation km: kilometer Lat.: latitude Lon.: longitude m: meter m/s: meter per second 𝑅௘௣௜: epicentral distance 𝑉௦ଷ଴: average shear wave velocity in the upper 30 m of the subsurface 6.2.2 Indirect Observations of Ground Motion In the absence of waveform records, indirect observations, like Modified Mercalli Intensity (MMI) maps or “Did You Feel it?” (DYFI) reports, are a valuable data resource to describe the effects of an earthquake and the extent of damage (Quitoriano and Wald, 2020). For the M7.2 and M7.5 events, 813 DYFI reports were submitted. Most reports came from Chacao (113), Capital District (49), and Valencia (39) in Venezuela, and the closest Caribbean islands (8 from Aruba, 20 from Curaçao, and 12 from Bonaire). A maximum MMI of IX was reported along the coastal corridor in La Guaira (Catia La Mar, Caraballeda, La Guaira, Morón, and Maiquetía). Figure 6-20 shows the corresponding MMI maps as reported by the USGS. The areas of maximum intensity are consistent with the predominantly eastward rupture of the USGS finite-fault model."
+        }
+      ]
+    },
+    {
+      "source": "strike_slip_doublet",
+      "relation": "triggers",
+      "target": "aftershock_sequence_ve",
+      "drm_phase": "none",
+      "status": "observed",
+      "explanation": "Over 1,000 aftershocks recorded following the doublet, including M4.9-5.2 events on 29 June.",
+      "confidence": "high",
+      "question": "What evidence do the documents give that \"Strike-slip earthquake doublet\" triggers \"Venezuela aftershock sequence\" in the earthquake in Venezuela, June 2026?",
+      "answer": "The 24 June 2026 Venezuela earthquake doublet, consisting of an M7.2 event near San Felipe and an M7.5 event offshore La Guaira/Catia La Mar separated by approximately 30 seconds, was followed by an extensive aftershock sequence, with ECHO reporting that more than 1,000 aftershocks were recorded in the area during the emergency and rescue operations.[1][2] Specific aftershocks are documented on 29 June, including a magnitude 4.2 event 27 km north of Caraballeda town and GFZ/GEOFON reports of an early M4.6 aftershock following the two mainshocks, consistent with the doublet rupture generating ongoing seismic activity in the same source region.[3][4] While the documents describe the doublet's rupture characteristics (two strike-slip subevents on steeply dipping fault segments with west-to-east progression) and separately report the large number of aftershocks, they do not explicitly state the causal mechanism linking the doublet rupture to the specific triggering of the aftershock sequence.[5][6]",
+      "support": "partial",
+      "n_citations": 6,
+      "citations": [
+        {
+          "n": 1,
+          "doc": "ERCC_echoflashitems_Earthqaukes_20261116.xlsx",
+          "page": 31022,
+          "title": "ECHO Flash: Venezuela - Earthquakes, update (2026-07-07)",
+          "sources": [
+            "ERCC ECHO Flash",
+            "AVN, UN OCHA"
+          ],
+          "date": "2026-07-07",
+          "text": "Venezuela - Earthquakes, update. According to UN OCHA and national authorities, the death toll reached 3 535 people following the two strong earthquakes of magnitude 7.2 and 7.5 that struck northern Venezuela on 24 June. More than 1 000 aftershocks have been recorded in the area during the emergency and rescue operations. In total, 6 462 people have been rescued, 17 854 are displaced and 16 740 were injured. National authorities and international organisations are providing support, and 82 temporary camps have been set up for the affected population. On 25 June, Venezuela requested assistance from the Union Civil Protection Mechanism (UCPM). To support damage assessment, the Copernicus Emergency Management Service (EMS) was activated in rapid‑mapping mode ( EMSR 884 ) on 24 June, and 33 maps have been produced to date."
+        },
+        {
+          "n": 2,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 3,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 3",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24 2026 San Felipe and Catia La Mar Earthquakes i August, 2026 EXECUTIVE SUMMARY On June 24, 2026, two earthquakes affected northern Venezuela within approximately 30 seconds of one another: an M7.2 event near San Felipe, Yaracuy, followed by an M7.5 event offshore La Guaira near Catia La Mar. The sequence occurred within the broad transpressional plate-boundary zone between the Caribbean and South American plates, where right-lateral motion is distributed across the Boconó–San Sebastián–El Pilar and related fault systems. The earthquakes produced severe and spatially variable impacts across the north-central region of the country, with the most significant damage concentrated in La Guaira, particularly Catia La Mar, Caraballeda, Macuto, Maiquetía, and neighboring coastal communities, as well as localized but notable impacts in Caracas, including San Bernardino and Los Palos Grandes. The events caused major loss of life, widespread damage to buildings and infrastructure, displacement of residents, disruption to essential services, and direct physical losses estimated in the tens of billions of U.S. dollars. dollars. The GEER Association organized a rapid hybrid reconnaissance effort to document the geotechnical, geological, seismological, and infrastructure-related effects of these earthquakes. The reconnaissance combined remote data collection, satellite and aerial imagery review, social media and news media georeferencing, collaboration with local professionals and students, field visits, drone surveys, limited subsurface investigation, and coordination with national and international organizations. The GEER team worked closely with Venezuelan academic institutions, the Venezuelan Society of Geotechnical Engineering, local engineering practitioners, students, government agencies, and international organizations to collect and preserve perishable data before cleanup, demolition, rainfall, and emergency response activities altered the evidence. This report provides a coordinated, source-documented record of early observations and identifies priority needs for future investigation. The M7.5 rupture was located close to the densely populated coastal corridor of La Guaira, and the sequence appears to have involved west-to-east rupture progression along strike-slip fault segments."
+        },
+        {
+          "n": 3,
+          "doc": "ERCC_echoflashitems_Earthqaukes_20261116.xlsx",
+          "page": 30993,
+          "title": "ECHO Flash: Venezuela - Earthquakes, update (2026-06-30)",
+          "sources": [
+            "ERCC ECHO Flash",
+            "DG ECHO, AVN, GDACS, media, USGS"
+          ],
+          "date": "2026-06-30",
+          "text": "Venezuela - Earthquakes, update. While another aftershock of magnitude 4.2 M occurred on 29 June, 27 km north of Caraballeda town (La Guaira state), the death toll continues to rise after the two earthquakes of magnitudes 7.2 and 7.5 M. According to the National Agency of Venezuela (AVN), 1 719 people have died and more than 5 000 have been injured. Moreover, 15 866 people have been affected and 22 619 have been treated in hospitals. A total of 189 buildings have collapsed and 666 have been damaged. The rescue operations conducted by national authorities and international organizations continue for thousands who remain missing or trapped beneath the rubble. On 25 June, Venezuela requested assistance from the Union Civil Protection Mechanism (UCPM). EUR 5 million have been allocated for emergency humanitarian‑aid funding. To support damage assessment, the Copernicus Emergency Management Service (EMS) was activated in rapid‑mapping mode (EMSR884), and 25 maps have been produced to date."
+        },
+        {
+          "n": 4,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 18,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 18",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "Locations of the 24 June 2026 northern Venezuela earthquakes and an early M4.6 aftershock as reported by GFZ/GEOFON. Screenshot reproduced from GFZ Helmholtz Centre for Geosciences (2026c); current USGS origins: U.S. Geological Survey (2026b, 2026c). ...... 113 Figure 5-5. USGS W-phase moment-tensor solutions for the M7.2 and M7.5 subevents. Values shown beside the nodal planes are strike, dip, and rake; the reported seismic moment magnitude, and centroid depth are listed below each focal mechanism. Compiled from U.S. Geological Survey (2026b, 2026c). ............................................................................................................... 114 Figure 5-6. GFZ/GEOFON standard moment-tensor solutions for the M7.3 and M7.4 subevents, including event origin, source location, source depth, and the strike, dip, and rake of both nodal planes. The GEOFON standard solution uses body and surface waves. Compiled from the GEOFON event records (GFZ Helmholtz Centre for Geosciences, 2026a, 2026b; CC BY 4.0). ..................................................................................................................................................... 115 Figure 5-7. GCMT catalog information and moment-tensor solution for the M7.5 event. ........ 115 Figure 5-8. Preliminary back-projection image for the 24 June 2026 Venezuela earthquakes. The left panel shows station-array geometry, and the right panel shows time-coded back-projection peaks whose plotted locations trend broadly eastward. Source: Dun Wang and collaborators, China University of Geosciences, Wuhan. ................................................................................. 116 Figure 5-9. InSAR-derived deformation field associated with the 24 June 2026 Venezuela earthquake sequence. Figure generated from Copernicus Sentinel-1 imagery. InSAR processing and preliminary source modeling: IREA-CNR and INGV; reproduced from INGVterremoti (2026). ......................................................................................................................................... 117 Figure 5-10. Sentinel-1 interferogram showing ground deformation associated with the 24 June 2026 Venezuela earthquake doublet. Source: modified Copernicus Sentinel-1 data (2026), processed by the European Space Agency. ................................................................................. 117 Figure 5-11. USGS finite-fault model for the June 24th 2026 Venezuela earthquakes; updated 27 July 2026. Top: cross-sections of modeled slip on two fault segments, with segment strike and"
+        },
+        {
+          "n": 5,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 112,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 112",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 110 August 2026 5. SEISMICITY AND EARTHQUAKE-SOURCE CHARACTERISTICS Table 5-1. Main Authors of this Section Name Affiliation Shiying Nie Senior Earthquake Scientist at Karen Clark & Company, USA 5.1 Summary Northern Venezuela lies within a broad transpressional plate-boundary zone between the Caribbean and South American plates. The principal dextral structure is the Boconó–San Sebastián–El Pilar fault system; the Oca-Ancón system is an important secondary dextral system in northwestern Venezuela (Audemard et al., 2000, 2006). The first subevent (M7.2) originated in the western source region, where the regional fault map shows the northeast-striking Boconó system approaching the approximately east–west San Sebastián system (Figure 1-2). The strand that hosted the initial subevent and the transfer geometry remains uncertain (USGS, 2026a, 2026b). The June 24, 2026, Venezuela earthquakes were two large strike-slip subevents separated by approximately 29.6 seconds in the current USGS catalog and 33.2 seconds in the GFZ/GEOFON catalog. Current USGS and GFZ moment tensor solutions place the first origin in the western source region and the M7.5 hypocenter offshore La Guaira, near Catia La Mar. The USGS finitefault solution represents sequence-related slip on two steeply dipping segments using seismic, InSAR, and GNSS constraints. The spatial sequence and rapid source information are broadly consistent with west-to-east source progression, although rupture speed and the transfer path remain uncertain. Possible transition paths include transfer between the Boconó and San Sebastián fault systems and participation of parallel or branching strands. Optical image correlation identifies possible tectonic near-surface deformation at La Guaira, while the Caraballeda signal is more consistent with lateral spreading or gravitational sliding. Eastward progression makes directivity plausible, but source proximity and Caracas basin response also require evaluation."
+        },
+        {
+          "n": 6,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 120,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 120",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 118 August 2026 Figure 5-11 shows the July 27th 2026 version of the USGS finite-fault model for the June 24th 2026 Venezuela earthquakes. The USGS finite-fault solution represents sequence-related slip on two steeply dipping strike-slip segments with strikes of approximately 81° and 86° and a dip of 78°. It shows western and eastern event locations and uses teleseismic waveforms, InSAR, and GNSS constraints. The plotted slip scale reaches approximately 1.8 m. The rupture speed and the specific fault strand connecting the modeled western and eastern slip regions remain uncertain (USGS, 2026a). Figure 5-11. USGS finite-fault model for the June 24th 2026 Venezuela earthquakes; updated 27 July 2026. Top: cross-sections of modeled slip on two fault segments, with segment strike and dip, slip amplitude, slip-direction arrows, event-location stars, and rupture-front contours at 10-second intervals. Bottom: surface projection showing the western Event 1 and eastern Event 2 locations, modeled slip, fault geometry, and observed and synthetic GNSS vectors. Source: U.S. Geological Survey (2026a). Regional geometry permits rupture transfer from the Boconó Fault to the San Sebastián Fault, while parallel strands and geometric complexity allow other transition paths (as also discussed in Chapter 3). Interferograms and source inversions show a broad coastal deformation pattern"
+        }
+      ]
+    },
+    {
+      "source": "m75_catia_la_mar",
+      "relation": "triggers",
+      "target": "la_guaira_liquefaction",
+      "drm_phase": "none",
+      "status": "observed",
+      "explanation": "GEER inventoried liquefaction and lateral-spreading features concentrated in La Guaira following the earthquakes.",
+      "confidence": "high",
+      "question": "What evidence do the documents give that \"M7.5 Catia La Mar earthquake\" triggers \"La Guaira coastal liquefaction\" in the earthquake in Venezuela, June 2026?",
+      "answer": "The GEER reconnaissance report documents that the M7.5 Catia La Mar earthquake produced severe shaking in the near-source coastal corridor of La Guaira, where geologic conditions such as coastal alluvial fans, reclaimed waterfront fills, river-mouth deposits, and thick sedimentary wedges were favorable for liquefaction, lateral spreading, settlement, and differential ground deformation.[1] GEER's remote and field teams inventoried 68 liquefaction-related features—including sand boils/ejecta, ground cracks, subsidence, and lateral spreading—concentrated along the roughly 30 km La Guaira coastal strip from Catia La Mar through Maiquetía, La Guaira, Macuto, Caraballeda, and Tanaguarena, with field visits verifying the presence of liquefaction-related ground deformation at selected sites.[2][3][4][5] This concentration of damage on young, water-bearing coastal deposits in La Guaira is explicitly linked to strong shaking from the 2026 earthquake sequence and is consistent with patterns seen after previous Venezuelan earthquakes, supporting the causal link between the Catia La Mar earthquake's shaking and the observed coastal liquefaction.[6]",
+      "support": "unverified",
+      "n_citations": 6,
+      "citations": [
+        {
+          "n": 1,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 3,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 3",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "dollars. The GEER Association organized a rapid hybrid reconnaissance effort to document the geotechnical, geological, seismological, and infrastructure-related effects of these earthquakes. The reconnaissance combined remote data collection, satellite and aerial imagery review, social media and news media georeferencing, collaboration with local professionals and students, field visits, drone surveys, limited subsurface investigation, and coordination with national and international organizations. The GEER team worked closely with Venezuelan academic institutions, the Venezuelan Society of Geotechnical Engineering, local engineering practitioners, students, government agencies, and international organizations to collect and preserve perishable data before cleanup, demolition, rainfall, and emergency response activities altered the evidence. This report provides a coordinated, source-documented record of early observations and identifies priority needs for future investigation. The M7.5 rupture was located close to the densely populated coastal corridor of La Guaira, and the sequence appears to have involved west-to-east rupture progression along strike-slip fault segments. This source geometry, combined with the short time interval between the two large events, likely contributed to severe shaking demands in near-source coastal areas. At the same time, local site conditions were important. The coastal alluvial fans, reclaimed waterfront fills, river-mouth deposits, and thick sedimentary wedges of La Guaira provided geologic conditions favorable for ground-motion amplification, liquefaction, lateral spreading, settlement, and differential ground deformation. In Caracas, damage patterns appear to have been influenced by basin geometry, sediment thickness, and the distribution of taller buildings in areas with longer site periods. Public strong-motion recordings from FUNVISIS were not available at the time of reporting, limiting direct evaluation of ground motions and local site response. The GEER team documented evidence of possible near-surface coseismic deformation and ground rupture along portions of the La Guaira coastal corridor. Satellite-based displacement products, optical image correlation, drone imagery, and field observations identified linear cracking and deformation near Maiquetía, the airport area, and Caraballeda. Some features were located near mapped or inferred traces of the San Sebastián and related fault systems, while other deformation"
+        },
+        {
+          "n": 2,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 202,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 202",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 200 August 2026 liquefaction-related features, including settlement, sand boils or ejecta, ground cracks, and subsidence, between Maiquetía and Tanaguarena, as shown in Figure 9-2. Where access was possible, the GEER local field team visited selected sites and verified the presence of liquefactionrelated ground deformation. Figure 9-2. Surface Manifestation of Liquefaction. Blue polygons represent sand boils/ejecta, ground cracks, or subsidence (with no lateral spread), while purple polygons represent lateral spread features mapped by the GEER remote team, combining pre- and post-earthquake satellite and drone images. Green dots are field observations (see Table 9-4). 9.4.1 Regional Pattern and Seismic Demand The evidence separates into three clusters (Figure 9-3). The first, and by far the best documented, is the La Guaira coastal corridor. The second lies in the Yaracuy river valley, within a few kilometers of the epicenter of the San Felipe earthquake, where a long river-parallel fissure was documented at Pueblo Ferriar, extensive liquefaction fissuring was filmed in Veroes municipality, and large, deep ground cracks were reported between Agua Negra and Palmarejo. The third follows the central coast between Morón / Puerto Cabello and Chuao, including beach cracking east of Puerto Cabello and liquefaction with sand ejecta at Boca de Aroa, georeferenced in the StEER media repository."
+        },
+        {
+          "n": 3,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 203,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 203",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 201 August 2026 Figure 9-3. Regional Distribution of the Reported Liquefaction Evidence Relative to the 24 June 2026 epicenters. Three clusters are discussed in this Chapter: the La Guaira coastal corridor (detail in Table 9-2), the Yaracuy river valley near the Epicenter of the San Felipe Earthquake, and the Central Coast between Morón/Puerto Cabello and Boca de Aroa. 9.4.2 Inventory Mapped from Post-Event Imagery Table 9-3 summarizes the 68 liquefaction-related features identified along the La Guaira corridor, including sand boils/ejecta, ground cracks, subsidence, and lateral spreading. For features whose evidence was ephemeral and may no longer be observable, such as sand boils/ejecta and lateral spread at beaches, that were not field-verified, the remote-sensing inventory provides valuable documentation of their occurrence in the immediate post-earthquake period. In contrast, features that may persist over longer periods, including subsidence, ground cracks, and some lateral spreads, could be evaluated during future field investigations to confirm or validate these interpretations. Differences between remotely inferred and field-verified failure mechanisms highlight the value of field reconnaissance for validating and refining interpretations derived from remote sensing. By providing ground-truth observations, field investigations help calibrate virtual reconnaissance methodologies, improve confidence in mechanism classification, and identify new limitations that should be documented when interpreting earthquake-induced ground-failure features from imagery alone. Table 9-3. Mapped ground deformation due to liquefaction along the La Guaira coastal corridor from post-event optical imagery, by evidence type and analyst’s confidence. Field reclassifications discussed in Section 9.5.7 are partially applied here, so that the remote interpretation remains auditable. Evidence Type Likely Possible Questionable Total Sand boils / ejecta 6 12 1 19 Ground cracks and fissures 22 5 2 29 Subsidence 6 1 0 7 Lateral spread 10 3 0 13"
+        },
+        {
+          "n": 4,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 4,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 4",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24 2026 San Felipe and Catia La Mar Earthquakes ii August, 2026 patterns were more consistent with lateral spreading, gravitational movement, or liquefactioninduced ground surface disruption. Because several mechanisms can produce similar surface expressions, distinguishing tectonic rupture from secondary ground deformation remains a priority for additional field investigation, surveying, trenching, and geodetic analysis. Liquefaction and liquefaction-induced ground failure were among the most important geotechnical effects observed. The strongest concentration of evidence occurred along the La Guaira coastal corridor, including Catia La Mar, Maiquetía, La Guaira, Macuto, Caraballeda, and Tanaguarena. Liquefaction-related features included sand boils, sediment ejecta, ground cracking, settlement, pavement disruption, quay and marina deformation, and lateral spreading toward free faces such as beaches, marina basins, river channels, and waterfront edges. Particularly significant observations were made near Playa Grande, Playa Puerto Viejo, the Marina Deportiva, Marina de Caraballeda, Av. José María España, the Doña Bárbara shopping center area, and other low-lying coastal fills. The geometry of many cracks, which were subparallel to shorelines, marina edges, and water channels, indicates lateral spreading under strong shaking, with local measurements documenting crack widths and offsets on the order of a few millimeters to several hundred millimeters. Additional liquefaction or liquefaction-like ground rupture was documented or reported near the Yaracuy River valley, Boca de Aroa, Puerto Cabello, and other central coast locations. Because early imagery and field visits occurred after emergency response activities had already modified many ground surfaces, the documented inventory should be interpreted as a lower-bound estimate of liquefaction triggering and related ground failure. The earthquakes also triggered widespread landsliding across the Cordillera de la Costa and surrounding watersheds."
+        },
+        {
+          "n": 5,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 200,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 200",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 198 August 2026 Event Location Sedimentary Environment Type of Evidence1 Confidence 1900 Earthquake Macuto, Vargas Fluvial/Alluvial/Coastal WD Questionable Carabelleda, Vargas Fluvial/Alluvial/Coastal WD Questionable Camurí Grande, Vargas Fluvial/Alluvial/Coastal GC Questionable Los Caracas, Vargas Fluvial/Alluvial/Coastal GC Questionable La Sabana, Vargas Fluvial/Alluvial/Coastal GC; WD Likely Chuspa, Vargas Fluvial/Alluvial/Coastal GC; WD Likely Paparo, Miranda Fluvial/Alluvial/Coastal GS Questionable Railway between Carenero and Chico River, Miranda - GS Possible Capaya, Miranda - GS Possible San Jacinto, Caracas - SE; WD Questionable Near Neverí River, Anzoátegui Fluvial/Deltaic SE; GS; GC; WD; LS Likely 1967 Earthquake Playa Caraballeda, Vargas Coastal GS; GC; WD; LS Likely Güigüe, Carabobo Lacustrine WD; LS Likely 1989 Sequence Tocuyo/Boca de Mangle/Chichiriviche, Falcón Intrabarrier Deposits SE; GC; SB Likely 1SE =soil ejecta; GS = ground settlement; GC = ground cracks; WD = water discharge; LS = lateral spread; SB = sand boils 9.2 Geologic and Geomorphic Setting of the Affected Areas The great majority of documented liquefaction lies within a narrow coastal strip of La Guaira state, roughly 30 km long, extending from Catia La Mar in the west through Maiquetía, La Guaira and Macuto to Caraballeda and Tanaguarena in the east. The strip is a discontinuous ribbon of coalescing alluvial fans, beach and beach-ridge deposits, river-mouth sediments and engineered coastal fills, pinned between the steep northern front of the Cordillera de la Costa and the Caribbean Sea (see Chapter 4). The alluvial fans were built and repeatedly reworked by debris flows descending from the Ávila massif; the December 1999 event alone deposited very large volumes of sand, gravel and boulders across what is now the urban footprint of Caraballeda and its neighbors (Wieczorek et al., 2001), and shallow investigations on the hill fronts between Catia La Mar and Caraballeda indicated surficial sediments of the order of 3 m over weathered schist and gneiss."
+        },
+        {
+          "n": 6,
+          "doc": "GEER report on June 24 2026 Venezuela Earthquake.pdf",
+          "page": 201,
+          "title": "GEER reconnaissance report: June 24 2026 San Felipe and Catia La Mar earthquakes – p. 201",
+          "sources": [
+            "GEER Association"
+          ],
+          "date": "2026-08-20",
+          "text": "June 24, 2026, San Felipe and Catia La Mar Earthquakes 199 August 2026 Sediment thickness increases sharply seaward. The geophysical model of Romero et al. (2006), based on seismic refraction, ambient noise and gravity data, indicates depth to basement of approximately 180 m at La Guaira, 290 m near Punta El Cojo in Macuto and 450 m near the Caraballeda shoreline, with fundamental site periods across the fan surfaces of about 0.9 to 1.8 s. Groundwater is shallow along the shoreline, and almost every feature described in this chapter lies either within about 250 m of the coast or within a few meters of a river channel or marina basin. Damage in this corridor has long been recognized as sensitive to local geological and geotechnical conditions, and the concentration of 2026 damage on young, water-bearing coastal deposits repeats a pattern documented after previous earthquakes in Venezuela. 9.3 Liquefaction Hazard Screening The geospatial Liquefaction Hazard model of Zhu et al. (2017 - Figure 9-1) shows that the coastal strip of La Guaira, the lower Yaracuy valley, and the Tuy, Valencia, and Barlovento basins have a higher relative liquefaction hazard. The model relies on proxy 𝑉௦ଷ଴, distance to water bodies and climatic wetness, and it cannot resolve the narrow, boulder-rich alluvial fans of the La Guaira coast, where liquefaction susceptibility varies over tens of meters between dense fan gravels, loose beach and channel sands, and hydraulically placed marina fills. Improved local liquefaction susceptibility and hazard estimates can be obtained by conducting in-situ testing (Section 9.8); the 2026 event nonetheless offers an unusually well-constrained opportunity to test geospatial models such as shown in Figure 9-1 with field data (see Table 9-5) against both positive and negative evidence. Figure 9-1. Geospatial Liquefaction Hazard Map for North-Central Venezuela; Blue Denotes Higher and Brown Lower probability of liquefaction. Model of Zhu et al. (2017) 9.4 Spatial distribution of Observed Liquefaction Liquefaction surface manifestations include excessive settlement, lateral spread, and surface ejecta."
+        }
+      ]
+    }
+  ]
+}

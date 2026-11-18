@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DRM Event KG · Citations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Citation reader: every node and edge of the event KG with the answer written from the documents and the
+   excerpts it cites. Same colours and type scale as viewer.html. Data: *_cited_graph.json (v2 step 4). */
+:root {
+  --bg: #f3f5f6; --surface: #ffffff; --surface-2: #e9eef0; --line: #d3dbdf; --fg: #172227; --muted: #56666e;
+  --accent: #0b6870; --accent-soft: #d6ecee;
+  --hazard: #c2410c; --impact: #a16207; --vuln: #7c3aed; --measure: #15803d; --need: #1d4ed8; --actor: #4b5563;
+  --high: #15803d; --medium: #a16207; --low: #b91c1c; --mark: #fde68a;
+  --font-display: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1518; --surface: #161e22; --surface-2: #1e292e; --line: #2b383e; --fg: #e1e8eb; --muted: #92a3ab;
+    --accent: #52b6bf; --accent-soft: #173a3e;
+    --hazard: #fb8a5a; --impact: #e2b04e; --vuln: #a78bfa; --measure: #4ade80; --need: #7ea6ff; --actor: #a7b4c2;
+    --high: #4ade80; --medium: #e2b04e; --low: #f87171; --mark: #6b5a12; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1518; --surface: #161e22; --surface-2: #1e292e; --line: #2b383e; --fg: #e1e8eb; --muted: #92a3ab;
+  --accent: #52b6bf; --accent-soft: #173a3e;
+  --hazard: #fb8a5a; --impact: #e2b04e; --vuln: #a78bfa; --measure: #4ade80; --need: #7ea6ff; --actor: #a7b4c2;
+  --high: #4ade80; --medium: #e2b04e; --low: #f87171; --mark: #6b5a12; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-ui); font-size: 14px; line-height: 1.5;
+  padding: 20px max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); }
+.wrap { max-width: 1440px; margin-inline: auto; display: flex; flex-direction: column; gap: 16px; }
+a { color: var(--accent); }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+header.top { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+.eyebrow { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: 28px; line-height: 1.15; margin: 4px 0 6px; text-wrap: balance; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 13px; }
+.meta b { color: var(--fg); font-weight: 500; }
+.loader { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 13px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.filename { font-family: var(--font-mono); font-size: 12px; color: var(--muted); max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.banner { border: 1px solid var(--line); background: var(--accent-soft); border-radius: 6px; padding: 10px 14px; font-size: 13px; }
+.banner.error { background: var(--surface); border-color: var(--low); color: var(--low); }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 6px 12px; font-size: 13px; color: var(--muted); }
+.stat b { font-family: var(--font-mono); color: var(--fg); font-weight: 500; font-variant-numeric: tabular-nums; margin-right: 4px; }
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.t-hazard { color: var(--hazard); } .pill.t-impact { color: var(--impact); } .pill.t-vulnerability { color: var(--vuln); }
+.pill.t-measure { color: var(--measure); } .pill.t-need { color: var(--need); } .pill.t-actor { color: var(--actor); }
+.pill.s-supported { color: var(--high); } .pill.s-partial { color: var(--medium); } .pill.s-not_found { color: var(--low); }
+.pill.s-unverified, .pill.s-none, .pill.neutral { color: var(--muted); }
+.filters { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: flex-start; }
+.fgroup { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.fgroup > span { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 2px 9px; font-size: 12px; cursor: pointer; }
+.chip[aria-pressed="false"] { background: transparent; color: var(--muted); opacity: .55; }
+.chip .c { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.search { border: 1px solid var(--line); background: var(--surface); border-radius: 6px; padding: 5px 10px; min-width: 220px; }
+.main { display: grid; grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; max-height: calc(100vh - 120px); overflow-y: auto; position: sticky; top: 12px; }
+.list .head { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 10px 12px 6px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--surface); }
+.row { display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--line); background: none; padding: 9px 12px; cursor: pointer; }
+.row:hover { background: var(--surface-2); }
+.row[aria-current="true"] { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.row .lab { font-weight: 500; overflow-wrap: anywhere; }
+.row .tags { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 12px; color: var(--muted); }
+.row.uncited .lab { color: var(--muted); }
+.rel { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+.detail { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.detail h2 { font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.25; margin: 0; overflow-wrap: anywhere; }
+.detail h3 { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 6px; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 12px; font-size: 13px; }
+.kv dt { color: var(--muted); } .kv dd { margin: 0; overflow-wrap: anywhere; }
+.question { color: var(--muted); font-style: italic; }
+.answer { font-family: var(--font-display); font-size: 16px; line-height: 1.6; max-width: 75ch; }
+.cite { font-family: var(--font-mono); font-size: 11px; vertical-align: super; line-height: 0; border: 1px solid var(--accent); color: var(--accent); background: var(--surface); border-radius: 4px; padding: 1px 4px; margin: 0 1px; cursor: pointer; }
+.cite:hover { background: var(--accent); color: var(--surface); }
+.cites { display: flex; flex-direction: column; gap: 8px; }
+.src { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; scroll-margin-top: 16px; }
+.src.flash { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.src .h { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.src .n { font-family: var(--font-mono); font-weight: 500; color: var(--accent); }
+.src .t { font-weight: 500; overflow-wrap: anywhere; }
+.src .m { font-size: 12px; color: var(--muted); }
+.src .x { font-size: 13px; color: var(--fg); white-space: pre-wrap; overflow-wrap: anywhere; max-width: 90ch; }
+.src .x.clip { max-height: 6.2em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
+.more { align-self: flex-start; border: 0; background: none; color: var(--accent); cursor: pointer; padding: 0; font-size: 12px; font-weight: 500; }
+.links { display: flex; flex-direction: column; gap: 4px; }
+.link { border: 0; background: none; padding: 2px 0; text-align: left; cursor: pointer; color: var(--fg); font-size: 13px; overflow-wrap: anywhere; }
+.link:hover .lab { text-decoration: underline; }
+.empty { color: var(--muted); font-size: 13px; }
+.drop { position: fixed; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 18%, transparent); font-size: 18px; font-weight: 600; z-index: 10; pointer-events: none; }
+@media (max-width: 820px) {
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .list { position: static; max-height: 45vh; }
+  h1 { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">DRM Event KG · Citations</div>
+      <h1 id="title">Knowledge graph with citations</h1>
+      <div class="meta" id="meta"></div>
+    </div>
+    <div class="loader">
+      <select class="btn" id="jsonPick" hidden aria-label="Data file"></select>
+      <span class="filename" id="fname"></span>
+      <button class="btn primary" id="openBtn">Open JSON…</button>
+      <input type="file" id="fileInput" accept=".json,application/json" hidden>
+    </div>
+  </header>
+  <div class="banner" id="banner" hidden></div>
+  <div class="stats" id="stats"></div>
+  <div class="filters" id="filters">
+    <div class="fgroup"><span>Show</span><div class="chips" id="fKind"></div></div>
+    <div class="fgroup"><span>Type</span><div class="chips" id="fType"></div></div>
+    <div class="fgroup"><span>Support</span><div class="chips" id="fSupport"></div></div>
+    <div class="fgroup"><span>Search</span><input class="search" id="q" type="search" placeholder="label, answer, document…"></div>
+  </div>
+  <div class="main">
+    <nav class="list" id="list" aria-label="Nodes and edges"></nav>
+    <article class="detail" id="detail"><p class="empty">Select a node or an edge.</p></article>
+  </div>
+</div>
+<div class="drop" id="drop" hidden>Drop the *_cited_graph.json file</div>
+<script>
+/* Loads *_cited_graph.json (v2_jrc/04_cite_kg.py): {"meta", "nodes", "edges"}, every node/edge with question, answer
+   ("... [1][2]"), support (supported | partial | not_found | unverified) and citations [{n, doc, page, title, sources,
+   date, text}]. Elements without "answer" were not cited (e.g. a test run on a few items).
+   Data comes from: ?file=<name>, the JSON files next to this page on GitHub Pages, Open JSON… or drag and drop. */
+const JSON_PATTERN = /_cited_graph\.json$/i;
+const TYPE_ORDER = ['hazard', 'vulnerability', 'impact', 'need', 'measure', 'actor'];
+const SUPPORT_ORDER = ['supported', 'partial', 'unverified', 'not_found', 'none'];
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let D = null, items = [], byKey = new Map(), current = null;
+const filt = { kind: new Set(['node', 'edge']), type: null, support: null, q: '' };
+
+function prep(data) {
+  if (!data || !Array.isArray(data.nodes) || !Array.isArray(data.edges))
+    throw new Error('No nodes / edges in this file. Open the *_cited_graph.json file written by 04_cite_kg.py.');
+  const lab = new Map(data.nodes.map(n => [n.id, n.label || n.id]));
+  const typ = new Map(data.nodes.map(n => [n.id, n.type]));
+  const sup = x => x.answer == null ? 'none' : (x.support || 'unverified');
+  const nodes = data.nodes.map(n => ({ kind: 'node', key: 'n:' + n.id, label: n.label || n.id, type: n.type, support: sup(n), raw: n }));
+  const edges = data.edges.map(e => ({ kind: 'edge', key: `e:${e.source}|${e.relation}|${e.target}`, label: `${lab.get(e.source)} → ${e.relation} → ${lab.get(e.target)}`,
+    src: lab.get(e.source), tgt: lab.get(e.target), type: typ.get(e.source), support: sup(e), raw: e }));
+  return [...nodes, ...edges];
+}
+
+function load(data, name) {
+  items = prep(data); D = data; byKey = new Map(items.map(i => [i.key, i]));
+  const ev = data.meta?.event || {};
+  $('#title').textContent = ev.name || 'Knowledge graph with citations';
+  $('#meta').innerHTML = [ev.date && `<span>Date <b>${esc(ev.date)}</b></span>`, ev.country && `<span>Country <b>${esc(ev.country)}</b></span>`,
+    ev.documents && `<span>${esc(ev.documents)}</span>`, data.meta?.model && `<span>Model <b>${esc(data.meta.model)}</b></span>`].filter(Boolean).join('');
+  $('#fname').textContent = name || '';
+  const cited = items.filter(i => i.support !== 'none');
+  const nn = items.filter(i => i.kind === 'node'), ne = items.filter(i => i.kind === 'edge');
+  const cn = nn.filter(i => i.support !== 'none').length, ce = ne.filter(i => i.support !== 'none').length;
+  const nCit = cited.reduce((s, i) => s + (i.raw.n_citations || 0), 0);
+  $('#stats').innerHTML = `<span class="stat"><b>${cn}/${nn.length}</b>nodes cited</span><span class="stat"><b>${ce}/${ne.length}</b>edges cited</span>`
+    + `<span class="stat"><b>${nCit}</b>citations</span>`
+    + SUPPORT_ORDER.filter(s => s !== 'none').map(s => [s, cited.filter(i => i.support === s).length]).filter(([, c]) => c)
+        .map(([s, c]) => `<span class="stat"><b>${c}</b>${s.replace('_', ' ')}</span>`).join('');
+  const b = $('#banner');
+  if (cited.length < items.length) {
+    b.hidden = false; b.className = 'banner';
+    b.innerHTML = `<b>Partial citations.</b> ${cited.length} of ${items.length} nodes and edges have been checked against the documents; the others are listed without citations.`;
+  } else b.hidden = true;
+  filt.type = new Set(items.map(i => i.type)); filt.support = new Set(items.map(i => i.support));
+  if (cited.length && cited.length < items.length) filt.support.delete('none');      // start with the cited ones
+  renderFilters(); renderList();
+  const fromHash = byKey.get(decodeURIComponent(location.hash.slice(1)));
+  select(fromHash || items.find(visible) || null);
+}
+
+function chip(group, value, label, count, on) {
+  return `<button class="chip" data-g="${group}" data-v="${esc(value)}" aria-pressed="${on}">${label}<span class="c">${count}</span></button>`;
+}
+function renderFilters() {
+  const count = (k, v) => items.filter(i => i[k] === v).length;
+  $('#fKind').innerHTML = chip('kind', 'node', 'Nodes', count('kind', 'node'), filt.kind.has('node')) + chip('kind', 'edge', 'Edges', count('kind', 'edge'), filt.kind.has('edge'));
+  const types = [...new Set(items.map(i => i.type))].sort((a, b) => (TYPE_ORDER.indexOf(a) + 1 || 99) - (TYPE_ORDER.indexOf(b) + 1 || 99));
+  $('#fType').innerHTML = types.map(t => chip('type', t, `<span class="pill t-${esc(t)}">${esc(t)}</span>`, count('type', t), filt.type.has(t))).join('');
+  const sups = SUPPORT_ORDER.filter(s => items.some(i => i.support === s));
+  $('#fSupport').innerHTML = sups.map(s => chip('support', s, s === 'none' ? 'not cited' : s.replace('_', ' '), count('support', s), filt.support.has(s))).join('');
+}
+$('#filters').addEventListener('click', e => {
+  const c = e.target.closest('.chip'); if (!c) return;
+  const set = filt[c.dataset.g], v = c.dataset.v;
+  set.has(v) ? set.delete(v) : set.add(v);
+  c.setAttribute('aria-pressed', set.has(v)); renderList();
+});
+$('#q').addEventListener('input', e => { filt.q = e.target.value.trim().toLowerCase(); renderList(); });
+
+function visible(i) {
+  if (!filt.kind.has(i.kind) || !filt.type.has(i.type) || !filt.support.has(i.support)) return false;
+  if (!filt.q) return true;
+  const r = i.raw, hay = [i.label, r.description, r.explanation, r.answer, r.category_label, ...(r.citations || []).map(c => `${c.title} ${c.doc}`)].join(' ').toLowerCase();
+  return hay.includes(filt.q);
+}
+function renderList() {
+  const vis = items.filter(visible);
+  const row = i => `<button class="row${i.support === 'none' ? ' uncited' : ''}" data-k="${esc(i.key)}" aria-current="${current === i}">`
+    + (i.kind === 'edge' ? `<span class="lab">${esc(i.src)} <span class="rel">${esc(i.raw.relation)}</span> ${esc(i.tgt)}</span>` : `<span class="lab">${esc(i.label)}</span>`)
+    + `<span class="tags"><span class="pill t-${esc(i.type)}">${i.kind === 'edge' ? 'edge' : esc(i.type)}</span>`
+    + `<span class="pill s-${i.support}">${i.support === 'none' ? 'not cited' : i.support.replace('_', ' ')}</span>`
+    + (i.raw.n_citations ? `<span>${i.raw.n_citations} cit.</span>` : '') + `</span></button>`;
+  $('#list').innerHTML = `<div class="head">${vis.length} of ${items.length}</div>` + (vis.map(row).join('') || '<p class="empty" style="padding:12px">Nothing matches the filters.</p>');
+}
+$('#list').addEventListener('click', e => { const r = e.target.closest('.row'); if (r) select(byKey.get(r.dataset.k)); });
+
+function answerHtml(text) {
+  return esc(text).replace(/\[(\d+)\]/g, (m, n) => `<button class="cite" data-n="${n}" aria-label="Source ${n}">${n}</button>`);
+}
+function select(i) {
+  current = i;
+  document.querySelectorAll('.row').forEach(r => r.setAttribute('aria-current', i && r.dataset.k === i.key));
+  if (!i) { $('#detail').innerHTML = '<p class="empty">Select a node or an edge.</p>'; return; }
+  try { history.replaceState(null, '', location.pathname + location.search + '#' + encodeURIComponent(i.key)); } catch (_) {}
+  const r = i.raw, cits = r.citations || [];
+  const facts = i.kind === 'node'
+    ? [['Type', `<span class="pill t-${esc(r.type)}">${esc(r.type)}</span>`], ['Category', esc(r.category_label || r.category)],
+       ['Generic item', esc(r.reference_label || '—')], ['DRM phase', esc(r.drm_phase)], ['Description', esc(r.description)]]
+    : [['Relation', `<span class="rel">${esc(r.relation)}</span>`], ['Status', esc(r.status)], ['DRM phase', esc(r.drm_phase)],
+       ['Confidence', esc(r.confidence)], ['Explanation', esc(r.explanation)]];
+  const link = x => `<button class="link" data-k="${esc(x.key)}"><span class="pill s-${x.support}">${x.support === 'none' ? 'not cited' : x.support.replace('_', ' ')}</span> `
+    + (x.kind === 'edge' ? `${esc(x.src)} <span class="rel">${esc(x.raw.relation)}</span> ${esc(x.tgt)}` : `<span class="lab">${esc(x.label)}</span>`) + `</button>`;
+  const related = i.kind === 'node'
+    ? items.filter(x => x.kind === 'edge' && (x.raw.source === r.id || x.raw.target === r.id))
+    : [byKey.get('n:' + r.source), byKey.get('n:' + r.target)].filter(Boolean);
+  $('#detail').innerHTML = `
+    <div><div class="eyebrow">${i.kind}</div><h2>${i.kind === 'edge' ? `${esc(i.src)} <span class="rel">${esc(r.relation)}</span> ${esc(i.tgt)}` : esc(i.label)}</h2></div>
+    <dl class="kv">${facts.map(([k, v]) => `<dt>${k}</dt><dd>${v || '—'}</dd>`).join('')}</dl>
+    <section><h3>Evidence <span class="pill s-${i.support}">${i.support === 'none' ? 'not cited' : i.support.replace('_', ' ')}</span></h3>
+      ${r.answer == null ? '<p class="empty">This element has not been checked against the documents yet (run 04_cite_kg.py on the full KG).</p>'
+        : `${r.question ? `<p class="question">${esc(r.question)}</p>` : ''}<p class="answer">${answerHtml(r.answer)}</p>`}</section>
+    ${cits.length ? `<section><h3>Sources (${cits.length})</h3><div class="cites">${cits.map(c => `
+      <div class="src" id="src-${c.n}"><div class="h"><span class="n">[${c.n}]</span><span class="t">${esc(c.title)}</span></div>
+        <div class="m">${esc((c.sources || []).join(', '))}${c.date ? ' · ' + esc(c.date) : ''} · <span style="font-family:var(--font-mono)">${esc(c.doc)}</span></div>
+        <div class="x clip">${esc(c.text)}</div><button class="more">Show the whole excerpt</button></div>`).join('')}</div></section>` : ''}
+    ${related.length ? `<section><h3>${i.kind === 'node' ? 'Edges of this node' : 'Ends of this edge'} (${related.length})</h3><div class="links">${related.map(link).join('')}</div></section>` : ''}`;
+}
+$('#detail').addEventListener('click', e => {
+  const c = e.target.closest('.cite');
+  if (c) {
+    const s = document.getElementById('src-' + c.dataset.n); if (!s) return;
+    s.querySelector('.x').classList.remove('clip'); s.querySelector('.more').hidden = true;
+    s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    s.classList.add('flash'); setTimeout(() => s.classList.remove('flash'), 1600); return;
+  }
+  const m = e.target.closest('.more');
+  if (m) { const x = m.previousElementSibling; const clipped = x.classList.toggle('clip'); m.textContent = clipped ? 'Show the whole excerpt' : 'Show less'; return; }
+  const l = e.target.closest('.link'); if (l) { const it = byKey.get(l.dataset.k); if (it) { if (!visible(it)) { filt.kind.add(it.kind); filt.type.add(it.type); filt.support.add(it.support); renderFilters(); renderList(); } select(it); } }
+});
+
+/* ---- loading ---- */
+function showError(msg) { const b = $('#banner'); b.hidden = false; b.className = 'banner error'; b.textContent = msg; }
+function readFile(f) {
+  const r = new FileReader();
+  r.onload = () => { try { load(JSON.parse(r.result), f.name); } catch (err) { showError(err.message); } };
+  r.readAsText(f);
+}
+async function loadFromUrl(name) {
+  const r = await fetch(new URL(name, location.href), { cache: 'no-cache' });
+  if (!r.ok) throw new Error(`Cannot load ${name} (${r.status})`);
+  load(await r.json(), name.split('/').pop());
+}
+$('#openBtn').onclick = () => $('#fileInput').click();
+$('#fileInput').onchange = e => e.target.files[0] && readFile(e.target.files[0]);
+$('#jsonPick').onchange = e => loadFromUrl(e.target.value).catch(err => showError(err.message));
+let dragDepth = 0;
+addEventListener('dragenter', e => { e.preventDefault(); dragDepth++; $('#drop').hidden = false; });
+addEventListener('dragleave', () => { if (--dragDepth <= 0) { dragDepth = 0; $('#drop').hidden = true; } });
+addEventListener('dragover', e => e.preventDefault());
+addEventListener('drop', e => { e.preventDefault(); dragDepth = 0; $('#drop').hidden = true; const f = e.dataTransfer.files[0]; if (f) readFile(f); });
+
+function repoCandidates() {                                    // GitHub Pages: list the JSON next to this page
+  if (!location.hostname.toLowerCase().endsWith('.github.io')) return [];
+  const owner = location.hostname.split('.')[0];
+  const parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
+  if (!location.pathname.endsWith('/')) parts.pop();
+  if (!parts.length) return [{ owner, repo: owner + '.github.io', dir: '' }];
+  return [{ owner, repo: parts[0], dir: parts.slice(1).join('/') }];
+}
+async function listRepoJson() {
+  for (const c of repoCandidates()) {
+    const path = c.dir ? '/' + c.dir.split('/').map(encodeURIComponent).join('/') : '';
+    const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents${path}`);
+    if (r.status === 403) throw new Error('GitHub API rate limit reached, try again later or use ?file=name.json');
+    if (!r.ok) continue;
+    const list = await r.json();
+    const files = Array.isArray(list) ? list.filter(f => f.type === 'file' && JSON_PATTERN.test(f.name)).map(f => f.name).sort() : [];
+    if (files.length) return files;
+  }
+  return [];
+}
+(async function start() {
+  try {
+    const param = new URLSearchParams(location.search).get('file');
+    if (param) return await loadFromUrl(param);
+    const files = await listRepoJson();
+    if (files.length) {
+      const sel = $('#jsonPick');
+      sel.innerHTML = files.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+      sel.hidden = files.length < 2;
+      return await loadFromUrl(files[0]);
+    }
+    const b = $('#banner'); b.hidden = false;
+    b.innerHTML = 'Click <b>Open JSON…</b> or drop a <span style="font-family:var(--font-mono)">*_cited_graph.json</span> file (from <span style="font-family:var(--font-mono)">drm_kg_jrc/citations/</span>) anywhere on the page.';
+  } catch (err) { showError(err.message); }
+})();
+</script>
+</body>
+</html>
